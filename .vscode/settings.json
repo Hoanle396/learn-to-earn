@@ -47,5 +47,11 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "cSpell.words": [
     "iconify"
-  ]
+  ],
+  "[solidity]": {
+    "editor.defaultFormatter": "JuanBlanco.solidity"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }

@@ -1,5 +1,5 @@
+import ConnectWallet from "@/components/button/ConnectWallet";
 import Image from "next/image";
-import { Button } from "@repo/ui/button";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
           priority
         />
         <ol>
-          <li>
+          <li className="text-6xl">
             Get started by editing <code>app/page.tsx</code>
           </li>
           <li>Save and see your changes instantly.</li>
@@ -46,9 +46,8 @@ export default function Home() {
             Read our docs
           </a>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+
+        <ConnectWallet />
       </main>
       <footer className={styles.footer}>
         <a
