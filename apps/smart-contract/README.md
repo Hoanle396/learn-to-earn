@@ -1,13 +1,24 @@
-# Sample Hardhat Project
+## Installation
+To install and use the contracts, follow these steps:
+1. **Clone the repository:**
+    ```bash
+    git clone xxx
+    cd xxx
+    ```
+2. **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3. **Compile the contracts:**
+    ```bash
+    npx hardhat compile
+    ```
+4. **Run the tests:**
+    ```bash
+    npx hardhat test
+    ```
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
+5. **Run the deploy:**
+    ```bash
+    npm deploy --network <<NETWORK>>
+    ```
