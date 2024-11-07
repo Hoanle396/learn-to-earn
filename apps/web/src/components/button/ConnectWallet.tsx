@@ -10,7 +10,7 @@ const ConnectWallet: React.FC = () => {
 
   return (
     <button
-      className="rounded-full text-6xl"
+      className="rounded-full text-lg flex appearance-none h-12 w-fit px-7 hover:bg-slate-200 border cursor-pointer items-center justify-center font-medium"
       onClick={() => {
         if (isConnected) {
           disconnect()

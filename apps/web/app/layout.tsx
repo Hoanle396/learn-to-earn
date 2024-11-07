@@ -1,4 +1,5 @@
 "use client"
+import React from "react";
 import { WagmiContext } from "@/contexts/WagmiContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./globals.css";
@@ -15,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <WagmiContext>
         <QueryClientProvider client={queryClient}>
-          <body >
+          <body className="h-screen overflow-y-auto" >
             <Header />
             {children}
           </body>

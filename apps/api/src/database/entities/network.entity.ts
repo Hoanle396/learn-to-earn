@@ -1,6 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-import { NetworkToken } from '.';
 import { BaseTime } from './base/time.entity';
 
 @Entity()
@@ -28,7 +27,4 @@ export class Network extends BaseTime {
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
-
-  @OneToMany(() => NetworkToken, (networkToken) => networkToken.network)
-  networkTokens: NetworkToken[];
 }

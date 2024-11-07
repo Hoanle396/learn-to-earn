@@ -1,4 +1,4 @@
-import type {Config} from "tailwindcss";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
 	content: [
@@ -7,12 +7,12 @@ const config: Config = {
 		"./app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
-    extend: {
-      colors: {
-        primary: '#3490dc',
-        secondary: '#f1c40f',
-        danger: '#e74c3c',
-        "dark-slate-blue": "#30338E",
+		extend: {
+			colors: {
+				primary: '#007bff',
+				secondary: '#f1c40f',
+				danger: '#e74c3c',
+				"dark-slate-blue": "#30338E",
 				supernova: "#FFC700",
 				"artyClick-deep-dky-blue": "#0C84FB",
 				"nile-blue": "#123456",
@@ -36,20 +36,20 @@ const config: Config = {
 				aureolin: "#FDEE00",
 				"flora-white": "#FFFAF3",
 				boulder: "#747775",
-      },
-      screens: {
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1536px",
-      },
-      fontFamily: {
-        sans: ['Inter', 'Arial', 'sans-serif'],
-        octosquare :  ['octosquare', 'sans-serif']
-      },
-    },
-  },
+			},
+			screens: {
+				sm: "640px",
+				md: "768px",
+				lg: "1024px",
+				xl: "1280px",
+				"2xl": "1536px",
+			},
+			fontFamily: {
+				sans: ['Inter', 'Arial', 'sans-serif'],
+				octosquare: ['octosquare', 'sans-serif']
+			},
+		},
+	},
 	plugins: [],
 };
 export default config;
