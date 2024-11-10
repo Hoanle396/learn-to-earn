@@ -1,9 +1,9 @@
 "use client"
-import React from "react";
+import Header from "@/components/layouts/Header";
 import { WagmiContext } from "@/contexts/WagmiContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "./globals.css";
-import Header from "@/components/layouts/Header";
+import React from "react";
+import "./globals.scss";
 
 
 export default function RootLayout({

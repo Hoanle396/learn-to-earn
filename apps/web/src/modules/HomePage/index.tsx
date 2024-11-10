@@ -2,11 +2,11 @@ import React from 'react'
 import Hero from './components/Hero'
 
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   return (
-    <div className='relative flex w-full h-auto'>
+    <>
       <Hero />
-    </div>
+    </>
   )
 }
 
