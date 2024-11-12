@@ -38,7 +38,7 @@ const Header = () => {
     <header className='flex border-b py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px] tracking-wide relative z-50'>
       <div className='flex flex-wrap items-center gap-5 w-full'>
         <Link href="/">
-          <img src="https://readymadeui.com/readymadeui.svg" alt="logo" className='w-36' />
+          <img src="/logo_full.svg" alt="logo" className='w-36' />
         </Link>
         <div
           className={cn({
@@ -53,7 +53,7 @@ const Header = () => {
             </button>
             <li className='mb-6 hidden max-lg:block'>
               <Link href="/">
-                <img src="https://readymadeui.com/readymadeui.svg" alt="logo" className='w-36' />
+                <img src="/logo_full.svg" alt="logo" className='w-36' />
               </Link>
             </li>
             <MenuItem href="/" title="Home" />
