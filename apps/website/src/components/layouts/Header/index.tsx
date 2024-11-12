@@ -1,10 +1,8 @@
-import Icons from '@/assets/icons'
 import ConnectWallet from '@/components/button/ConnectWallet'
 import useToggle from '@/hooks/useToggle'
 import { cn } from '@/libs/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
 import { IoClose, IoMenu } from 'react-icons/io5'
 type MenuProps = {
   href: string
@@ -18,7 +16,7 @@ const MenuItem = ({ href, title }: MenuProps) => {
       <Link
         href={href}
         className={cn({
-          'lg:hover:text-primary block font-semibold text-[15px]': true,
+          'lg:hover:text-primary block font-medium text-[18px]': true,
           'text-[#007bff]': pathname === href,
           'text-gray-500': pathname !== href
         })}

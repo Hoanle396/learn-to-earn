@@ -83,7 +83,9 @@ const btnGroup: Variants = {
   animate: {
     y: 0,
     opacity: 1,
-    animation: {
+    transition: {
+      duration: 0.6,
+      delay: 0.5,
       ease: easing
     }
   }
@@ -97,15 +99,8 @@ const star: Variants = {
   animate: {
     y: 0,
     opacity: 1,
-    animation: {
-      ease: easing
-    }
   }
 };
-
-
-
-
 
 const Hero: React.FC = () => {
   return (
@@ -163,28 +158,34 @@ const Hero: React.FC = () => {
 
           <motion.p variants={fadeInUp}>When, while lovely valley teems with vapor around meand <br />meridian sun strikes the upper impenetrable.</motion.p>
 
-          <motion.div className="btn_group" variants={stagger}>
-            <motion.div className="btn btn_primary" variants={btnGroup} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Hire Me
+          <motion.div className="flex justify-start gap-6" variants={stagger}>
+            <motion.button
+              className="rounded-full text-lg flex gap-2 appearance-none h-12 w-fit px-7 hover:bg-slate-200 border-2 cursor-pointer items-center justify-center font-medium"
+              variants={btnGroup}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Hire Me
               <IoChevronForwardCircle />
-            </motion.div>
-            <motion.div className="btn btn_secondary" variants={btnGroup} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Live Chat</motion.div>
+            </motion.button>
+            <motion.button
+              className="rounded-full text-lg flex gap-2 appearance-none h-12 w-fit px-7 hover:bg-slate-200 border-2 cursor-pointer items-center justify-center font-medium"
+              variants={btnGroup} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Live Chat
+              <IoChevronForwardCircle />
+            </motion.button>
           </motion.div>
-
-
           <motion.div className="review_container" variants={stagger}>
             <motion.p className="total_review" variants={star}>64+ Reviews</motion.p>
             <div className='flex'>
-              <motion.span className='h-8 w-8 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
-              <motion.span className='h-8 w-8 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
-              <motion.span className='h-8 w-8 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
-              <motion.span className='h-8 w-8 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
-              <motion.span className='h-8 w-8 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
+              <motion.span className='h-10 w-10 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
+              <motion.span className='h-10 w-10 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
+              <motion.span className='h-10 w-10 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
+              <motion.span className='h-10 w-10 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
+              <motion.span className='h-10 w-10 justify-center items-center flex' variants={star} whileHover={{ scale: 1.2, rotate: 180, borderRadius: '100%', cursor: 'pointer' }}><IoStar /></motion.span>
             </div>
-
             <motion.p className="more_review" variants={star}>More then 50+ people taking services.</motion.p>
           </motion.div>
         </div>
-
         <motion.div className="right_content_wrapper">
           <motion.img src='/images/bg.png' alt="bg" initial={{ x: 200, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: .5, delay: 0.8 }} />
         </motion.div>
