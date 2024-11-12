@@ -1,4 +1,3 @@
-"use client"
 import React from "react"
 import { useAccount, useConnect, useDisconnect } from "wagmi"
 import { metaMask } from "wagmi/connectors"
@@ -19,7 +18,12 @@ const ConnectWallet = () => {
         }
       }}
     >
-      {isConnected ? address?.substring(0, 5) + '...' + address?.substring(address.length - 5) : 'Connect Wallet'}
+      <span>
+        {isConnected ?
+          address?.substring(0, 5) + '...' + address?.substring(address.length - 5) :
+          'Connect Wallet'
+        }
+      </span>
     </button>
   )
 }

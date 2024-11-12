@@ -57,10 +57,10 @@ const Header = () => {
               </Link>
             </li>
             <MenuItem href="/" title="Home" />
-            <MenuItem href="/feature" title="Feature" />
-            <MenuItem href="/blog" title="Blog" />
+            <MenuItem href="/learn" title="Learn" />
+            <MenuItem href="/rank-king" title="Rank king" />
+            <MenuItem href="/for-education" title="For education" />
             <MenuItem href="/about" title="About" />
-            <MenuItem href="/team" title="Team" />
           </ul>
         </div>
         <div className='flex ml-auto'>

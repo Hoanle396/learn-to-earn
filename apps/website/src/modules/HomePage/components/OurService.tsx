@@ -151,7 +151,7 @@ const OurService: React.FC = () => {
           </a>
         </motion.div>
         <motion.div className="card dark" variants={item}>
-          <img src={process.env.PUBLIC_URL + '/images/line.png'} alt="line" className="line" />
+          <img src='/images/line.png' alt="line" className="line" />
           <h2>+4 <br />More...</h2>
           <a href="#">
             <span>View more...</span>

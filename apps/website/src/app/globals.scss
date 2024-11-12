@@ -262,8 +262,8 @@ body{
       top:-5px;
     }
     &.dark{
-      background-color:$black;
-      color:$white;
+      background-color:$light_green;
+      color:#34acc7;
       .line{
         position: absolute;
         top:0;
@@ -271,7 +271,7 @@ body{
         width:4.5vw;
       }
       h2{
-        color:$white;
+        color:#34acc7;
         text-align: left;
       }
       a{

@@ -36,7 +36,7 @@ const ExploreCard = ({ id, imgUrl, title, index, active, handleClick }: ExploreC
           className={`${styles.flexCenter} w-[60px] h-[60px] rounded-[24px] glass-morphism mb-[16px]`}
         >
           <img
-            src="/headset.svg"
+            src="/images/headset.svg"
             alt="headset"
             className="w-1/2 h-1/2 object-contain"
           />
