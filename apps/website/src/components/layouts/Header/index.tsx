@@ -58,7 +58,7 @@ const Header = () => {
             </li>
             <MenuItem href="/" title="Home" />
             <MenuItem href="/learn" title="Learn" />
-            <MenuItem href="/rank-king" title="Rank king" />
+            <MenuItem href="/ranking" title="Ranking" />
             <MenuItem href="/for-education" title="For education" />
             <MenuItem href="/about" title="About" />
           </ul>
