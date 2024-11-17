@@ -1,29 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 
-contract LearnToEarnCertificate is OwnableUpgradeable {
-    struct Certificate {
-        address recipient;
-        string title;
-        string dateIssued;
-        string score;
-        string additionalInfo;
-    }
-
-    mapping(address => Certificate) private certificates;
+contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
     mapping(address => bool) private admin;
+    uint256 private counter = 0;
 
-    event CertificateIssued(
-        address indexed recipient,
-        string title,
-        string dateIssued,
-        string score,
-        string additionalInfo
-    );
-    
+    event LearnToEarnCertificateCreated(address indexed reciptient, uint256 id);
+
+    error OnlyAdminCanCall(address caller);
+
     modifier onlyAdmin() {
-        require(admin[msg.sender] == true, "Only admin can call this function");
+        if (!admin[msg.sender]) revert OnlyAdminCanCall(msg.sender);
         _;
     }
 
@@ -33,20 +23,12 @@ contract LearnToEarnCertificate is OwnableUpgradeable {
 
     function initialize() public initializer {
         __Ownable_init();
+        __ERC721_init("Learn to Earn Certificate", "L2E");
     }
 
-    function issueCertificate(
-        address _recipient,
-        string memory _title,
-        string memory _dateIssued,
-        string memory _score,
-        string memory _additionalInfo
-    ) public onlyAdmin {
-        certificates[_recipient] = Certificate(_recipient, _title, _dateIssued, _score, _additionalInfo);
-        emit CertificateIssued(_recipient, _title, _dateIssued, _score, _additionalInfo);
-    }
-
-    function getCertificate(address _recipient) public view returns (Certificate memory) {
-        return certificates[_recipient];
+    function mint(address _recipient) public onlyAdmin {
+        uint256 currentId = counter++;
+        _mint(_recipient, currentId);
+        emit LearnToEarnCertificateCreated(_recipient, currentId);
     }
 }
