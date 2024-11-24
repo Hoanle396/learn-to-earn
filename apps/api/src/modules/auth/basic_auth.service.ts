@@ -23,7 +23,7 @@ export class BasicAuthService implements IBasicAuth {
     private readonly authHelperService: AuthHelperService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+  ) { }
 
   async createUser(
     dto: CreateUserByPasswordDto,
@@ -85,5 +85,10 @@ export class BasicAuthService implements IBasicAuth {
       user,
       tokens,
     };
+  }
+
+  async updateWallet(user: User, wallet: string) {
+    user.wallet = wallet;
+    return await this.userRepository.save(user);
   }
 }

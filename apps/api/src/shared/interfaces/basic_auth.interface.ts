@@ -12,4 +12,6 @@ export interface IBasicAuth {
   validateUser(
     input: ValidateUserByPasswordDto,
   ): Promise<{ user: User; tokens: TokensType }>;
+
+  updateWallet(user: User, wallet: string): Promise<User>;
 }

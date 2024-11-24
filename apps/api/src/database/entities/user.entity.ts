@@ -1,6 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-import { UserSocial } from '.';
 import { BaseTime } from './base/time.entity';
 
 @Entity()
@@ -20,6 +19,6 @@ export class User extends BaseTime {
   @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany(() => UserSocial, (social) => social.user)
-  socials: UserSocial[];
+  @Column({ length: 100, nullable: true })
+  wallet: string;
 }

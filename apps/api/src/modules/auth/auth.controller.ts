@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators/user.decorator';
 import {
@@ -16,6 +16,8 @@ import { CreateUserByPasswordDto } from './dto/user_basic.create';
 import { CreateUserBySocialDto } from './dto/user_social.create';
 import { AdminJwtRefreshTokenGuard } from './guards/admin_jwt_refresh_token.guard';
 import { UserJwtRefreshTokenGuard } from './guards/user_jwt_refresh_token.guard';
+import { UserJwtGuard } from './guards/user_jwt.guard';
+import { User } from 'src/database/entities';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -23,7 +25,7 @@ export class AuthController {
   constructor(
     private readonly authFactory: AuthFactory,
     private readonly authHelperService: AuthHelperService,
-  ) {}
+  ) { }
 
   /**
    * Admin Routes
@@ -53,17 +55,6 @@ export class AuthController {
     @GetUser() admin: JwtPayloadType,
   ): Promise<TokensType> {
     return await this.authHelperService.refreshTokenAsAdmin(admin);
-  }
-
-  /**
-   * User Routes
-   */
-  @Post('user/login-with-google')
-  async loginAsUserWithGoogle(@Body() dto: CreateUserBySocialDto) {
-    const authService = this.authFactory.getSocialAuthService(
-      SocialAuthEnum.GOOGLE,
-    );
-    return await authService.createUserSession(dto);
   }
 
   @Post('user/register-basic')
@@ -96,5 +87,16 @@ export class AuthController {
     @GetUser() user: JwtPayloadType,
   ): Promise<TokensType> {
     return await this.authHelperService.refreshTokenAsUser(user);
+  }
+
+  @ApiBearerAuth()
+  @Get('user/update-wallet')
+  @UseGuards(UserJwtGuard)
+  async updateWallet(
+    @GetUser("user") user: User,
+    @Query('wallet') wallet: string,
+  ): Promise<User> {
+    const authService = this.authFactory.getBasicAuthService(BasicAuthEnum.USER);
+    return await authService.updateWallet(user, wallet);
   }
 }
