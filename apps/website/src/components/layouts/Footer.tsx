@@ -1,7 +1,6 @@
 'use client';
 
 import { footerVariants } from '@/utils/motion';
-import styles from '@/utils/styles';
 import { motion } from 'framer-motion';
 export const socials = [
   {
@@ -27,10 +26,10 @@ const Footer = () => (
     variants={footerVariants}
     initial="hidden"
     whileInView="show"
-    className={`${styles.xPaddings} py-8 relative`}
+    className={`py-8 relative`}
   >
     <div className="footer-gradient" />
-    <div className={`${styles.innerWidth} mx-auto flex flex-col gap-8`}>
+    <div className={`container mx-auto flex flex-col gap-8`}>
       <div className="flex flex-col">
         <div className="mb-[50px] h-[2px] bg-white opacity-10" />
 
