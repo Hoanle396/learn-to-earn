@@ -1,9 +1,16 @@
-"use client"
+"use client";
 import { cn } from "@/libs/utils";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsChatDots } from "react-icons/bs";
-import { FaBookmark, FaShareAlt, FaStar, FaTrophy, FaUpload, FaUser } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaShareAlt,
+  FaStar,
+  FaTrophy,
+  FaUpload,
+  FaUser,
+} from "react-icons/fa";
 
 const LearningDetailPage = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -14,9 +21,11 @@ const LearningDetailPage = () => {
     instructor: {
       name: "Dr. Sarah Johnson",
       expertise: "Full Stack Development",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+      image:
+        "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
     },
-    overview: "Master modern web development with this comprehensive course covering React, Node.js, and more.",
+    overview:
+      "Master modern web development with this comprehensive course covering React, Node.js, and more.",
     syllabus: [
       { title: "Introduction to Web Development", duration: "2 hours" },
       { title: "Frontend Fundamentals", duration: "4 hours" },
@@ -24,14 +33,17 @@ const LearningDetailPage = () => {
     ],
     reviews: [
       { user: "John D.", rating: 5, comment: "Excellent course content!" },
-      { user: "Maria S.", rating: 4, comment: "Very informative and well-structured." },
-    ]
+      {
+        user: "Maria S.",
+        rating: 4,
+        comment: "Very informative and well-structured.",
+      },
+    ],
   };
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
-
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,7 +58,9 @@ const LearningDetailPage = () => {
         {/* Header Section */}
         <header className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">{dummyData.courseTitle}</h1>
+            <h1 className="text-3xl font-bold text-gray-800">
+              {dummyData.courseTitle}
+            </h1>
             <div className="flex items-center space-x-4">
               <button
                 className="p-2 rounded-full hover:bg-gray-200"
@@ -66,7 +80,10 @@ const LearningDetailPage = () => {
           </div>
           <div className="bg-gray-200 rounded-full h-4 mb-4">
             <div
-              className={cn("bg-blue-500 h-4 rounded-full transition-all duration-300", `w-[45%]`)}
+              className={cn(
+                "bg-blue-500 h-4 rounded-full transition-all duration-300",
+                `w-[45%]`,
+              )}
             />
           </div>
           <p className="text-sm text-gray-600">45% Complete</p>
@@ -78,16 +95,18 @@ const LearningDetailPage = () => {
           <nav className="lg:w-1/4">
             <div className="bg-white rounded-lg shadow-sm p-4">
               <ul className="space-y-2">
-                {["overview", "syllabus", "instructor", "reviews"].map((tab) => (
-                  <li key={tab}>
-                    <button
-                      className={`w-full text-left p-3 rounded-lg transition ${activeTab === tab ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
-                      onClick={() => handleTabChange(tab)}
-                    >
-                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                    </button>
-                  </li>
-                ))}
+                {["overview", "syllabus", "instructor", "reviews"].map(
+                  (tab) => (
+                    <li key={tab}>
+                      <button
+                        className={`w-full text-left p-3 rounded-lg transition ${activeTab === tab ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"}`}
+                        onClick={() => handleTabChange(tab)}
+                      >
+                        {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                      </button>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
 
@@ -130,10 +149,14 @@ const LearningDetailPage = () => {
 
                   {/* File Upload */}
                   <div className="mt-6">
-                    <h3 className="text-lg font-semibold mb-3">Assignment Upload</h3>
+                    <h3 className="text-lg font-semibold mb-3">
+                      Assignment Upload
+                    </h3>
                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                       <FaUpload className="mx-auto text-gray-400 text-3xl mb-2" />
-                      <p className="text-gray-600 mb-2">Drag and drop your files here or</p>
+                      <p className="text-gray-600 mb-2">
+                        Drag and drop your files here or
+                      </p>
                       <input
                         type="file"
                         className="hidden"
@@ -162,7 +185,9 @@ const LearningDetailPage = () => {
                       >
                         <div className="flex justify-between items-center">
                           <h3 className="font-semibold">{item.title}</h3>
-                          <span className="text-gray-600 text-sm">{item.duration}</span>
+                          <span className="text-gray-600 text-sm">
+                            {item.duration}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -172,7 +197,9 @@ const LearningDetailPage = () => {
 
               {activeTab === "instructor" && (
                 <div>
-                  <h2 className="text-2xl font-bold mb-4">Meet Your Instructor</h2>
+                  <h2 className="text-2xl font-bold mb-4">
+                    Meet Your Instructor
+                  </h2>
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 rounded-full relative">
                       <Image
@@ -183,8 +210,12 @@ const LearningDetailPage = () => {
                       />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold">{dummyData.instructor.name}</h3>
-                      <p className="text-gray-600">{dummyData.instructor.expertise}</p>
+                      <h3 className="text-xl font-semibold">
+                        {dummyData.instructor.name}
+                      </h3>
+                      <p className="text-gray-600">
+                        {dummyData.instructor.expertise}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -232,7 +263,9 @@ const LearningDetailPage = () => {
               </div>
               <div className="h-80 overflow-y-auto p-4">
                 {/* Chat messages would go here */}
-                <p className="text-gray-500 text-center">Start a conversation!</p>
+                <p className="text-gray-500 text-center">
+                  Start a conversation!
+                </p>
               </div>
             </div>
           )}

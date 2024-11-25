@@ -37,7 +37,7 @@ describe("SushiPaymentGateway", function () {
 
   it("Should prevent non-owners from setting the vault receipt", async function () {
     await expect(sushiPaymentGateway.connect(addr1).setVaultReceipt(addr1.address)).to.be.revertedWith(
-      "Ownable: caller is not the owner"
+      "Ownable: caller is not the owner",
     );
   });
 
@@ -59,13 +59,13 @@ describe("SushiPaymentGateway", function () {
   it("Should prevent non-owners from adding or updating tokens", async function () {
     const amount = ethers.parseEther("10.0");
     await expect(sushiPaymentGateway.connect(addr1).addTokenAddress(token.target, amount)).to.be.revertedWith(
-      "Ownable: caller is not the owner"
+      "Ownable: caller is not the owner",
     );
 
     await sushiPaymentGateway.addTokenAddress(token.target, amount);
     const newAmount = ethers.parseEther("15.0");
     await expect(
-      sushiPaymentGateway.connect(addr1).updateTokenPaymentAmount(token.target, newAmount)
+      sushiPaymentGateway.connect(addr1).updateTokenPaymentAmount(token.target, newAmount),
     ).to.be.revertedWith("Ownable: caller is not the owner");
   });
 
@@ -102,7 +102,9 @@ describe("SushiPaymentGateway", function () {
 
     // Attempt to pay with insufficient amount
     await expect(
-      sushiPaymentGateway.connect(addr1).pay(sushiPaymentGateway.NATIVE_TOKEN(), 0, { value: ethers.parseEther("0.5") })
+      sushiPaymentGateway
+        .connect(addr1)
+        .pay(sushiPaymentGateway.NATIVE_TOKEN(), 0, { value: ethers.parseEther("0.5") }),
     ).to.be.revertedWith("Incorrect native token amount sent");
   });
 
@@ -131,7 +133,7 @@ describe("SushiPaymentGateway", function () {
 
     // Try to send payment without approval
     await expect(sushiPaymentGateway.connect(addr1).pay(token.target, 0)).to.be.revertedWith(
-      "ERC20: insufficient allowance"
+      "ERC20: insufficient allowance",
     );
   });
 
@@ -140,7 +142,7 @@ describe("SushiPaymentGateway", function () {
 
     // Try to send payment with an unapproved token
     await expect(sushiPaymentGateway.connect(addr1).pay(token.target, 0)).to.be.revertedWith(
-      "This token is not accepted for payment"
+      "This token is not accepted for payment",
     );
   });
 });

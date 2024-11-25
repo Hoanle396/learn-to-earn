@@ -1,3 +1,3 @@
-export * from './wagmi';
+export * from "./wagmi";
 
-export * from './app'
+export * from "./app";

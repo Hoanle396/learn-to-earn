@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { textContainer, textVariant2 } from '@/utils/motion';
-import { motion } from 'framer-motion';
-import React from 'react';
+import { textContainer, textVariant2 } from "@/utils/motion";
+import { motion } from "framer-motion";
+import React from "react";
 
 interface TypingTextProps {
   title: React.ReactNode | string;
@@ -16,7 +16,7 @@ export const TypingText = ({ title, textStyles }: TypingTextProps) => (
   >
     {Array.from(title as string).map((letter, index) => (
       <motion.span variants={textVariant2} key={index}>
-        {letter === ' ' ? '\u00A0' : letter}
+        {letter === " " ? "\u00A0" : letter}
       </motion.span>
     ))}
   </motion.p>

@@ -39,7 +39,7 @@ describe("SushiBlobNft", function () {
     await sushiBlobNft.addNewBlob();
     await sushiBlobNft.addNewBlob();
     await expect(sushiBlobNft.adminMint(1000000, addr1.address, 1000001)).to.be.revertedWith(
-      "Can mint only one blob type"
+      "Can mint only one blob type",
     );
   });
 
@@ -65,10 +65,10 @@ describe("SushiBlobNft", function () {
   it("Should prevent non-owners from calling admin functions", async function () {
     await expect(sushiBlobNft.connect(addr1).addNewBlob()).to.be.revertedWith("Ownable: caller is not the owner");
     await expect(sushiBlobNft.connect(addr1).adminMint(1000000, addr1.address, 10)).to.be.revertedWith(
-      "Ownable: caller is not the owner"
+      "Ownable: caller is not the owner",
     );
     await expect(sushiBlobNft.connect(addr1).setUrl(1, "https://example.com/blob1")).to.be.revertedWith(
-      "Ownable: caller is not the owner"
+      "Ownable: caller is not the owner",
     );
   });
 });

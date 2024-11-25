@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#007bff',
-        secondary: '#f1c40f',
-        danger: '#e74c3c',
+        primary: "#007bff",
+        secondary: "#f1c40f",
+        danger: "#e74c3c",
         "dark-slate-blue": "#30338E",
         supernova: "#FFC700",
         "artyClick-deep-dky-blue": "#0C84FB",
@@ -45,12 +45,11 @@ const config: Config = {
         "2xl": "1536px",
       },
       fontFamily: {
-        sans: ['Inter', 'Arial', 'sans-serif'],
-        octosquare: ['octosquare', 'sans-serif']
+        sans: ["Inter", "Arial", "sans-serif"],
+        octosquare: ["octosquare", "sans-serif"],
       },
     },
   },
   plugins: [],
 };
 export default config;
-

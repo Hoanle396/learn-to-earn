@@ -1,36 +1,36 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 const faqs = [
   {
-    "header": "What is blockchain technology?",
-    "text": "Blockchain technology is a decentralized digital ledger that records transactions across many computers in a way that the registered transactions cannot be altered retroactively."
+    header: "What is blockchain technology?",
+    text: "Blockchain technology is a decentralized digital ledger that records transactions across many computers in a way that the registered transactions cannot be altered retroactively.",
   },
   {
-    "header": "How do I enroll in a blockchain course?",
-    "text": "To enroll in a blockchain course, visit our courses page, select the course you are interested in, and follow the enrollment instructions."
+    header: "How do I enroll in a blockchain course?",
+    text: "To enroll in a blockchain course, visit our courses page, select the course you are interested in, and follow the enrollment instructions.",
   },
   {
-    "header": "What are the prerequisites for learning blockchain?",
-    "text": "Basic understanding of computer science and programming is recommended. Some courses may have specific prerequisites, which will be listed in the course details."
+    header: "What are the prerequisites for learning blockchain?",
+    text: "Basic understanding of computer science and programming is recommended. Some courses may have specific prerequisites, which will be listed in the course details.",
   },
   {
-    "header": "Are the courses self-paced?",
-    "text": "Yes, most of our courses are self-paced, allowing you to learn at your own convenience. However, some courses may have scheduled live sessions."
+    header: "Are the courses self-paced?",
+    text: "Yes, most of our courses are self-paced, allowing you to learn at your own convenience. However, some courses may have scheduled live sessions.",
   },
   {
-    "header": "Do you provide certification upon course completion?",
-    "text": "Yes, we provide a certificate of completion for all our courses, which you can share with potential employers or on your professional profiles."
+    header: "Do you provide certification upon course completion?",
+    text: "Yes, we provide a certificate of completion for all our courses, which you can share with potential employers or on your professional profiles.",
   },
   {
-    "header": "What is the duration of the blockchain courses?",
-    "text": "The duration of our blockchain courses varies depending on the course. Typically, courses range from a few weeks to a few months."
+    header: "What is the duration of the blockchain courses?",
+    text: "The duration of our blockchain courses varies depending on the course. Typically, courses range from a few weeks to a few months.",
   },
   {
-    "header": "Can I access the course materials after completion?",
-    "text": "Yes, you will have lifetime access to the course materials even after you have completed the course."
-  }
-]
+    header: "Can I access the course materials after completion?",
+    text: "Yes, you will have lifetime access to the course materials even after you have completed the course.",
+  },
+];
 
 const FAQ = () => {
   return (
@@ -95,11 +95,10 @@ const FAQ = () => {
 
 export default FAQ;
 
-const FAQItem = ({ header, text }: { header: string, text: string }) => {
+const FAQItem = ({ header, text }: { header: string; text: string }) => {
   const [active, setActive] = useState(false);
 
   const handleToggle = () => {
-
     setActive(!active);
   };
   return (
@@ -110,8 +109,9 @@ const FAQItem = ({ header, text }: { header: string, text: string }) => {
       >
         <div className="mr-5 flex h-10 w-full max-w-[40px] items-center justify-center rounded-lg bg-primary/5 text-primary dark:bg-white/5">
           <svg
-            className={`fill-primary stroke-primary duration-200 ease-in-out ${active ? "rotate-180" : ""
-              }`}
+            className={`fill-primary stroke-primary duration-200 ease-in-out ${
+              active ? "rotate-180" : ""
+            }`}
             width="17"
             height="10"
             viewBox="0 0 17 10"
@@ -133,8 +133,9 @@ const FAQItem = ({ header, text }: { header: string, text: string }) => {
       </button>
 
       <div
-        className={`pl-[62px] duration-200 ease-in-out ${active ? "block" : "hidden"
-          }`}
+        className={`pl-[62px] duration-200 ease-in-out ${
+          active ? "block" : "hidden"
+        }`}
       >
         <p className="py-3 text-base leading-relaxed text-body-color dark:text-dark-6">
           {text}

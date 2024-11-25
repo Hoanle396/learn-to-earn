@@ -23,7 +23,7 @@ export class BasicAuthService implements IBasicAuth {
     private readonly authHelperService: AuthHelperService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async createUser(
     dto: CreateUserByPasswordDto,

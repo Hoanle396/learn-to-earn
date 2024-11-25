@@ -1,13 +1,13 @@
-import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from 'react';
+import type { ForwardRefExoticComponent, RefAttributes, SVGProps } from "react";
 
-import close from './svg/close.svg';
-import menu from './svg/menu.svg';
-import search from './svg/search.svg';
+import close from "./svg/close.svg";
+import menu from "./svg/menu.svg";
+import search from "./svg/search.svg";
 
 const IconList = {
   search,
   menu,
-  close
+  close,
 };
 
 type SVGAttributes = Partial<SVGProps<SVGSVGElement>>;

@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-import styles from '@/utils/styles';
-import { fadeIn } from '../utils/motion';
+import styles from "@/utils/styles";
+import { fadeIn } from "../utils/motion";
 
 interface ExploreCardProps {
   id: string;
@@ -14,11 +14,19 @@ interface ExploreCardProps {
   handleClick: (id: string) => void;
 }
 
-const ExploreCard = ({ id, imgUrl, title, index, active, handleClick }: ExploreCardProps) => (
+const ExploreCard = ({
+  id,
+  imgUrl,
+  title,
+  index,
+  active,
+  handleClick,
+}: ExploreCardProps) => (
   <motion.div
-    variants={fadeIn('right', 'spring', index * 0.5, 0.75)}
-    className={`relative ${active === id ? 'lg:flex-[3.5] flex-[10]' : 'lg:flex-[0.5] flex-[2]'
-      } flex items-center justify-center min-w-[170px] h-[700px] transition-[flex] duration-[0.7s] ease-out-flex cursor-pointer`}
+    variants={fadeIn("right", "spring", index * 0.5, 0.75)}
+    className={`relative ${
+      active === id ? "lg:flex-[3.5] flex-[10]" : "lg:flex-[0.5] flex-[2]"
+    } flex items-center justify-center min-w-[170px] h-[700px] transition-[flex] duration-[0.7s] ease-out-flex cursor-pointer`}
     onClick={() => handleClick(id)}
   >
     <img

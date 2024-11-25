@@ -1,12 +1,12 @@
-import Explore from './components/Explore';
-import FAQ from './components/FAQs';
-import Feedback from './components/Feedback';
-import GetStarted from './components/GetStarted';
-import Hero from './components/Hero';
-import Insights from './components/Insights';
-import OurService from './components/OurService';
-import WhatsNew from './components/WhatsNew';
-import World from './components/World';
+import Explore from "./components/Explore";
+import FAQ from "./components/FAQs";
+import Feedback from "./components/Feedback";
+import GetStarted from "./components/GetStarted";
+import Hero from "./components/Hero";
+import Insights from "./components/Insights";
+import OurService from "./components/OurService";
+import WhatsNew from "./components/WhatsNew";
+import World from "./components/World";
 
 const HomePage = () => {
   return (
@@ -30,7 +30,7 @@ const HomePage = () => {
       </div>
       <FAQ />
     </>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

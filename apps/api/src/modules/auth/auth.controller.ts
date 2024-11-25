@@ -25,7 +25,7 @@ export class AuthController {
   constructor(
     private readonly authFactory: AuthFactory,
     private readonly authHelperService: AuthHelperService,
-  ) { }
+  ) {}
 
   /**
    * Admin Routes
@@ -93,10 +93,12 @@ export class AuthController {
   @Get('user/update-wallet')
   @UseGuards(UserJwtGuard)
   async updateWallet(
-    @GetUser("user") user: User,
+    @GetUser('user') user: User,
     @Query('wallet') wallet: string,
   ): Promise<User> {
-    const authService = this.authFactory.getBasicAuthService(BasicAuthEnum.USER);
+    const authService = this.authFactory.getBasicAuthService(
+      BasicAuthEnum.USER,
+    );
     return await authService.updateWallet(user, wallet);
   }
 }

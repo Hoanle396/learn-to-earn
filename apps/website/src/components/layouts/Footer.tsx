@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { footerVariants } from '@/utils/motion';
-import { motion } from 'framer-motion';
+import { footerVariants } from "@/utils/motion";
+import { motion } from "framer-motion";
 export const socials = [
   {
-    name: 'twitter',
-    url: '/images/twitter.svg',
+    name: "twitter",
+    url: "/images/twitter.svg",
   },
   {
-    name: 'linkedin',
-    url: '/images/linkedin.svg',
+    name: "linkedin",
+    url: "/images/linkedin.svg",
   },
   {
-    name: 'instagram',
-    url: '/images/instagram.svg',
+    name: "instagram",
+    url: "/images/instagram.svg",
   },
   {
-    name: 'facebook',
-    url: '/images/facebook.svg',
+    name: "facebook",
+    url: "/images/facebook.svg",
   },
 ];
 
@@ -34,7 +34,7 @@ const Footer = () => (
         <div className="mb-[50px] h-[2px] bg-white opacity-10" />
 
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <img src="/logo_full.svg" alt="logo" className='w-36' />
+          <img src="/logo_full.svg" alt="logo" className="w-36" />
           <p className="font-normal text-[14px] opacity-50">
             Copyright © 2024 - 2025 Le Huu Hoan. All rights reserved.
           </p>

@@ -1,6 +1,5 @@
-"use client"
-import React, { useState } from 'react'
-
+"use client";
+import React, { useState } from "react";
 
 type Course = {
   id: number;
@@ -40,7 +39,8 @@ const mockCourses: Course[] = [
     description: "Master professional English communication",
     imageUrl: "https://via.placeholder.com/400",
     price: 49.99,
-  }, {
+  },
+  {
     id: 2,
     title: "Business English",
     level: "Advanced",
@@ -48,7 +48,8 @@ const mockCourses: Course[] = [
     description: "Master professional English communication",
     imageUrl: "https://via.placeholder.com/400",
     price: 49.99,
-  }, {
+  },
+  {
     id: 2,
     title: "Business English",
     level: "Advanced",
@@ -56,7 +57,8 @@ const mockCourses: Course[] = [
     description: "Master professional English communication",
     imageUrl: "https://via.placeholder.com/400",
     price: 49.99,
-  }, {
+  },
+  {
     id: 2,
     title: "Business English",
     level: "Advanced",
@@ -64,7 +66,8 @@ const mockCourses: Course[] = [
     description: "Master professional English communication",
     imageUrl: "https://via.placeholder.com/400",
     price: 49.99,
-  }, {
+  },
+  {
     id: 2,
     title: "Business English",
     level: "Advanced",
@@ -72,7 +75,8 @@ const mockCourses: Course[] = [
     description: "Master professional English communication",
     imageUrl: "https://via.placeholder.com/400",
     price: 49.99,
-  }, {
+  },
+  {
     id: 2,
     title: "Business English",
     level: "Advanced",
@@ -84,23 +88,28 @@ const mockCourses: Course[] = [
 ];
 
 const RankingPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const filteredCourses = mockCourses.filter(course => {
-    return course.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
+  const filteredCourses = mockCourses.filter((course) => {
+    return (
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) &&
       (selectedLevel ? course.level === selectedLevel : true) &&
-      (selectedCategory ? course.category === selectedCategory : true);
+      (selectedCategory ? course.category === selectedCategory : true)
+    );
   });
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 mt-12">
       <div className="mx-auto container">
-
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-primary mb-4">Prove Your Expertise, Earn Your Certification</h1>
-          <p className="text-xl text-gray-700">Get certified today and unlock new opportunities</p>
+          <h1 className="text-4xl font-bold text-primary mb-4">
+            Prove Your Expertise, Earn Your Certification
+          </h1>
+          <p className="text-xl text-gray-700">
+            Get certified today and unlock new opportunities
+          </p>
         </div>
         <div className="flex flex-wrap justify-end gap-4 mb-8">
           <input
@@ -136,9 +145,16 @@ const RankingPage = () => {
 
         {/* Course Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredCourses.map(course => (
-            <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <img src={course.imageUrl} alt={course.title} className="w-full h-48 object-cover" />
+          {filteredCourses.map((course) => (
+            <div
+              key={course.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+            >
+              <img
+                src={course.imageUrl}
+                alt={course.title}
+                className="w-full h-48 object-cover"
+              />
               <div className="p-4">
                 <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
                 <p className="text-gray-600 mb-4">{course.description}</p>
@@ -162,4 +178,4 @@ const RankingPage = () => {
   );
 };
 
-export default RankingPage
+export default RankingPage;
