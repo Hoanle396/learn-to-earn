@@ -37,7 +37,7 @@ const hoverEffect = {
 
 const OurService: React.FC = () => {
   return (
-    <motion.div className="service_container">
+    <motion.div className="container service_container">
       <div className="title_wrapper">
         <motion.p
           className="service_title"

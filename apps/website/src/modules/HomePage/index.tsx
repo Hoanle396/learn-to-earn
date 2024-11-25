@@ -1,4 +1,5 @@
 import Explore from './components/Explore';
+import FAQ from './components/FAQs';
 import Feedback from './components/Feedback';
 import GetStarted from './components/GetStarted';
 import Hero from './components/Hero';
@@ -27,6 +28,7 @@ const HomePage = () => {
         <div className="gradient-04 z-0" />
         <Feedback />
       </div>
+      <FAQ />
     </>
   )
 }

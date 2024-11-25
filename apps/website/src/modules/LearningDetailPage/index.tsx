@@ -3,11 +3,10 @@ import { cn } from "@/libs/utils";
 import Image from "next/image";
 import React, { useState } from "react";
 import { BsChatDots } from "react-icons/bs";
-import { FaBookmark, FaSearch, FaShareAlt, FaStar, FaTrophy, FaUpload, FaUser } from "react-icons/fa";
+import { FaBookmark, FaShareAlt, FaStar, FaTrophy, FaUpload, FaUser } from "react-icons/fa";
 
 const LearningDetailPage = () => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [searchQuery, setSearchQuery] = useState("");
   const [showChat, setShowChat] = useState(false);
 
   const dummyData = {
@@ -33,9 +32,6 @@ const LearningDetailPage = () => {
     setActiveTab(tab);
   };
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,7 +42,7 @@ const LearningDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto py-8 pt-20">
         {/* Header Section */}
         <header className="mb-8">
           <div className="flex items-center justify-between mb-6">
@@ -68,19 +64,6 @@ const LearningDetailPage = () => {
               </button>
             </div>
           </div>
-
-          {/* Search Bar */}
-          <div className="relative mb-6">
-            <input
-              type="text"
-              placeholder="Search within course..."
-              className="w-full p-3 pl-10 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchQuery}
-              onChange={handleSearch}
-            />
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          </div>
-
           <div className="bg-gray-200 rounded-full h-4 mb-4">
             <div
               className={cn("bg-blue-500 h-4 rounded-full transition-all duration-300", `w-[45%]`)}

@@ -55,16 +55,16 @@ const LearningPage = () => {
   );
 
   return (
-    <div className="bg-white">
+    <div className="bg-white container mx-auto">
       <div>
-        <div className="relative z-40 lg:hidden" role="dialog" aria-modal="true">
+        <div className="relative  z-[100]  lg:hidden" role="dialog" aria-modal="true">
 
           <div className="fixed inset-0 bg-black/25" aria-hidden="true"></div>
 
-          <div className="fixed inset-0 z-40 flex">
+          <div className="fixed inset-0 flex">
 
-            <div className="relative ml-auto flex size-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
-              <div className="flex items-center justify-between px-4">
+            <div className="relative px-4 ml-auto flex size-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+              <div className="flex items-center justify-between">
                 <h2 className="text-lg font-medium text-gray-900">Filters</h2>
                 <button type="button" className="-mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
                   <span className="sr-only">Close menu</span>
@@ -98,14 +98,6 @@ const LearningPage = () => {
                   <h3 className="-mx-2 -my-3 flow-root">
                     <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-0" aria-expanded="false">
                       <span className="font-medium text-gray-900">Color</span>
-                      <span className="ml-6 flex items-center">
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
                     </button>
                   </h3>
                   <div className="pt-6" id="filter-section-mobile-0">
@@ -119,7 +111,7 @@ const LearningPage = () => {
                         <label htmlFor="filter-mobile-color-1" className="ml-3 min-w-0 flex-1 text-gray-500">Beige</label>
                       </div>
                       <div className="flex items-center">
-                        <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                         <label htmlFor="filter-mobile-color-2" className="ml-3 min-w-0 flex-1 text-gray-500">Blue</label>
                       </div>
                       <div className="flex items-center">
@@ -139,19 +131,8 @@ const LearningPage = () => {
                 </div>
                 <div className="border-t border-gray-200 px-4 py-6">
                   <h3 className="-mx-2 -my-3 flow-root">
-
                     <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-1" aria-expanded="false">
                       <span className="font-medium text-gray-900">Category</span>
-                      <span className="ml-6 flex items-center">
-
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>
-
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
                     </button>
                   </h3>
 
@@ -166,7 +147,7 @@ const LearningPage = () => {
                         <label htmlFor="filter-mobile-category-1" className="ml-3 min-w-0 flex-1 text-gray-500">Sale</label>
                       </div>
                       <div className="flex items-center">
-                        <input id="filter-mobile-category-2" name="category[]" value="travel" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input id="filter-mobile-category-2" name="category[]" value="travel" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                         <label htmlFor="filter-mobile-category-2" className="ml-3 min-w-0 flex-1 text-gray-500">Travel</label>
                       </div>
                       <div className="flex items-center">
@@ -180,55 +161,12 @@ const LearningPage = () => {
                     </div>
                   </div>
                 </div>
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <h3 className="-mx-2 -my-3 flow-root">
-                    <button type="button" className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500" aria-controls="filter-section-mobile-2" aria-expanded="false">
-                      <span className="font-medium text-gray-900">Size</span>
-                      <span className="ml-6 flex items-center">/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </button>
-                  </h3>/
-                  <div className="pt-6" id="filter-section-mobile-2">
-                    <div className="space-y-6">
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-0" name="size[]" value="2l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-0" className="ml-3 min-w-0 flex-1 text-gray-500">2L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-1" name="size[]" value="6l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-1" className="ml-3 min-w-0 flex-1 text-gray-500">6L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-2" name="size[]" value="12l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-2" className="ml-3 min-w-0 flex-1 text-gray-500">12L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-3" name="size[]" value="18l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-3" className="ml-3 min-w-0 flex-1 text-gray-500">18L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-4" name="size[]" value="20l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-4" className="ml-3 min-w-0 flex-1 text-gray-500">20L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-mobile-size-5" name="size[]" value="40l" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-mobile-size-5" className="ml-3 min-w-0 flex-1 text-gray-500">40L</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <main className="mx-auto px-4 sm:px-6 lg:px-8">
+        <main className="mx-auto">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
@@ -289,14 +227,6 @@ const LearningPage = () => {
                   <h3 className="-my-3 flow-root">
                     <button type="button" className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
                       <span className="font-medium text-gray-900">Color</span>
-                      <span className="ml-6 flex items-center">
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
                     </button>
                   </h3>
                   <div className="pt-6" id="filter-section-0">
@@ -310,7 +240,7 @@ const LearningPage = () => {
                         <label htmlFor="filter-color-1" className="ml-3 text-sm text-gray-600">Beige</label>
                       </div>
                       <div className="flex items-center">
-                        <input id="filter-color-2" name="color[]" value="blue" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input id="filter-color-2" name="color[]" value="blue" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                         <label htmlFor="filter-color-2" className="ml-3 text-sm text-gray-600">Blue</label>
                       </div>
                       <div className="flex items-center">
@@ -329,19 +259,11 @@ const LearningPage = () => {
                   </div>
                 </div>
                 <div className="border-b border-gray-200 py-6">
-                  <h3 className="-my-3 flow-root">/
+                  <h3 className="-my-3 flow-root">
                     <button type="button" className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-1" aria-expanded="false">
                       <span className="font-medium text-gray-900">Category</span>
-                      <span className="ml-6 flex items-center">/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
                     </button>
-                  </h3>/
+                  </h3>
                   <div className="pt-6" id="filter-section-1">
                     <div className="space-y-4">
                       <div className="flex items-center">
@@ -353,7 +275,7 @@ const LearningPage = () => {
                         <label htmlFor="filter-category-1" className="ml-3 text-sm text-gray-600">Sale</label>
                       </div>
                       <div className="flex items-center">
-                        <input id="filter-category-2" name="category[]" value="travel" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input id="filter-category-2" name="category[]" value="travel" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                         <label htmlFor="filter-category-2" className="ml-3 text-sm text-gray-600">Travel</label>
                       </div>
                       <div className="flex items-center">
@@ -363,49 +285,6 @@ const LearningPage = () => {
                       <div className="flex items-center">
                         <input id="filter-category-4" name="category[]" value="accessories" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                         <label htmlFor="filter-category-4" className="ml-3 text-sm text-gray-600">Accessories</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="border-b border-gray-200 py-6">
-                  <h3 className="-my-3 flow-root">/
-                    <button type="button" className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-2" aria-expanded="false">
-                      <span className="font-medium text-gray-900">Size</span>
-                      <span className="ml-6 flex items-center">/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                        </svg>/
-                        <svg className="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path fill-rule="evenodd" d="M4 10a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H4.75A.75.75 0 0 1 4 10Z" clip-rule="evenodd" />
-                        </svg>
-                      </span>
-                    </button>
-                  </h3>/
-                  <div className="pt-6" id="filter-section-2">
-                    <div className="space-y-4">
-                      <div className="flex items-center">
-                        <input id="filter-size-0" name="size[]" value="2l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-0" className="ml-3 text-sm text-gray-600">2L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-size-1" name="size[]" value="6l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-1" className="ml-3 text-sm text-gray-600">6L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-size-2" name="size[]" value="12l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-2" className="ml-3 text-sm text-gray-600">12L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-size-3" name="size[]" value="18l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-3" className="ml-3 text-sm text-gray-600">18L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-size-4" name="size[]" value="20l" type="checkbox" className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-4" className="ml-3 text-sm text-gray-600">20L</label>
-                      </div>
-                      <div className="flex items-center">
-                        <input id="filter-size-5" name="size[]" value="40l" type="checkbox" checked className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                        <label htmlFor="filter-size-5" className="ml-3 text-sm text-gray-600">40L</label>
                       </div>
                     </div>
                   </div>

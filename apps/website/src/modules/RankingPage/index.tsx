@@ -95,8 +95,8 @@ const RankingPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 mt-12 px-12">
-      <div className="mx-auto">
+    <div className="min-h-screen bg-gray-50 p-8 mt-12">
+      <div className="mx-auto container">
 
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-primary mb-4">Prove Your Expertise, Earn Your Certification</h1>
@@ -135,7 +135,7 @@ const RankingPage = () => {
         </div>
 
         {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredCourses.map(course => (
             <div key={course.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
               <img src={course.imageUrl} alt={course.title} className="w-full h-48 object-cover" />

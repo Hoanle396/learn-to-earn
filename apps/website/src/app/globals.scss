@@ -122,7 +122,6 @@ body{
   background-color: $light_green;
   clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
   border-radius: 16px;
-  padding:3%;
   .left_content_wrapper{
     width:48%;
     h2{
@@ -210,7 +209,7 @@ body{
 //service_container
 .service_container{
   display:block;
-  width:80%;
+  width:100%;
   margin:80px auto 0 auto;
   .title_wrapper{
     overflow: hidden;
@@ -240,7 +239,7 @@ body{
 .service_card{
   display: flex;
   flex-wrap: wrap;
-  grid-gap:1vw;
+  grid-gap:.9vw;
   justify-content: flex-start;
   margin:60px 0;
   .card{
@@ -291,7 +290,7 @@ body{
     }
     h3{
       font-size:1.15vw;
-      font-weight: 600;
+      font-weight: 500;
       color:$black;
       text-transform: capitalize;
     }
