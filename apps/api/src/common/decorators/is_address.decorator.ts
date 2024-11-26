@@ -1,6 +1,5 @@
 import type { ValidationArguments, ValidationOptions } from 'class-validator';
 import { registerDecorator } from 'class-validator';
-import { isAddress } from 'web3-validator';
 
 export function IsAddress(validationOptions?: ValidationOptions) {
   return function (object: object, propertyName: string) {
@@ -11,7 +10,7 @@ export function IsAddress(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(value: any, args: ValidationArguments) {
-          return isAddress(value);
+          return true;
         },
         defaultMessage(args: ValidationArguments) {
           return `${args.property} must be a valid wallet address`;

@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import type { ScheduledTask } from 'node-cron';
 import cron from 'node-cron';
-import { NetworkToken } from 'src/database/entities';
-import { getFromCache } from 'src/utils/cache';
 import { getLogger } from 'src/utils/logger';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { TokenPriceService } from '../services/token_price.service';
-import { CrawlTokenService } from './crawl_token.service';
-import { CrawlTokenPriceService } from './crawl_token_price.service';
+import type { CrawlTokenService } from './crawl_token.service';
+import type { CrawlTokenPriceService } from './crawl_token_price.service';
 
 const logger = getLogger('ManagerService');
 
@@ -20,8 +17,6 @@ export class ManagerService {
   private cronJob: ScheduledTask;
 
   constructor(
-    @InjectRepository(NetworkToken)
-    private readonly networkTokenRepository: Repository<NetworkToken>,
     private readonly dataSource: DataSource,
     private readonly tokenPriceService: TokenPriceService,
   ) {
@@ -40,65 +35,7 @@ export class ManagerService {
     await this.initNetworkToken();
   }
 
-  private async initNetworkToken() {
-    const NetworkTokens = await this.networkTokenRepository.find({
-      relations: ['token', 'network'],
-    });
-
-    logger.info(
-      `Init Networks: ${NetworkTokens.map((n) => n.network.name).join(', ')}`,
-    );
-
-    for (const networkToken of NetworkTokens) {
-      logger.info(`Init Currency: ${networkToken.token.name}`);
-
-      const runCrawlTokenService = async () => {
-        if (networkToken.token.contractAddress) {
-          const oldNetworkToken = await getFromCache(
-            networkToken.token.contractAddress,
-            () => Promise.resolve(null),
-          );
-          if (oldNetworkToken !== networkToken.token.contractAddress) {
-            this.crawlTokenServices.forEach((service) => service.stop());
-            this.crawlTokenServices = [];
-            this.crawlTokenServices.push(
-              new CrawlTokenService(networkToken, this.dataSource),
-            );
-            logger.info(
-              `Starting CrawlTokenService for: ${networkToken.network.name}`,
-            );
-          }
-        }
-      };
-
-      const runCrawlTokenPriceService = async () => {
-        if (networkToken.token.contractAddress) {
-          const oldNetworkToken = await getFromCache(
-            networkToken.token.contractAddress,
-            () => Promise.resolve(null),
-          );
-          if (oldNetworkToken !== networkToken.token.contractAddress) {
-            this.crawlTokenPriceServices.forEach((service) => service.stop());
-            this.crawlTokenPriceServices = [];
-            this.crawlTokenPriceServices.push(
-              new CrawlTokenPriceService(
-                networkToken,
-                this.dataSource,
-                this.tokenPriceService,
-              ),
-            );
-            logger.info(
-              `Starting CrawlTokenPriceService for: ${networkToken.network.name}`,
-            );
-          }
-        }
-      };
-
-      // TODO: Run this
-      this.runWorker(runCrawlTokenService);
-      // this.runWorker(runCrawlTokenPriceService);
-    }
-  }
+  private async initNetworkToken() { }
 
   private runWorker(_callback: () => void): void {
     try {

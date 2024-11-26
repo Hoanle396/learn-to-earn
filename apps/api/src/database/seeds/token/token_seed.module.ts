@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NetworkToken, Token } from 'src/database/entities';
 
 import { TokenSeedService } from './token_seed.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Token, NetworkToken])],
+  imports: [TypeOrmModule.forFeature([])],
   providers: [TokenSeedService],
   exports: [TokenSeedService],
 })
-export class TokenSeedModule {}
+export class TokenSeedModule { }

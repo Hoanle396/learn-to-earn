@@ -1,13 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {
-  Admin,
-  AdminSession,
-  User,
-  UserSession,
-  UserSocial,
-} from 'src/database/entities';
+import { Admin, AdminSession, User, UserSession } from 'src/database/entities';
 
 import { ServicesModule } from '../services/services.module';
 import { SessionModule } from '../session/session.module';
@@ -26,13 +20,7 @@ import { UserJwtRefreshTokenStrategy } from './strategies/user_jwt_refresh_token
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      User,
-      Admin,
-      UserSocial,
-      UserSession,
-      AdminSession,
-    ]),
+    TypeOrmModule.forFeature([User, Admin, UserSession, AdminSession]),
     JwtModule.register({}),
     SessionModule,
     ServicesModule,
@@ -53,4 +41,4 @@ import { UserJwtRefreshTokenStrategy } from './strategies/user_jwt_refresh_token
   controllers: [AuthController],
   exports: [MyJwtService],
 })
-export class AuthModule {}
+export class AuthModule { }

@@ -4,8 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { OAuth2Client } from 'google-auth-library';
 import { CustomException } from 'src/common/exceptions/custom_exception';
 import type { StellaConfig } from 'src/configs';
-import { Admin, User, UserSocial } from 'src/database/entities';
-import { SocialAuthEnum } from 'src/shared/enums';
+import { Admin, User } from 'src/database/entities';
 import type { ISocial } from 'src/shared/interfaces/social.interface';
 import type { ISocialAuth } from 'src/shared/interfaces/social_auth.interface';
 import type { TokensType } from 'src/shared/types';
@@ -25,8 +24,6 @@ export class GoogleAuthService implements ISocialAuth {
     private readonly adminRepository: Repository<Admin>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(UserSocial)
-    private readonly userSocialRepository: Repository<UserSocial>,
   ) {
     this.google = new OAuth2Client(
       this.configService.get('social.googleClientId', { infer: true }),
@@ -94,48 +91,6 @@ export class GoogleAuthService implements ISocialAuth {
     }
 
     return admin;
-  }
-
-  private async validateSocialUser(socialData: ISocial): Promise<User> {
-    let user: User = null;
-    const { id, email, firstName, lastName } = socialData;
-
-    user = await this.userRepository.findOne({
-      where: {
-        email,
-      },
-    });
-
-    if (!user) {
-      const fullName = `${firstName} ${lastName}`;
-      const user = await this.userRepository.save({
-        email,
-        fullName,
-      });
-
-      await this.userSocialRepository.save({
-        email,
-        socialId: id,
-        fullName,
-        socialType: SocialAuthEnum.GOOGLE,
-        user,
-      });
-    }
-
-    return user;
-  }
-
-  async createUserSession(
-    input: CreateUserBySocialDto,
-  ): Promise<{ user: User; tokens: TokensType }> {
-    const socialData = await this.getProfileByToken(input.code);
-    const user = await this.validateSocialUser(socialData);
-    const tokens = await this.authHelperService.createTokensAsUser(user);
-
-    return {
-      user,
-      tokens,
-    };
   }
 
   async createAdminSession(

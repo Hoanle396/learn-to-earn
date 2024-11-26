@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TokenPrice } from 'src/database/entities';
 
 import { TokenPriceController } from './token_price.controller';
 import { TokenPriceService } from './token_price.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TokenPrice])],
+  imports: [TypeOrmModule.forFeature([])],
   providers: [TokenPriceService],
   controllers: [TokenPriceController],
   exports: [TokenPriceService],
 })
-export class TokenPriceModule {}
+export class TokenPriceModule { }

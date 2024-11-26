@@ -1,6 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-import { Token } from '.';
 import { BaseTime } from './base/time.entity';
 
 @Entity()
@@ -25,9 +24,4 @@ export class Transaction extends BaseTime {
 
   @Column({ length: 255, nullable: false })
   transactionHash: string;
-
-  @ManyToOne(() => Token, (token) => token.transactions, {
-    onDelete: 'CASCADE',
-  })
-  token: Token;
 }
