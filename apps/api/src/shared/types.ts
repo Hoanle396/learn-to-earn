@@ -9,3 +9,5 @@ export type JwtPayloadType = {
   iat: number;
   exp: number;
 };
+
+export type NetworkType = 'mainnet' | 'testnet';

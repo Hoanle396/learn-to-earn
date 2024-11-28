@@ -1,57 +1,45 @@
-import { HttpStatus, Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
-import compression from 'compression';
-import rateLimit from 'express-rate-limit';
+import { NestApplication, NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
-
 import { AppModule } from './app.module';
-import { setupSwagger } from './swagger';
-
-// Set the timezone to UTC
-process.env.TZ = 'Etc/Universal';
+import { BigIntInterceptor } from './common/interceptors/bigint.interceptor';
+import { compress } from './utils/compression';
+import { setupSwagger } from './utils/setup-swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
     bufferLogs: true,
   });
 
-  const logger = new Logger('Ruins');
-
+  const logger = new Logger(NestApplication.name);
   const configService = app.get(ConfigService);
 
+  app.set('trust proxy', true);
   app.setGlobalPrefix(configService.get('main.apiPrefix'));
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
-
-  app.use(helmet());
-  app.use(compression());
-  app.use(
-    rateLimit({
-      windowMs: 10 * 60 * 1000,
-      limit: 150,
-      standardHeaders: 'draft-7',
-      legacyHeaders: false,
-      message: {
-        meta: {
-          code: HttpStatus.TOO_MANY_REQUESTS,
-          message: 'Too many requests, please try again later.',
-        },
-        data: {},
-      },
-    }),
-  );
 
   setupSwagger(app);
 
-  await app.listen(configService.get('main.port') ?? 1410);
-  logger.log(
-    `App is running on ${configService.get('main.port') ?? 1410} port!`,
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    })
   );
+
+  app.use(helmet());
+  app.use(compress());
+
+  app.useGlobalInterceptors(new BigIntInterceptor());
+
+  const port = configService.get('main.port') ?? 3001;
+  await app.listen(port);
+  logger.log(`⚡Nest application is running on port ${port}!`);
 }
 bootstrap();

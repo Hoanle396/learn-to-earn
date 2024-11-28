@@ -1,69 +1,53 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OAuth2Client } from 'google-auth-library';
-import { CustomException } from 'src/common/exceptions/custom_exception';
-import type { StellaConfig } from 'src/configs';
-import { Admin, User } from 'src/database/entities';
-import type { ISocial } from 'src/shared/interfaces/social.interface';
-import type { ISocialAuth } from 'src/shared/interfaces/social_auth.interface';
-import type { TokensType } from 'src/shared/types';
+import { catchError, firstValueFrom } from 'rxjs';
 import { Repository } from 'typeorm';
+
+import { Causes } from '@/common/exceptions/causes';
+import { Admin } from '@/databases/entities';
+import type { TokensType } from '@/shared/types';
 
 import { AuthHelperService } from './auth_helper.service';
 import type { CreateUserBySocialDto } from './dto/user_social.create';
+import { DOPConfig } from '@/configs';
 
 @Injectable()
-export class GoogleAuthService implements ISocialAuth {
-  private google: OAuth2Client;
-
+export class GoogleAuthService {
   constructor(
-    private readonly configService: ConfigService<StellaConfig>,
+    private readonly configService: ConfigService<DOPConfig>,
     private readonly authHelperService: AuthHelperService,
+    private readonly httpService: HttpService,
     @InjectRepository(Admin)
-    private readonly adminRepository: Repository<Admin>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) {
-    this.google = new OAuth2Client(
-      this.configService.get('social.googleClientId', { infer: true }),
-      this.configService.get('social.googleClientSecret', { infer: true }),
-      'postmessage',
-    );
-  }
+    private readonly adminRepository: Repository<Admin>
+  ) {}
 
-  private async getProfileByToken(code: string): Promise<ISocial> {
+  private async getProfileByToken(accessToken: string) {
     try {
-      const ticket = await this.getGoogleLoginTicket(code);
-
-      const data = ticket.getPayload();
-
-      if (!data) {
-        throw new BadRequestException('Wrong token');
-      }
+      const googleApi = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
+      const { data } = await firstValueFrom(
+        this.httpService.get(googleApi).pipe(
+          catchError((error: any) => {
+            Logger.error(error.response.data.error.status);
+            throw error.response.data.error;
+          })
+        )
+      );
+      const { id, email, given_name: firstName, family_name: lastName } = data;
 
       return {
-        id: data.sub,
-        email: data.email,
-        firstName: data.given_name,
-        lastName: data.family_name,
+        id,
+        email,
+        firstName,
+        lastName,
       };
     } catch (error) {
       throw new BadRequestException(error);
     }
   }
 
-  private async getGoogleLoginTicket(code: string) {
-    const { tokens } = await this.google.getToken(code);
-    return await this.google.verifyIdToken({
-      idToken: tokens.id_token,
-      audience: [
-        this.configService.getOrThrow('social.googleClientId', { infer: true }),
-      ],
-    });
-  }
-
-  private async validateSocialAdmin(socialData: ISocial): Promise<Admin> {
+  private async validateSocialAdmin(socialData): Promise<Admin> {
     let admin: Admin = null;
     const { id, email } = socialData;
 
@@ -74,29 +58,18 @@ export class GoogleAuthService implements ISocialAuth {
     });
 
     if (!admin) {
-      throw new CustomException(
-        'Access Denied! Your email address is not authorized to access this site!',
-        HttpStatus.FORBIDDEN,
-      );
+      throw Causes.FORBIDDEN('Email', 'Access Denied! Your email address is not authorized to access this site!');
     } else {
       if (!admin.isActive) {
-        throw new CustomException('Admin is not active!', HttpStatus.FORBIDDEN);
-      }
-
-      if (!admin.socialId) {
-        await this.adminRepository.update(admin.id, {
-          socialId: id,
-        });
+        throw Causes.FORBIDDEN('Admin', 'Admin is not active!');
       }
     }
 
     return admin;
   }
 
-  async createAdminSession(
-    input: CreateUserBySocialDto,
-  ): Promise<{ admin: Admin; tokens: TokensType }> {
-    const socialData = await this.getProfileByToken(input.code);
+  async createAdminSession(input: CreateUserBySocialDto): Promise<{ admin: Admin; tokens: TokensType }> {
+    const socialData = await this.getProfileByToken(input.accessToken);
     const admin = await this.validateSocialAdmin(socialData);
     const tokens = await this.authHelperService.createTokensAsAdmin(admin);
 

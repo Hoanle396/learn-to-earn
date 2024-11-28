@@ -1,85 +1,47 @@
-# Description
+<p align="center">
+  <a href="http://var-meta.com/" target="blank"><img src="https://www.var-meta.com/images/logo_light.svg" width="200" alt="Var meta Logo" /></a>
+</p>
 
-## Ruins is a web3 application to track tracks and discover the most potential coins, funds, and pools in the solar system
+# DOP Marketplace API
 
-- [Nest](https://docs.nestjs.com) is a framework for building efficient, scalable Node.js server-side applications.
+## Description
 
-## Documentation of some libraries I used
+A API repository integrate by [NestJs](http://nestjs.com)
 
-- [TypeORM](https://typeorm.io/) is an ORM that can run in NodeJS, Browser, Cordova, PhoneGap, Ionic, React Native, NativeScript, Expo, and Electron platforms and can be used with TypeScript and JavaScript (ES2021).
-- [Web3.js](https://web3js.org/) is a TypeScript implementation of the Ethereum JSON RPC API and related tooling maintained by ChainSafe Systems.
-
-# Installation
+## Installation
 
 ```bash
-# install
-$ yarn
+# First, copy env file:
+$ cp env.example .env
 ```
 
-# Note before running the project
+```bash
+# Install dependencies 
+$ pnpm install
+```
 
-- Create '.env' file in the project's root folder. (For example: /root/.env).
-- Create a folder named 'logs' in the root folder of the project. In the 'logs' folder create a file named 'error.txt'. (For example: /root/logs/error.txt).
-
-# Watch mode
+## Running the app
 
 ```bash
+# development
+$ pnpm run start
+
 # watch mode
-$ yarn dev
+$ pnpm run dev
 
-# worker watch mode
-$ yarn dev:worker
-
-# run seed
-$ yarn seed
+# production mode
+$ pnpm run start:prod
 ```
 
-# Test
+## Support
 
-```bash
-# unit tests
-$ yarn test
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-# e2e tests
-$ yarn test:e2e
+## Stay in touch
 
-# test coverage
-$ yarn test:cov
-```
+- Powered by - [Var Meta](https://var-meta.com)
+- Website - [https://var-meta.com](https://var-meta.com/)
 
-# Build & Production mode
-
-```bash
-# build
-$ yarn build
-
-# start app
-$ yarn start:prod
-
-# start worker app
-$ yarn start:prod-worker
-
-# run seed if you want to seed some data
-$ yarn seed
-```
-
-# Using docker
-
-```bash
-# build
-$ docker-compose up -d
-
-# start
-$ docker-compose start
-
-# restart
-$ docker-compose restart
-```
-
-# Stay in touch
-
-- Author - [Nguyễn Như Khánh](https://www.facebook.com/nhukhanh.dev)
-
-# License
+## License
 
 Nest is [MIT licensed](LICENSE).

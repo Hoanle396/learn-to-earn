@@ -1,26 +1,24 @@
 import type { ExecutionContext } from '@nestjs/common';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from 'src/common/decorators/admin_roles.decorator';
-import { AdminSession } from 'src/database/entities';
-import type { RoleEnum } from 'src/shared/enums';
 import { DataSource } from 'typeorm';
 
+import { AdminSession } from '@/databases/entities';
+import type { RoleEnum } from '@/shared/enums';
+
 import { MyJwtService } from '../jwt.service';
+import { ROLES_KEY } from '@/common/decorators/roles.decorator';
 
 @Injectable()
 export class RoleGuard {
   constructor(
     private readonly reflector: Reflector,
     private readonly jwtService: MyJwtService,
-    private readonly dataSource: DataSource,
+    private readonly dataSource: DataSource
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const roles = this.reflector.getAllAndOverride<RoleEnum[]>(ROLES_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const roles = this.reflector.getAllAndOverride<RoleEnum[]>(ROLES_KEY, [context.getHandler(), context.getClass()]);
     if (!roles) {
       return true;
     }

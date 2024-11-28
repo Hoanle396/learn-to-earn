@@ -3,26 +3,22 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import type { StellaConfig } from 'src/configs';
-import type { AdminAuthConfig } from 'src/configs/admin_auth.config';
-import { AdminSession } from 'src/database/entities';
-import type { JwtPayloadType } from 'src/shared/types';
 import { Repository } from 'typeorm';
 
+import { AdminSession } from '@/databases/entities';
+import type { JwtPayloadType } from '@/shared/types';
+import { DOPConfig } from '@/configs';
+
 @Injectable()
-export class AdminJwtRefreshTokenStrategy extends PassportStrategy(
-  Strategy,
-  'admin-jwt-refresh-token',
-) {
+export class AdminJwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'admin-jwt-refresh-token') {
   constructor(
-    private readonly configService: ConfigService<StellaConfig>,
+    private readonly configService: ConfigService<DOPConfig>,
     @InjectRepository(AdminSession)
-    private readonly adminSessionRepository: Repository<AdminSession>,
+    private readonly adminSessionRepository: Repository<AdminSession>
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey:
-        configService.get<AdminAuthConfig>('adminAuth').refreshTokenSecret,
+      secretOrKey: configService.get('adminAuth.refreshTokenSecret', { infer: true }),
     });
   }
 

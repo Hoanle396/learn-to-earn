@@ -22,13 +22,8 @@ export class AdminAuthConfig {
     this.accessTokenSecret = process.env.ADMIN_ACCESS_TOKEN_SECRET;
     this.accessTokenLifetime = Number(process.env.ADMIN_ACCESS_TOKEN_LIFETIME);
     this.refreshTokenSecret = process.env.ADMIN_REFRESH_TOKEN_SECRET;
-    this.refreshTokenLifetime = Number(
-      process.env.ADMIN_REFRESH_TOKEN_LIFETIME,
-    );
+    this.refreshTokenLifetime = Number(process.env.ADMIN_REFRESH_TOKEN_LIFETIME);
   }
 }
 
-export default registerAs<AdminAuthConfig>(
-  'adminAuth',
-  () => new AdminAuthConfig(),
-);
+export default registerAs<AdminAuthConfig>('adminAuth', () => new AdminAuthConfig());

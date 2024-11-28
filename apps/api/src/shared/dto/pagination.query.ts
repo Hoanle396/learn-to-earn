@@ -11,7 +11,7 @@ export class QueryPaginationDto {
   @IsOptional()
   @IsNumber()
   @Transform(({ value }) => Number(value))
-  limit?: number;
+  limit?: number = 10;
 
   @ApiProperty({
     required: false,
@@ -21,5 +21,5 @@ export class QueryPaginationDto {
   @IsOptional()
   @IsNumber()
   @Transform(({ value }) => Number(value))
-  page?: number;
+  page?: number = 1;
 }

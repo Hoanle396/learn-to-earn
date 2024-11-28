@@ -1,14 +1,10 @@
 import { registerAs } from '@nestjs/config';
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class MainConfig {
   @IsNotEmpty()
   @IsNumber()
   port: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  workerPort: number;
 
   @IsNotEmpty()
   @IsBoolean()
@@ -19,10 +15,9 @@ export class MainConfig {
   apiPrefix: string;
 
   constructor() {
-    this.port = Number(process.env.PORT) || 3000;
-    this.workerPort = Number(process.env.WORKER_PORT) || 3001;
+    this.port = Number(process.env.PORT);
     this.isProduction = process.env.PRODUCTION === 'true';
-    this.apiPrefix = 'api';
+    this.apiPrefix = process.env.API_PREFIX || 'api';
   }
 }
 

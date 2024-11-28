@@ -8,37 +8,35 @@ export enum RoleEnum {
   ADMIN = 'admin',
 }
 
-export enum SocialAuthEnum {
-  GOOGLE = 'google',
-  FACEBOOK = 'facebook',
+export enum AdminStatusEnum {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }
 
-export enum BasicAuthEnum {
+export enum AuthEnum {
   ADMIN = 'admin',
   USER = 'user',
 }
 
-export enum SwaggerOperationEnum {
-  PUBLIC = 'Public',
-  SUPER_ADMIN = 'Router for super admin',
-  ADMIN = 'Router for admin',
-  USER = 'Router for user',
+export enum RarityEnum {
+  COMMON = 'Common',
+  RARE = 'Rare',
+  EPIC = 'Epic',
+  LEGENDARY = 'legendary',
 }
 
-export enum BinanceIntervalEnum {
-  ONE_MINUTE = '1m',
-  THREE_MINUTES = '3m',
-  FIVE_MINUTES = '5m',
-  FIFTY_MINUTES = '15m',
-  THIRTY_MINUTES = '30m',
-  ONE_HOUR = '1h',
-  TWO_HOURS = '2h',
-  FOUR_HOURS = '4h',
-  SIX_HOURS = '6h',
-  EIGHT_HOURS = '8h',
-  TWELVE_HOURS = '12h',
-  ONE_DAY = '1d',
-  THREE_DAYS = '3d',
-  ONE_WEEK = '1w',
-  ONE_MONTH = '1M',
+export enum TransactionActionType {
+  BUY = 'buy',
+  SELL = 'sell',
+  BID = 'bid',
+  LIST = 'list_nft',
+  CANCEL_LIST = 'cancel_list_nft',
+  CANCEL_BID = 'cancel_bid',
+  ACCEPT_BID = 'accept_bid',
+}
+
+export enum NftStatus {
+  FOR_SALE = 'FOR_SALE',
+  NOT_FOR_SALE = 'NOT_FOR_SALE',
+  FOR_AUCTION = 'FOR_AUCTION',
 }

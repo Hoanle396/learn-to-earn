@@ -1,24 +1,24 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import type { StellaConfig } from 'src/configs';
-import type { AdminAuthConfig } from 'src/configs/admin_auth.config';
-import { AdminSession } from 'src/database/entities';
 import { Repository } from 'typeorm';
+
+import { Causes } from '@/common/exceptions/causes';
+import type { DOPConfig } from '@/configs';
+import { AdminSession } from '@/databases/entities';
 
 @Injectable()
 export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
   constructor(
-    private readonly configService: ConfigService<StellaConfig>,
+    private readonly configService: ConfigService<DOPConfig>,
     @InjectRepository(AdminSession)
-    private readonly adminSessionRepository: Repository<AdminSession>,
+    private readonly adminSessionRepository: Repository<AdminSession>
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey:
-        configService.get<AdminAuthConfig>('adminAuth').accessTokenSecret,
+      secretOrKey: configService.get('adminAuth.accessTokenSecret', { infer: true }),
     });
   }
 
@@ -33,8 +33,6 @@ export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
         'admin.id',
         'admin.email',
         'admin.fullName',
-        'admin.socialId',
-        'admin.socialType',
         'admin.role',
         'admin.isActive',
         'admin.createdAt',
@@ -43,7 +41,7 @@ export class AdminJwtStrategy extends PassportStrategy(Strategy, 'admin-jwt') {
       ])
       .getOne();
 
-    if (!adminSession) throw new UnauthorizedException('Invalid access token');
+    if (!adminSession) throw Causes.UNAUTHORIZED('Access Token', 'Invalid access token');
 
     adminSession.expiresAt = undefined;
     adminSession.id = undefined;

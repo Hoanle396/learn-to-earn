@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminSession, UserSession } from 'src/database/entities';
+
+import { AdminSession, UserSession } from '@/databases/entities';
 
 import { SessionService } from './session.service';
 

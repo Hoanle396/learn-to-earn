@@ -1,24 +1,11 @@
-import type {
-  ArgumentsHost,
-  ExceptionFilter as ExceptionFilterBase,
-} from '@nestjs/common';
-import { Catch, HttpException, HttpStatus } from '@nestjs/common';
-import { writeFileSync } from 'fs';
-import * as path from 'path';
-import { getLogger } from 'src/utils/logger';
+import type { ArgumentsHost, ExceptionFilter as ExceptionFilterBase } from '@nestjs/common';
+import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
 
-const logger = getLogger('ExceptionFilter');
-
-class EmptyObject {
-  constructor() {}
-}
+const logger = new Logger('ExceptionFilter');
 
 function processMessage(exception: any): string {
-  let message: any =
-    exception instanceof HttpException
-      ? exception.getResponse()
-      : 'Internal server error';
-  if (typeof message == 'object') {
+  let message: any = exception instanceof HttpException ? exception.getResponse() : 'Internal server error';
+  if (typeof message === 'object') {
     message = message.message ? message.message : message.error || message;
   }
   return message;
@@ -26,42 +13,32 @@ function processMessage(exception: any): string {
 
 @Catch()
 export class ExceptionFilter<T> implements ExceptionFilterBase {
-  catch(exception: T, host: ArgumentsHost) {
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest();
     const response = ctx.getResponse();
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const body = `Body: ${JSON.stringify(request.body)}`;
     const query = `Query: ${JSON.stringify(request.query)}`;
     const params = `Params: ${JSON.stringify(request.params)}`;
+    const endpoint = `❌ Endpoint: ${request.method} ${request.url} 💔 ${status}`;
 
+    logger.error(endpoint);
     logger.error(body);
     logger.error(query);
     logger.error(params);
     logger.error(exception);
 
-    // If status is 500, write log to file
-    if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
-      const logFilePath = path.join(__dirname, '../../../../logs/error.txt');
-      const logMessage = `[❌] Error at ${new Date().toISOString()}:\n${
-        (exception as Error).stack
-      }\n${body}\n${query}\n${params}\n\n`;
-      writeFileSync(logFilePath, logMessage, { flag: 'a' }); // 'a' flag for appending
-    }
-
     const message = processMessage(exception);
 
-    response.status(status).json({
+    return response.status(status).json({
       meta: {
         code: status,
         message,
       },
-      data: new EmptyObject(),
+      data: null,
     });
   }
 }

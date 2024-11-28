@@ -24,14 +24,14 @@ export class FetchResult<T> {
 export async function paginateEntities<T>(
   queryBuilder: SelectQueryBuilder<T>,
   pagination: QueryPaginationDto,
-  fetchType: FetchType,
+  fetchType: FetchType = FetchType.MANAGED
 ): Promise<FetchResult<T>> {
   const { page, limit } = pagination;
 
-  const take = limit > 50 || !limit ? 50 : limit;
+  const take = limit > 100 || !limit ? 100 : limit;
   const skip = (page - 1) * take || 0;
 
-  const totalItems = await queryBuilder.getCount();
+  const totalItems = (await queryBuilder.clone().getRawMany())?.length;
   const items = await (fetchType === FetchType.RAW
     ? queryBuilder.clone().offset(skip).limit(take).getRawMany()
     : queryBuilder.clone().offset(skip).limit(take).getMany());
