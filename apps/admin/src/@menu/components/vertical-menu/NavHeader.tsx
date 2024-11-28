@@ -1,11 +1,11 @@
 // Third-party Imports
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
 // Type Imports
-import type { ChildrenType } from '../../types'
+import type { ChildrenType } from "../../types";
 
 // Util Imports
-import { verticalNavClasses } from '../../utils/menuClasses'
+import { verticalNavClasses } from "../../utils/menuClasses";
 
 const StyledNavHeader = styled.div`
   padding: 15px;
@@ -13,10 +13,14 @@ const StyledNavHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 const NavHeader = ({ children }: ChildrenType) => {
-  return <StyledNavHeader className={verticalNavClasses.header}>{children}</StyledNavHeader>
-}
+	return (
+		<StyledNavHeader className={verticalNavClasses.header}>
+			{children}
+		</StyledNavHeader>
+	);
+};
 
-export default NavHeader
+export default NavHeader;

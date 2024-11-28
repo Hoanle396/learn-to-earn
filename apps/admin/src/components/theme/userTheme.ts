@@ -8,7 +8,7 @@
  */
 
 // MUI Imports
-import type { Theme } from '@mui/material/styles'
+import type { Theme } from "@mui/material/styles";
 
 // Type Imports
 /* Enable following line and the `settings` parameter in the below `userTheme`
@@ -17,9 +17,9 @@ import type { Theme } from '@mui/material/styles'
 // import type { Settings } from '@core/contexts/settingsContext'
 
 const userTheme = (/* settings: Settings */): Theme => {
-  return {
-    // Write your custom theme object here.
-  } as Theme
-}
+	return {
+		// Write your custom theme object here.
+	} as Theme;
+};
 
-export default userTheme
+export default userTheme;

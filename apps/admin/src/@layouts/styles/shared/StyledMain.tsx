@@ -1,21 +1,21 @@
 // Third-party Imports
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
 // Config Imports
-import themeConfig from '@configs/themeConfig'
+import themeConfig from "@configs/themeConfig";
 
 type StyledMainProps = {
-  isContentCompact: boolean
-}
+	isContentCompact: boolean;
+};
 
 const StyledMain = styled.main<StyledMainProps>`
   padding: ${themeConfig.layoutPadding}px;
   ${({ isContentCompact }) =>
-    isContentCompact &&
-    `
+		isContentCompact &&
+		`
     margin-inline: auto;
     max-inline-size: ${themeConfig.compactContentWidth}px;
   `}
-`
+`;
 
-export default StyledMain
+export default StyledMain;

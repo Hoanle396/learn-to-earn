@@ -1,14 +1,14 @@
 // Component Imports
-import NotFound from '@views/NotFound'
+import NotFound from "@views/NotFound";
 
 // Server Action Imports
-import { getServerMode } from '@core/utils/serverHelpers'
+import { getServerMode } from "@core/utils/serverHelpers";
 
 const Error = () => {
-  // Vars
-  const mode = getServerMode()
+	// Vars
+	const mode = getServerMode();
 
-  return <NotFound mode={mode} />
-}
+	return <NotFound mode={mode} />;
+};
 
-export default Error
+export default Error;

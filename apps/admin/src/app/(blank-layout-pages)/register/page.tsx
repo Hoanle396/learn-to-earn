@@ -1,14 +1,14 @@
 // Component Imports
-import Register from '@views/Register'
+import Register from "@views/Register";
 
 // Server Action Imports
-import { getServerMode } from '@core/utils/serverHelpers'
+import { getServerMode } from "@core/utils/serverHelpers";
 
 const RegisterPage = () => {
-  // Vars
-  const mode = getServerMode()
+	// Vars
+	const mode = getServerMode();
 
-  return <Register mode={mode} />
-}
+	return <Register mode={mode} />;
+};
 
-export default RegisterPage
+export default RegisterPage;

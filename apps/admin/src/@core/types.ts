@@ -1,16 +1,22 @@
 // React Imports
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react";
 
-export type Skin = 'default' | 'bordered'
+export type Skin = "default" | "bordered";
 
-export type Mode = 'light' | 'dark'
+export type Mode = "light" | "dark";
 
-export type SystemMode = 'light' | 'dark'
+export type SystemMode = "light" | "dark";
 
-export type Direction = 'ltr' | 'rtl'
+export type Direction = "ltr" | "rtl";
 
 export type ChildrenType = {
-  children: ReactNode
-}
+	children: ReactNode;
+};
 
-export type ThemeColor = 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success'
+export type ThemeColor =
+	| "primary"
+	| "secondary"
+	| "error"
+	| "warning"
+	| "info"
+	| "success";

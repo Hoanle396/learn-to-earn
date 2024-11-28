@@ -1,14 +1,15 @@
 // Third-party Imports
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
 // Type Imports
-import type { VerticalNavState } from '../../contexts/verticalNavContext'
-import type { VerticalNavProps } from '../../components/vertical-menu/VerticalNav'
+import type { VerticalNavState } from "../../contexts/verticalNavContext";
+import type { VerticalNavProps } from "../../components/vertical-menu/VerticalNav";
 
 // Util Imports
-import { verticalNavClasses } from '../../utils/menuClasses'
+import { verticalNavClasses } from "../../utils/menuClasses";
 
-type StyledVerticalNavProps = VerticalNavProps & Pick<VerticalNavState, 'isBreakpointReached' | 'transitionDuration'>
+type StyledVerticalNavProps = VerticalNavProps &
+	Pick<VerticalNavState, "isBreakpointReached" | "transitionDuration">;
 
 const StyledVerticalNav = styled.aside<StyledVerticalNavProps>`
   position: sticky;
@@ -17,7 +18,8 @@ const StyledVerticalNav = styled.aside<StyledVerticalNavProps>`
   z-index: 9;
 
   /* Transition */
-  transition-property: inline-size, min-inline-size, margin-inline-start, inset-inline-start;
+  transition-property: inline-size, min-inline-size, margin-inline-start,
+    inset-inline-start;
   transition-duration: ${({ transitionDuration }) => `${transitionDuration}ms`};
   transition-timing-function: ease-in-out;
 
@@ -39,8 +41,8 @@ const StyledVerticalNav = styled.aside<StyledVerticalNavProps>`
   }
 
   ${({ width, isBreakpointReached }) =>
-    !isBreakpointReached &&
-    `
+		!isBreakpointReached &&
+		`
     &.${verticalNavClasses.toggled} {
       margin-inline-start: -${width}px;
     }
@@ -48,6 +50,6 @@ const StyledVerticalNav = styled.aside<StyledVerticalNavProps>`
 
   /* User Styles */
   ${({ customStyles }) => customStyles}
-`
+`;
 
-export default StyledVerticalNav
+export default StyledVerticalNav;

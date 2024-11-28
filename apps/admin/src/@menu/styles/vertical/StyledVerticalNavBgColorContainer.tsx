@@ -1,5 +1,5 @@
 // Third-party Imports
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
 const StyledVerticalNavBgColorContainer = styled.div`
   position: relative;
@@ -10,6 +10,6 @@ const StyledVerticalNavBgColorContainer = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   background-color: white;
-`
+`;
 
-export default StyledVerticalNavBgColorContainer
+export default StyledVerticalNavBgColorContainer;

@@ -1,19 +1,19 @@
 // Type Imports
-import type { ChildrenType } from '@core/types'
+import type { ChildrenType } from "@core/types";
 
 // Component Imports
-import Providers from '@components/Providers'
-import BlankLayout from '@layouts/BlankLayout'
+import Providers from "@components/Providers";
+import BlankLayout from "@layouts/BlankLayout";
 
 const Layout = ({ children }: ChildrenType) => {
-  // Vars
-  const direction = 'ltr'
+	// Vars
+	const direction = "ltr";
 
-  return (
-    <Providers direction={direction}>
-      <BlankLayout>{children}</BlankLayout>
-    </Providers>
-  )
-}
+	return (
+		<Providers direction={direction}>
+			<BlankLayout>{children}</BlankLayout>
+		</Providers>
+	);
+};
 
-export default Layout
+export default Layout;
