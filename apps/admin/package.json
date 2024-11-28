@@ -22,10 +22,12 @@
     "@mui/material-nextjs": "^5.15.11",
     "apexcharts": "^3.49.1",
     "classnames": "^2.5.1",
+    "gapi-script": "^1.2.0",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.3.1",
+    "react-google-login": "^5.2.2",
     "react-perfect-scrollbar": "^1.5.8",
     "react-use": "^17.5.0",
     "server-only": "^0.0.1"
@@ -38,14 +40,7 @@
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
     "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.3",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.1",
     "postcss": "^8.4.38",
     "postcss-styled-syntax": "^0.6.4",
     "prettier": "^3.3.2",
@@ -55,12 +50,5 @@
     "tailwindcss-logical": "^3.0.1",
     "tsx": "^4.15.2",
     "typescript": "^5.4.5"
-  },
-  "resolutions": {
-    "rimraf": "^5.0.7"
-  },
-  "overrides": {
-    "react": "^18.3.1",
-    "rimraf": "^5.0.7"
   }
 }
