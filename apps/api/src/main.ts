@@ -7,14 +7,15 @@ import { AppModule } from './app.module';
 import { BigIntInterceptor } from './common/interceptors/bigint.interceptor';
 import { compress } from './utils/compression';
 import { setupSwagger } from './utils/setup-swagger';
-
+console.log('start');
 async function bootstrap() {
+  const logger = new Logger(NestApplication.name);
+  logger.debug('Starting application...');
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: true,
     bufferLogs: true,
   });
 
-  const logger = new Logger(NestApplication.name);
   const configService = app.get(ConfigService);
 
   app.set('trust proxy', true);

@@ -21,6 +21,12 @@ export class Course extends BaseEntity {
   @Column({ length: 18, nullable: false })
   price: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
+  @Column({ type: 'text', array: true, default: [] })
+  tags: string[];
+
   @OneToMany(
     () => Lesson,
     (lesson) => lesson.course
