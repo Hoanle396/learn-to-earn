@@ -1,8 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 import { BaseEntity } from './base/base.entity';
-import { Lesson } from './lesson.entity';
-import { User } from './user.entity';
+import { Lesson, User } from '.';
 
 @Entity()
 export class LessonProcess extends BaseEntity {

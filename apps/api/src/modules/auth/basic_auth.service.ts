@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.create';
 import { AuthHelperService } from './auth_helper.service';
 import { HttpService } from '@nestjs/axios';
@@ -23,7 +23,7 @@ export class BasicAuthService {
     const { fullName, email, password } = dto;
     const exits = await this.userRepository.findOne({ where: { email } });
     if (exits) {
-      throw new Error('Email already exists');
+      throw new ConflictException('Email already exists');
     }
 
     const passwordHash = await this.hashService.hash(password);

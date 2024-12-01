@@ -1,5 +1,5 @@
 import { Category } from '@/databases/entities';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCategoryDto } from './dto/create.dto';
@@ -9,7 +9,7 @@ import { UpdateCategoryDto } from './dto/update.dto';
 
 @Injectable()
 export class CategoryService {
-  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) {}
+  constructor(@InjectRepository(Category) private readonly categoryRepository: Repository<Category>) { }
 
   async createCategory(dto: CreateCategoryDto): Promise<Category> {
     const { description, icon, name } = dto;
@@ -22,7 +22,11 @@ export class CategoryService {
   }
 
   async getCategory(id: number): Promise<Category> {
-    return await this.categoryRepository.findOne({ where: { id } });
+    const category = await this.categoryRepository.findOne({ where: { id } });
+    if (!category) {
+      throw new NotFoundException('Category not found');
+    }
+    return category;
   }
 
   async updateCategory(id: number, dto: UpdateCategoryDto): Promise<Category> {

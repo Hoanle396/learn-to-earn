@@ -12,7 +12,7 @@ export class CourseService {
   constructor(
     @InjectRepository(Course) private courseRepository: Repository<Course>,
     @InjectRepository(Category) private categoryRepository: Repository<Category>
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateCourseDto) {
     const category = await this.categoryRepository.findOne({
@@ -38,7 +38,11 @@ export class CourseService {
   }
 
   async findOne(id: number) {
-    return await this.courseRepository.findOne({ where: { id } });
+    const course = await this.courseRepository.findOne({ where: { id } });
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+    return course;
   }
 
   async update(id: number, updateCourseDto: UpdateCourseDto) {

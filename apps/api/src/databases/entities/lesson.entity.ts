@@ -1,7 +1,5 @@
 import { Column, Entity, ManyToOne, OneToMany, } from 'typeorm';
-
-import { Course } from './course.entity';
-import { LessonProcess } from './lesson-process.entity';
+import { Course, LessonProcess } from '.';
 import { BaseEntity } from './base/base.entity';
 
 @Entity()
