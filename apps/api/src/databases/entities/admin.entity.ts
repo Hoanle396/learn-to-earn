@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, } from 'typeorm';
 
 import { RoleEnum } from '@/shared/enums';
 import { BaseEntity } from './base/base.entity';

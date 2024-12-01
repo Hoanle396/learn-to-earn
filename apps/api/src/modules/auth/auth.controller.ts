@@ -1,22 +1,28 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { GetUser } from '@/common/decorators/user.decorator';
 
 import type { TokensType } from '@/shared/types';
-import { JwtPayloadType } from '@/shared/types';
-
-import { AuthFactory } from './auth.factory';
+import type { JwtPayloadType } from '@/shared/types';
 import { AuthHelperService } from './auth_helper.service';
-import { CreateUserBySocialDto } from './dto/user_social.create';
+import type { CreateUserBySocialDto } from './dto/user_social.create';
 import { AdminJwtRefreshTokenGuard } from './guards/admin_jwt_refresh_token.guard';
+import { GoogleAuthService } from './google_auth.service';
+import { BasicAuthService } from './basic_auth.service';
+import { CreateUserDto } from './dto/user.create';
+import { LoginDto } from './dto/login.dto';
+import { UserJwtRefreshTokenGuard } from './guards/user_jwt_refresh_token.guard';
+import { UserJwtGuard } from './guards/user_jwt.guard';
+import { User } from '@/databases/entities';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authFactory: AuthFactory,
-    private readonly authHelperService: AuthHelperService
+    private readonly googleAuthService: GoogleAuthService,
+    private readonly basicAuthService: BasicAuthService,
+    @Inject(AuthHelperService) private readonly authHelperService: AuthHelperService
   ) {}
 
   /**
@@ -24,8 +30,7 @@ export class AuthController {
    */
   @Post('admin/login-with-google')
   async loginAsAdminWithGoogle(@Body() dto: CreateUserBySocialDto) {
-    const authService = this.authFactory.getGoogleAuthService();
-    return await authService.createAdminSession(dto);
+    return await this.googleAuthService.createAdminSession(dto);
   }
 
   @ApiBearerAuth()
@@ -40,5 +45,36 @@ export class AuthController {
   @UseGuards(AdminJwtRefreshTokenGuard)
   async refreshTokenAsAdmin(@GetUser() admin: JwtPayloadType): Promise<TokensType> {
     return await this.authHelperService.refreshTokenAsAdmin(admin);
+  }
+
+  @Post('register')
+  async register(@Body() dto: CreateUserDto) {
+    return await this.basicAuthService.createUser(dto);
+  }
+
+  @Post('login')
+  async login(@Body() dto: LoginDto) {
+    return await this.basicAuthService.loginUser(dto);
+  }
+
+  @ApiBearerAuth()
+  @Post('logout')
+  @UseGuards(UserJwtRefreshTokenGuard)
+  async logoutAsUser(@GetUser('session') session: string): Promise<boolean> {
+    return await this.authHelperService.logoutAsUser(session);
+  }
+
+  @ApiBearerAuth()
+  @Post('refresh-token')
+  @UseGuards(UserJwtRefreshTokenGuard)
+  async refreshTokenAsUser(@GetUser() user: JwtPayloadType): Promise<TokensType> {
+    return await this.authHelperService.refreshTokenAsUser(user);
+  }
+
+  @ApiBearerAuth()
+  @Get('me')
+  @UseGuards(UserJwtGuard)
+  async getMe(@GetUser() user: User): Promise<User> {
+    return user;
   }
 }

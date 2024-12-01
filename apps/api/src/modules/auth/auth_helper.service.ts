@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import type { Admin } from '@/databases/entities';
+import type { Admin, User } from '@/databases/entities';
 import type { JwtPayloadType, TokensType } from '@/shared/types';
 
 import { SessionService } from '../session/session.service';
@@ -12,6 +12,17 @@ export class AuthHelperService {
     private readonly sessionService: SessionService,
     private readonly jwtService: MyJwtService
   ) {}
+  async createTokensAsUser(user: User): Promise<TokensType> {
+    const { id } = await this.sessionService.createUserSession({
+      user,
+    });
+
+    const tokens = await this.jwtService.signUserTokens({
+      session: id,
+    });
+
+    return tokens;
+  }
 
   async createTokensAsAdmin(admin: Admin): Promise<TokensType> {
     const { id } = await this.sessionService.createAdminSession({
@@ -38,8 +49,30 @@ export class AuthHelperService {
     return tokens;
   }
 
+  /**
+   * Refresh Token
+   */
+  async refreshTokenAsUser(payload: JwtPayloadType): Promise<TokensType> {
+    const { session } = payload;
+    const { id } = await this.sessionService.createUserSession({
+      id: session,
+    });
+
+    const tokens = await this.jwtService.signUserTokens({
+      session: id,
+    });
+
+    return tokens;
+  }
+
   async logoutAsAdmin(session: string): Promise<boolean> {
     return await this.sessionService.deleteAdminSession({
+      id: session,
+    });
+  }
+
+  async logoutAsUser(session: string): Promise<boolean> {
+    return await this.sessionService.deleteUserSession({
       id: session,
     });
   }

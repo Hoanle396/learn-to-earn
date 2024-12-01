@@ -1,16 +1,16 @@
 import { Body, Controller, Delete, Get, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
 import { RoleEnum } from '@/shared/enums';
 import type { FetchResult } from '@/utils/paginate';
 
+import { Roles } from '@/common/decorators/roles.decorator';
+import { GetUser } from '@/common/decorators/user.decorator';
+import { Admin } from '@/databases/entities';
+import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
 import { AdminService } from './admin.service';
 import { CreateAdminDto, QueryAdminDto, UpdateAdminDto } from './dto/admin.dto';
-import { Admin } from '@/databases/entities';
-import { GetUser } from '@/common/decorators/user.decorator';
-import { Roles } from '@/common/decorators/roles.decorator';
-import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
 
 @ApiTags('admin')
 @ApiBearerAuth()

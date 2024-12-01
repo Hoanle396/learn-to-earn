@@ -12,6 +12,10 @@ import { HttpModule } from '@nestjs/axios';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RoleGuard } from './modules/auth/guards/role.guard';
+import { CategoryModule } from './modules/category/category.module';
+import { CourseModule } from './modules/course/course.module';
+import { LessonModule } from './modules/lesson/lesson.module';
+import { RankingModule } from './modules/ranking/ranking.module';
 
 @Module({
   imports: [
@@ -25,6 +29,10 @@ import { RoleGuard } from './modules/auth/guards/role.guard';
     HttpModule,
     AdminModule,
     AuthModule,
+    CategoryModule,
+    CourseModule,
+    LessonModule,
+    RankingModule,
   ],
   controllers: [AppController],
   providers: [

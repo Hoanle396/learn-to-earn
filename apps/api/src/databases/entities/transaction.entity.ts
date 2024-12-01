@@ -1,7 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { BaseEntity } from './base/base.entity';
 import { TransactionActionType } from '@/shared/enums';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Token } from '.';
+import { BaseEntity } from './base/base.entity';
 
 @Entity()
 export class Transaction extends BaseEntity {

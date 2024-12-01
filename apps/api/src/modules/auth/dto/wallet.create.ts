@@ -3,12 +3,8 @@ import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 import { IsAddress } from '@/common/decorators/is_address.decorator';
 
-export class CreateWalletDto {
-  @ApiProperty({
-    minLength: 6,
-    required: true,
-    example: '0x62226C6d4B1a8347f42...',
-  })
+export class UpdateWalletDto {
+  @ApiProperty({ minLength: 6, required: true })
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
