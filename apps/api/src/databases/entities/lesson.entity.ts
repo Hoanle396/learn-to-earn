@@ -7,6 +7,9 @@ export class Lesson extends BaseEntity {
   @Column()
   title: number;
 
+  @Column({ default: 1 })
+  index: number;
+
   @Column({ nullable: true })
   description: string;
 

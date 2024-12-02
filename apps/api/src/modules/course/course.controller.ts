@@ -8,6 +8,7 @@ import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { UserJwtGuard } from '../auth/guards/user_jwt.guard';
 import { GetUser } from '@/common/decorators/user.decorator';
 import { User } from '@/databases/entities';
+import { LearnDto } from './dto/learn.dto';
 
 @Controller('course')
 export class CourseController {
@@ -23,9 +24,17 @@ export class CourseController {
   @ApiBearerAuth()
   @UseGuards(UserJwtGuard)
   @ApiOperation({ summary: 'Subscribe to a category' })
-  @Post(':id')
+  @Post('subscribe/:id')
   async subscribe(@GetUser() user: User, @Param('id') id: number) {
     return await this.courseService.userSubscribe(id, user);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(UserJwtGuard)
+  @ApiOperation({ summary: 'Learn to a category' })
+  @Post('learn/:id')
+  async learn(@GetUser() user: User, @Param('id') id: number, @Body() body: LearnDto) {
+    return await this.courseService.learn(id, user, body.percent);
   }
 
   @Get()
@@ -36,8 +45,8 @@ export class CourseController {
   @Get('my-course')
   @ApiBearerAuth()
   @UseGuards(UserJwtGuard)
-  async findMyCourse(@GetUser() user: User) {
-    return await this.courseService.findMyCourses(user);
+  async findMyCourse(@GetUser() user: User, @Query() query: QueryPaginationDto) {
+    return await this.courseService.findMyCourses(user, query);
   }
 
   @Get(':id')
