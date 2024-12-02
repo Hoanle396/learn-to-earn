@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create.dto';
-import { Category, Course } from '@/databases/entities';
+import { Category, Course, User, UserCourse } from '@/databases/entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
@@ -10,9 +10,12 @@ import { UpdateCourseDto } from './dto/update.dto';
 @Injectable()
 export class CourseService {
   constructor(
+    @InjectRepository(UserCourse)
+    private userCourseRepository: Repository<UserCourse>,
     @InjectRepository(Course) private courseRepository: Repository<Course>,
-    @InjectRepository(Category) private categoryRepository: Repository<Category>
-  ) { }
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>
+  ) {}
 
   async create(createCourseDto: CreateCourseDto) {
     const category = await this.categoryRepository.findOne({
@@ -62,5 +65,23 @@ export class CourseService {
 
   async remove(id: number) {
     return await this.courseRepository.softRemove({ id });
+  }
+
+  async userSubscribe(id: number, user: User) {
+    const course = await this.courseRepository.findOne({ where: { id } });
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+    const userCourse = new UserCourse();
+    userCourse.course = course;
+    userCourse.user = user;
+    return await this.userCourseRepository.save(userCourse);
+  }
+
+  async findMyCourses(user: User) {
+    return await this.userCourseRepository.find({
+      where: { user },
+      relations: ['course'],
+    });
   }
 }

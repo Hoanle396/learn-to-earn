@@ -22,7 +22,8 @@ export class AuthController {
   constructor(
     private readonly googleAuthService: GoogleAuthService,
     private readonly basicAuthService: BasicAuthService,
-    @Inject(AuthHelperService) private readonly authHelperService: AuthHelperService
+    @Inject(AuthHelperService)
+    private readonly authHelperService: AuthHelperService
   ) {}
 
   /**

@@ -18,7 +18,9 @@ export class AdminJwtRefreshTokenStrategy extends PassportStrategy(Strategy, 'ad
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: configService.get('adminAuth.refreshTokenSecret', { infer: true }),
+      secretOrKey: configService.get('adminAuth.refreshTokenSecret', {
+        infer: true,
+      }),
     });
   }
 

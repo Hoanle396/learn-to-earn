@@ -12,7 +12,7 @@ export class AdminSeedService {
   constructor(
     @InjectRepository(Admin)
     private readonly adminRepository: Repository<Admin>
-  ) { }
+  ) {}
 
   async bootstrap(): Promise<void> {
     await this.truncateTables();
@@ -33,7 +33,7 @@ export class AdminSeedService {
         fullName: 'Lê Hữu Hoàn',
         role: RoleEnum.SUPER_ADMIN,
         isActive: true,
-      }
+      },
     ];
 
     const values = admins

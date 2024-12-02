@@ -11,3 +11,5 @@ export * from './lesson.entity';
 export * from './lesson-process.entity';
 export * from './rate.entity';
 export * from './comment.entity';
+export * from './user_course.entity';
+export * from './network.entity';

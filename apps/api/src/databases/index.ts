@@ -12,6 +12,8 @@ import {
   Lesson,
   LessonProcess,
   Vote,
+  UserCourse,
+  Network,
 } from './entities';
 
 const entities = [
@@ -28,6 +30,8 @@ const entities = [
   Lesson,
   LessonProcess,
   Vote,
+  UserCourse,
+  Network,
 ];
 
 export default entities;
