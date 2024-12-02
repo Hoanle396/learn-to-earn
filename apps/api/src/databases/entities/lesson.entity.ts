@@ -4,16 +4,16 @@ import { BaseEntity } from './base/base.entity';
 
 @Entity()
 export class Lesson extends BaseEntity {
-  @Column()
-  title: number;
+  @Column({ type: 'text' })
+  title: string;
 
   @Column({ default: 1 })
   index: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   description: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, type: 'text' })
   lessonUrl: string;
 
   @ManyToOne(

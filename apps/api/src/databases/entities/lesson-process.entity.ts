@@ -11,7 +11,7 @@ export class LessonProcess extends BaseEntity {
   )
   lesson: Lesson;
 
-  @Column({ default: 0, type: 'number' })
+  @Column({ default: 0, type: 'int' })
   percent: number;
 
   @ManyToOne(() => User)
