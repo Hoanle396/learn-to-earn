@@ -15,6 +15,7 @@ import { LoginDto } from './dto/login.dto';
 import { UserJwtRefreshTokenGuard } from './guards/user_jwt_refresh_token.guard';
 import { UserJwtGuard } from './guards/user_jwt.guard';
 import { User } from '@/databases/entities';
+import { UpdateWalletDto } from './dto/update.wallet';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -77,5 +78,12 @@ export class AuthController {
   @UseGuards(UserJwtGuard)
   async getMe(@GetUser() user: User): Promise<User> {
     return user;
+  }
+
+  @ApiBearerAuth()
+  @Post('update-address')
+  @UseGuards(UserJwtGuard)
+  async updateAddress(@GetUser() user: User, @Body() dto: UpdateWalletDto): Promise<User> {
+    return await this.basicAuthService.updateWalletAddress(user, dto);
   }
 }

@@ -6,7 +6,7 @@ import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
 
 @ApiTags('Lesson')
-@Controller('lesson')
+@Controller('lessons')
 export class LessonController {
   constructor(private readonly lessonService: LessonService) {}
 

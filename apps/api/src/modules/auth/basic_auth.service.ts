@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { HashService } from './hash.service';
 import { LoginDto } from './dto/login.dto';
 import { TokensType } from '@/shared/types';
+import { UpdateWalletDto } from './dto/update.wallet';
 
 @Injectable()
 export class BasicAuthService {
@@ -70,5 +71,14 @@ export class BasicAuthService {
       user,
       tokens,
     };
+  }
+
+  async updateWalletAddress(user: User, dto: UpdateWalletDto) {
+    const { wallet } = dto;
+    if (user.wallet) {
+      throw new ConflictException('Wallet already exists');
+    }
+    user.wallet = wallet;
+    return await this.userRepository.save(user);
   }
 }

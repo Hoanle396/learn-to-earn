@@ -1,13 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { CategoryService } from './category.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { CreateCategoryDto } from './dto/create.dto';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
-import { UpdateCategoryDto } from './dto/update.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
+import { CategoryService } from './category.service';
+import { CreateCategoryDto } from './dto/create.dto';
+import { UpdateCategoryDto } from './dto/update.dto';
 
-@Controller('category')
-@ApiTags('category')
+@ApiTags('Category')
+@Controller('categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

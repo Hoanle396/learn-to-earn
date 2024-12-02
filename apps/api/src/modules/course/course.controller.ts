@@ -10,7 +10,7 @@ import { GetUser } from '@/common/decorators/user.decorator';
 import { User } from '@/databases/entities';
 import { LearnDto } from './dto/learn.dto';
 
-@Controller('course')
+@Controller('courses')
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
