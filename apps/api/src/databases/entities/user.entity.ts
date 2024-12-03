@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { BaseEntity } from './base/base.entity';
+import { UserQuiz } from '.';
 
 @Entity()
 export class User extends BaseEntity {
@@ -18,4 +19,10 @@ export class User extends BaseEntity {
 
   @Column({ length: 100, nullable: true })
   wallet: string;
+
+  @OneToMany(
+    () => UserQuiz,
+    (userQuiz) => userQuiz.user
+  )
+  userQuiz: UserQuiz[];
 }

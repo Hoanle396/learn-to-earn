@@ -40,3 +40,10 @@ export enum NftStatus {
   NOT_FOR_SALE = 'NOT_FOR_SALE',
   FOR_AUCTION = 'FOR_AUCTION',
 }
+
+export enum OptionQuiz {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+}

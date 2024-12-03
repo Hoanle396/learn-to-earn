@@ -13,3 +13,8 @@ export * from './rate.entity';
 export * from './comment.entity';
 export * from './user_course.entity';
 export * from './network.entity';
+export * from './quiz.entity';
+export * from './option.entity';
+export * from './user_quiz.entity';
+export * from './ranking-pool.entity';
+export * from './prizes.entity';

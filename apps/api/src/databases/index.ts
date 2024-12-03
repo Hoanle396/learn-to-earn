@@ -14,6 +14,11 @@ import {
   Vote,
   UserCourse,
   Network,
+  Quiz,
+  RankingPool,
+  Option,
+  Prize,
+  UserQuiz,
 } from './entities';
 
 const entities = [
@@ -32,6 +37,11 @@ const entities = [
   Vote,
   UserCourse,
   Network,
+  Quiz,
+  RankingPool,
+  Option,
+  Prize,
+  UserQuiz,
 ];
 
 export default entities;
