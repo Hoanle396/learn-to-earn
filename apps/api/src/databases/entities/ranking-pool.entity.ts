@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
+import { Quiz } from '.';
 
 @Entity()
 export class RankingPool extends BaseEntity {
@@ -32,4 +33,10 @@ export class RankingPool extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: false })
   endTime: Date;
+
+  @OneToMany(
+    () => Quiz,
+    (quiz) => quiz.rankingPool
+  )
+  quizzes: Quiz[];
 }

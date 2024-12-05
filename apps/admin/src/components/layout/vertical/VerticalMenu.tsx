@@ -55,13 +55,13 @@ const VerticalMenu = ({
     <ScrollWrapper
       {...(isBreakpointReached
         ? {
-          className: "bs-full overflow-y-auto overflow-x-hidden",
-          onScroll: (container) => scrollMenu(container, false),
-        }
+            className: "bs-full overflow-y-auto overflow-x-hidden",
+            onScroll: (container) => scrollMenu(container, false),
+          }
         : {
-          options: { wheelPropagation: false, suppressScrollX: true },
-          onScrollY: (container) => scrollMenu(container, true),
-        })}
+            options: { wheelPropagation: false, suppressScrollX: true },
+            onScrollY: (container) => scrollMenu(container, true),
+          })}
     >
       {/* Incase you also want to scroll NavHeader to scroll with Vertical Menu, remove NavHeader from above and paste it below this comment */}
       {/* Vertical Menu */}
@@ -76,13 +76,18 @@ const VerticalMenu = ({
         renderExpandedMenuItemIcon={{ icon: <i className="ri-circle-line" /> }}
         menuSectionStyles={menuSectionStyles(theme)}
       >
-        <MenuItem icon={<i className="ri-home-smile-line" />} href="/">Dashboards</MenuItem>
+        <MenuItem icon={<i className="ri-home-smile-line" />} href="/">
+          Dashboards
+        </MenuItem>
         <MenuSection label="Course management">
           <MenuItem
             href="/account-settings"
             icon={<i className="ri-book-shelf-line" />}
           >
             Categories
+          </MenuItem>
+          <MenuItem href="/ranking" icon={<i className="ri-sort-asc" />}>
+            Ranking
           </MenuItem>
           <SubMenu
             label="Auth Pages"

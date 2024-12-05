@@ -9,7 +9,7 @@ export class Option extends BaseEntity {
   answer: string;
 
   @Column({ type: 'enum', enum: OptionQuiz })
-  option: boolean;
+  option: OptionQuiz;
 
   @Column({ type: 'text', nullable: true })
   image: string;

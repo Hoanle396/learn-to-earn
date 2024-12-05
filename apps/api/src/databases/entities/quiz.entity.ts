@@ -1,6 +1,6 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
-import { Option } from '.';
+import { Option, RankingPool } from '.';
 
 @Entity()
 export class Quiz extends BaseEntity {
@@ -15,4 +15,10 @@ export class Quiz extends BaseEntity {
     (option) => option.quiz
   )
   options: Option[];
+
+  @ManyToOne(
+    () => RankingPool,
+    (rankingPool) => rankingPool.quizzes
+  )
+  rankingPool: RankingPool;
 }

@@ -1,23 +1,19 @@
 "use client";
+import type * as React from 'react';
+import { FormProvider, type UseFormReturn, type SubmitHandler, FieldValues } from 'react-hook-form';
 
-// React Imports
-import type { DetailedHTMLProps, FormHTMLAttributes } from "react";
+interface Props<TFormValue extends FieldValues> {
+  methods: UseFormReturn<TFormValue, unknown>;
+  onSubmit: SubmitHandler<TFormValue>;
+  children?: React.ReactNode;
+}
 
-type Props = DetailedHTMLProps<
-	FormHTMLAttributes<HTMLFormElement>,
-	HTMLFormElement
->;
-
-const FormComponent = (props: Props) => {
-	// Props
-	const { onSubmit, ...rest } = props;
-
-	return (
-		<form
-			{...rest}
-			onSubmit={onSubmit ? (e) => onSubmit(e) : (e) => e.preventDefault()}
-		/>
-	);
+const FormWrapper = <TFormValue extends FieldValues,>({ methods, onSubmit, children }: Props<TFormValue>) => {
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods?.handleSubmit ? methods.handleSubmit(onSubmit) : (e) => e.preventDefault()}>{children}</form>
+    </FormProvider>
+  );
 };
 
-export default FormComponent;
+export default FormWrapper;
