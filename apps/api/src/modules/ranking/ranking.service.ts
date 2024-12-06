@@ -23,7 +23,7 @@ export class RankingService {
     private readonly userQuizRepository: Repository<UserQuiz>
   ) {}
 
-  createPool(dto: PoolCreateDto) {
+  async createPool(dto: PoolCreateDto) {
     const newPool = new RankingPool();
     newPool.name = dto.name;
     newPool.description = dto.description;

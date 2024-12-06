@@ -14,7 +14,9 @@ export class RankingController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(AdminJwtGuard)
-  async createPool(@Body() dto: PoolCreateDto) {}
+  async createPool(@Body() dto: PoolCreateDto) {
+    return await this.rankingService.createPool(dto);
+  }
 
   @Post('question')
   @UseInterceptors(FileInterceptor('file'))
