@@ -50,4 +50,4 @@ import { RankingModule } from './modules/ranking/ranking.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }

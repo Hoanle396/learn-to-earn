@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome lint",
+    "format": "biome format",
+    "lint:fix": "biome lint --fix",
+    "format:fix": "biome format . --write"
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
@@ -27,6 +30,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

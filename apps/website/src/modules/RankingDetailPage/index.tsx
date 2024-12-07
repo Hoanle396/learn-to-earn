@@ -6,7 +6,7 @@ import Rating from "./components/Rating";
 import ReviewCourse from "./components/ReviewCourse";
 import Sidebar from "./components/Sidebar";
 
-const RankingDetailPage = ({}) => {
+const RankingDetailPage = () => {
   return (
     <div>
       {/* ============================ Page Title Start================================== */}

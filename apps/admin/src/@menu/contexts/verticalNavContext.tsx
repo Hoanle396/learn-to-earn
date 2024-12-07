@@ -39,7 +39,7 @@ export const VerticalNavProvider = ({ children }: ChildrenType) => {
 		setVerticalNavState((prevState) => ({
 			...prevState,
 			isToggled:
-				value !== undefined ? Boolean(value) : !Boolean(prevState?.isToggled),
+				value !== undefined ? Boolean(value) : !prevState?.isToggled,
 		}));
 	}, []);
 

@@ -54,7 +54,6 @@ const UserDropdown = () => {
     }
 
     if (
-      // biome-ignore lint/complexity/useOptionalChain: <explanation>
       anchorRef.current &&
       anchorRef.current.contains(event?.target as HTMLElement)
     ) {

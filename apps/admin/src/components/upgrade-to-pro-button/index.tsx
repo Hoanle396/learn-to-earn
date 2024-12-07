@@ -19,17 +19,6 @@ import styles from "./styles.module.css";
 const TooltipContent = () => {
 	return (
 		<Card>
-			<a
-				href="https://themeselection.com/item/materio-mui-nextjs-admin-template"
-				target="_blank"
-				className="flex"
-			>
-				<img
-					src="https://cdn.jsdelivr.net/gh/themeselection/ts-assets/materio/materio-mui-nextjs-admin-template/banner/banner.png"
-					alt="Upgrade to Pro"
-					className="w-full"
-				/>
-			</a>
 			<CardHeader
 				title={`${themeConfig.templateName} - MUI Next.js Admin Template`}
 			/>
@@ -65,29 +54,6 @@ const TooltipContent = () => {
 const UpgradeToProButton = () => {
 	return (
 		<div className={classnames(styles.wrapper, "mui-fixed")}>
-			<Tooltip
-				title={<TooltipContent />}
-				placement="top-end"
-				slotProps={{
-					tooltip: {
-						style: {
-							padding: 0,
-							backgroundColor: "transparent",
-							maxInlineSize: 400,
-						},
-					},
-				}}
-			>
-				<a
-					className={styles.button}
-					role="button"
-					href="https://themeselection.com/item/materio-mui-nextjs-admin-template"
-					target="_blank"
-				>
-					Upgrade to Pro
-					<span className={styles.buttonInner} />
-				</a>
-			</Tooltip>
 		</div>
 	);
 };
