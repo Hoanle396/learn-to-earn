@@ -1,9 +1,9 @@
-import { bscTestnet } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createConfig, http } from "wagmi";
 
 export const wagmiConfig = createConfig({
-  chains: [bscTestnet],
+  chains: [polygonAmoy],
   transports: {
-    [bscTestnet.id]: http(),
+    [polygonAmoy.id]: http(),
   },
 });

@@ -17,6 +17,7 @@ import {
 } from "react-query";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { WagmiContext } from "@/libs/Web3provider";
 
 const queryClientOption: QueryClientConfig = {
 	defaultOptions: {
@@ -31,9 +32,11 @@ const RootLayout = ({ children }: ChildrenType) => {
 	return (
 		<html id="__next" dir={direction} lang="en">
 			<QueryClientProvider client={queryClient}>
-				<body className="flex is-full min-bs-full flex-auto flex-col">
-					{children}
-				</body>
+				<WagmiContext>
+					<body className="flex is-full min-bs-full flex-auto flex-col">
+						{children}
+					</body>
+				</WagmiContext>
 				<Toaster />
 			</QueryClientProvider>
 		</html>

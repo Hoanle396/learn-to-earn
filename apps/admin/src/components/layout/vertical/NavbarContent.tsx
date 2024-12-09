@@ -8,6 +8,7 @@ import NavToggle from "./NavToggle";
 
 // Util Imports
 import { verticalLayoutClasses } from "@layouts/utils/layoutClasses";
+import ConnectWallet from "@/components/button/ConnectWallet";
 
 const NavbarContent = () => {
   return (
@@ -22,6 +23,7 @@ const NavbarContent = () => {
         <NavSearch />
       </div>
       <div className="flex items-center">
+        <ConnectWallet />
         <ModeDropdown />
         <UserDropdown />
       </div>

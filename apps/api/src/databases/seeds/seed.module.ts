@@ -5,6 +5,7 @@ import { OrmModule } from 'src/orm.module';
 
 import { TokenSeedModule } from './token/token_seed.module';
 import { AdminSeedModule } from './admin/admin_seed.module';
+import { CategorySeedModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AdminSeedModule } from './admin/admin_seed.module';
     OrmModule,
     TokenSeedModule,
     AdminSeedModule,
+    CategorySeedModule
   ],
 })
-export class SeedModule {}
+export class SeedModule { }
