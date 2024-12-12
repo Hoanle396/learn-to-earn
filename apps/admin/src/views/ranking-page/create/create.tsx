@@ -8,26 +8,51 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import * as yup from "yup";
+import { useTemplate } from "@/@core/apis/ranking";
 
 const languageData = ["English", "Arabic", "French", "German", "Portuguese"];
 
 const CreatePool = () => {
+
+  const [file, setFile] = useState<File | null>(null);
+
   const [fileInput, setFileInput] = useState<string>("");
-  const [imgSrc, setImgSrc] = useState<string>("/images/avatars/1.png");
+  const [tags, setTags] = useState<string[]>([])
+  const [imgSrc, setImgSrc] = useState<string>("/images/logo_full.svg");
+  const { mutateAsync: download } = useTemplate()
 
   const schema = yup.object().shape({
-    bid: yup.number().label("bid").typeError("Bid must a number").required(),
+    name: yup.string().required(),
+    description: yup.string().required(),
+    startDate: yup.date().min(new Date()).required(),
+    endDate: yup.date().min(yup.ref("startDate")).required(),
+    questionPerPool: yup.number().required()
+
   });
   const methods = useForm({
-    defaultValues: {
-      bid: 0,
-    },
     resolver: yupResolver(schema),
   });
   const formSubmitHandler = async (formData: any) => {
     console.log(formData);
   };
 
+  const handleDownload = async () => {
+    try {
+      const data = await download()
+      console.log(data);
+      const url = window.URL.createObjectURL(
+        new Blob([data as unknown as BlobPart]),
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `template.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleFileInputChange = (file: ChangeEvent) => {
     const reader = new FileReader();
     const { files } = file.target as HTMLInputElement;
@@ -44,7 +69,7 @@ const CreatePool = () => {
 
   const handleFileInputReset = () => {
     setFileInput("");
-    setImgSrc("/images/avatars/1.png");
+    setImgSrc("/images/logo_full.svg");
   };
 
   return (
@@ -66,7 +91,7 @@ const CreatePool = () => {
         <Divider />
       </Grid>
       <Grid item xs={12}>
-        <CardContent className="mbe-5">
+        <CardContent className="mbe-5 flex justify-between">
           <div className="flex max-sm:flex-col items-center gap-6">
             <img
               height={200}
@@ -105,6 +130,9 @@ const CreatePool = () => {
               <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
             </div>
           </div>
+          <div className="">
+            <Button size="small" variant="contained" className="h-26" onClick={handleDownload}>download template</Button>
+          </div>
         </CardContent>
       </Grid>
       <Grid item xs={12}>
@@ -114,93 +142,60 @@ const CreatePool = () => {
               <TextField
                 fullWidth
                 name="name"
-                label="First Name"
-                placeholder="John"
+                label="Pool Name"
+                placeholder="Pool Name"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                name="question"
-                label="Last Name"
-                placeholder="Doe"
+                name="questionPerPool"
+                label="Question per pool"
+                placeholder="Num of question pass pool"
+              />
+            </Grid>
+            <Grid item xs={12} >
+              <TextField
+                multiline
+                rows={4}
+                fullWidth
+                name="description"
+                label="Description"
+                placeholder="Description"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                name="bid"
-                label="Email"
-                placeholder="john.doe@gmail.com"
+                name="startDate"
+                label="Start Date"
+                type="datetime-local"
+                placeholder="Start Date"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
-                name="bid"
-                label="Organization"
-                placeholder="ThemeSelection"
+                name="endDate"
+                label="End Date"
+                type="datetime-local"
+                placeholder="end Date"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                name="bid"
-                label="Phone Number"
-                placeholder="+1 (234) 567-8901"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                name="bid"
-                label="Address"
-                placeholder="Address"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                label="State"
-                name="state"
-                placeholder="New York"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                type="number"
-                name="zipCode"
-                label="Zip Code"
-                placeholder="123456"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <FormControl fullWidth>
-                <InputLabel>Country</InputLabel>
-                <Select
-                  label="Country"
-                >
-                  <MenuItem value="usa">USA</MenuItem>
-                  <MenuItem value="uk">UK</MenuItem>
-                  <MenuItem value="australia">Australia</MenuItem>
-                  <MenuItem value="germany">Germany</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Language</InputLabel>
+                <InputLabel>tags</InputLabel>
                 <Select
                   multiple
-                  value={[]}
-                  label="Language"
+                  value={tags}
+                  label="tags"
                   renderValue={(selected) => (
                     <div className="flex flex-wrap gap-2">
                       {(selected as string[]).map((value) => (
                         <Chip
                           key={value}
                           clickable
+                          onDelete={() => { setTags(prev => ([...prev.filter(item => item != value)])) }}
                           deleteIcon={
                             <i
                               className="ri-close-circle-fill"
@@ -215,7 +210,7 @@ const CreatePool = () => {
                   )}
                 >
                   {languageData.map((name) => (
-                    <MenuItem key={name} value={name}>
+                    <MenuItem key={name} value={name} onClick={() => setTags((prev) => ([...prev, name]))}>
                       {name}
                     </MenuItem>
                   ))}
@@ -223,7 +218,7 @@ const CreatePool = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} className="flex gap-4 flex-wrap">
+            <Grid item xs={12} className="flex gap-4 flex-wrap justify-start flex-row-reverse">
               <Button variant="contained" type="submit">
                 Save Changes
               </Button>
@@ -231,7 +226,10 @@ const CreatePool = () => {
                 variant="outlined"
                 type="reset"
                 color="secondary"
-                onClick={() => methods.reset()}
+                onClick={() => {
+                  methods.reset();
+                  setTags([]);
+                }}
               >
                 Reset
               </Button>

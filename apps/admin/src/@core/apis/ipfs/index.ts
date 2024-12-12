@@ -1,12 +1,12 @@
-import { useMutation, UseMutationOptions } from "react-query";
+import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import request from "./axios";
 
 export const useMutationPinFileToIPFS = (options?: Omit<UseMutationOptions<any>, "mutationFn"> | undefined) => {
-  return useMutation(pinFileToIPFS, { ...options })
+  return useMutation({ mutationFn: pinFileToIPFS, ...options })
 }
 
 export const useMutationPinJsonToIPFS = (options?: Omit<UseMutationOptions<any>, "mutationFn"> | undefined) => {
-  return useMutation(pinJsonToIPFS, { ...options })
+  return useMutation({ mutationFn: pinJsonToIPFS, ...options })
 }
 
 export const pinJsonToIPFS = async (data: any) => {

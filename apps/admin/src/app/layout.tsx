@@ -14,7 +14,7 @@ import {
 	QueryClient,
 	type QueryClientConfig,
 	QueryClientProvider,
-} from "react-query";
+} from "@tanstack/react-query";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { WagmiContext } from "@/libs/Web3provider";

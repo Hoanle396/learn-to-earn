@@ -34,7 +34,7 @@ import useAuthStore from "@/stores/auth";
 // Hook Imports
 import { useImageVariant } from "@core/hooks/useImageVariant";
 import toast from "react-hot-toast";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import {
 	GoogleLogin,
 	type GoogleLoginResponse,
