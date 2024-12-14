@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateQuestionDto, PoolCreateDto } from './dto/pool.create';
 import { parseStream } from 'fast-csv';
 import { Readable } from 'stream';
@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Option, Quiz, RankingPool, UserQuiz } from '@/databases/entities';
 import { OptionQuiz } from '@/shared/enums';
+import { QueryPaginationDto } from '@/shared/dto/pagination.query';
+import { paginateEntities } from '@/utils/paginate';
 
 @Injectable()
 export class RankingService {
@@ -21,7 +23,7 @@ export class RankingService {
 
     @InjectRepository(UserQuiz)
     private readonly userQuizRepository: Repository<UserQuiz>
-  ) {}
+  ) { }
 
   async createPool(dto: PoolCreateDto) {
     const newPool = new RankingPool();
@@ -85,5 +87,22 @@ export class RankingService {
   }
   catch(error) {
     throw error;
+  }
+
+  async findAll(query: QueryPaginationDto) {
+    const builder = this.rankingPoolRepository.createQueryBuilder('ranking');
+    return await paginateEntities(builder, query);
+  }
+
+  async findOne(id: number) {
+    const pool = await this.rankingPoolRepository.findOne({
+      where: { id }, relations: {
+        quizzes: true,
+      }
+    });
+    if (!pool) {
+      throw new NotFoundException('pool not found');
+    }
+    return pool;
   }
 }
