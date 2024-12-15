@@ -64,3 +64,5 @@ const client: AxiosInstance = axios.create(axiosRequestConfig);
 
 client.interceptors.request.use(requestInterceptor);
 client.interceptors.response.use(successInterceptor, errorInterceptor);
+
+export default client;
