@@ -1,10 +1,10 @@
 import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query"
-import { course, courses, learn, subscribe } from "./request"
+import { course, courses, learn, myCourses, subscribe } from "./request"
 
-export const useCourses = (options?: Partial<UseQueryOptions<any, any>>) => {
+export const useCourses = (params: any, options?: Partial<UseQueryOptions<any, any>>) => {
   return useQuery<any, any>({
     queryKey: ["courses"],
-    queryFn: courses,
+    queryFn: () => courses(params),
     ...options
   })
 }
@@ -13,6 +13,14 @@ export const useCourseById = (id: string, options?: Partial<UseQueryOptions<any,
   return useQuery<any, any>({
     queryKey: ["course", id],
     queryFn: () => course(id),
+    ...options
+  })
+}
+
+export const useMyCourses = (params: any, options?: Partial<UseQueryOptions<any, any>>) => {
+  return useQuery<any, any>({
+    queryKey: ["my-courses"],
+    queryFn: () => myCourses(params),
     ...options
   })
 }

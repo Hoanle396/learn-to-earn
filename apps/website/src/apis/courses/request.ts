@@ -1,10 +1,11 @@
 import client from "../client"
 import { Course } from "./type"
 
-export const courses = async (): Promise<Course[]> => {
+export const courses = async (params: any): Promise<Course[]> => {
   return client({
     url: "/courses",
-    method: "GET"
+    method: "GET",
+    params
   })
 }
 
@@ -28,5 +29,12 @@ export const learn = async ({ id, percent }: { id: string, percent: number }): P
     url: `/courses/learn/${id}`,
     method: "POST",
     data: { percent }
+  })
+}
+export const myCourses = async (params: any): Promise<Course[]> => {
+  return client({
+    url: "/courses/my-course",
+    method: "GET",
+    params
   })
 }
