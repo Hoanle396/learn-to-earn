@@ -1,9 +1,15 @@
+"use client"
 import { Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import CardUser from "../card-basic/CardUser";
 import Link from "@/components/Link";
+import { useRankingList } from "@/@core/apis/ranking";
 
 const List = () => {
+  const { data } = useRankingList({
+    limit: 12,
+    page: 1
+  })
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
@@ -21,14 +27,12 @@ const List = () => {
         </Stack>
         <Divider />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <CardUser />
-      </Grid>
-
-      <Grid item xs={12}>
-        <Typography variant="h3">Solid Cards</Typography>
-        <Divider />
-      </Grid>
+      {data?.data.items.map((item: any) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+          <CardUser {...item} />
+        </Grid>
+      ))
+      }
     </Grid>
   );
 };

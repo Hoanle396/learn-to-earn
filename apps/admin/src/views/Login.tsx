@@ -43,7 +43,8 @@ import {
 
 const Login = ({ mode }: { mode: Mode }) => {
 	const { updateFullName, updateIsLogin } = useAuthStore((state) => state);
-	const { mutate } = useMutation(login, {
+	const { mutate } = useMutation({
+		mutationFn: login,
 		onSuccess: ({ data }) => {
 			console.log(data);
 			updateFullName(data?.admin.fullName ?? "");

@@ -33,7 +33,7 @@ export class RankingService {
     newPool.endTime = dto.endDate;
     newPool.tags = dto.tags;
     newPool.logo = dto.logo;
-    newPool.price = dto.price;
+    newPool.price = "0";
     newPool.questionPerPool = dto.questionPerPool;
 
     return this.rankingPoolRepository.save(newPool);

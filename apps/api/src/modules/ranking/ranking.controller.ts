@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, Post, Query, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Header, Param, Post, Query, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { RankingService } from './ranking.service';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
@@ -56,7 +56,7 @@ export class RankingController {
     return await this.rankingService.findAll(query);
   }
   @Get(':id')
-  async findOne(@Query('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return await this.rankingService.findOne(id);
   }
 

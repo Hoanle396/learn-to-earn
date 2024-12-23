@@ -16,7 +16,7 @@ export class RankingPool extends BaseEntity {
   @Column({ length: 255 })
   logo: string;
 
-  @Column()
+  @Column({ default: false })
   isVerified: boolean;
 
   @Column({ length: 18, nullable: false })

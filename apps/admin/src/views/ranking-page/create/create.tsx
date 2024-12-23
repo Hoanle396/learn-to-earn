@@ -8,18 +8,22 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import * as yup from "yup";
-import { useTemplate } from "@/@core/apis/ranking";
+import { useCreateRanking, useTemplate } from "@/@core/apis/ranking";
+import { useMutationPinFileToIPFS } from "@/@core/apis/ipfs";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const languageData = ["English", "Arabic", "French", "German", "Portuguese"];
 
 const CreatePool = () => {
 
   const [file, setFile] = useState<File | null>(null);
-
-  const [fileInput, setFileInput] = useState<string>("");
+  const { push } = useRouter()
   const [tags, setTags] = useState<string[]>([])
   const [imgSrc, setImgSrc] = useState<string>("/images/logo_full.svg");
   const { mutateAsync: download } = useTemplate()
+  const { mutateAsync } = useMutationPinFileToIPFS()
+  const { mutateAsync: createRanking } = useCreateRanking()
 
   const schema = yup.object().shape({
     name: yup.string().required(),
@@ -33,7 +37,29 @@ const CreatePool = () => {
     resolver: yupResolver(schema),
   });
   const formSubmitHandler = async (formData: any) => {
-    console.log(formData);
+    try {
+      if (!file) {
+        toast.error("Please upload a file");
+        return;
+      }
+      const result: any = await mutateAsync(file as any);
+      const { hash } = result;
+
+      const payload = {
+        ...formData,
+        tags,
+        logo: hash,
+      }
+      const data = await createRanking(payload)
+      console.log(data);
+      toast.success("Course created successfully");
+      methods.reset();
+      setTags([]);
+      setFile(null);
+      push("/ranking/questions/" + data?.data?.id)
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    }
   };
 
   const handleDownload = async () => {
@@ -62,13 +88,13 @@ const CreatePool = () => {
       reader.readAsDataURL(files[0]);
 
       if (reader.result !== null) {
-        setFileInput(reader.result as string);
       }
     }
+    setFile(files?.[0] as any);
   };
 
   const handleFileInputReset = () => {
-    setFileInput("");
+    setFile(null);
     setImgSrc("/images/logo_full.svg");
   };
 
@@ -112,7 +138,6 @@ const CreatePool = () => {
                   <input
                     hidden
                     type="file"
-                    value={fileInput}
                     accept="image/png, image/jpeg"
                     onChange={handleFileInputChange}
                     id="account-settings-upload-image"

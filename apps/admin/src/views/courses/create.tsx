@@ -8,16 +8,19 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import * as yup from "yup";
-import { useTemplate } from "@/@core/apis/ranking";
+import { useCreateRanking, useTemplate } from "@/@core/apis/ranking";
+import { useMutationPinFileToIPFS } from "@/@core/apis/ipfs";
+import toast from "react-hot-toast";
 
-const languageData = ["English", "Arabic", "French", "German", "Portuguese"];
+const tags = ["English", "Arabic", "French", "German", "Portuguese"];
 
 const CreateCourse = () => {
 
   const [fileInput, setFileInput] = useState<string>("");
   const [tags, setTags] = useState<string[]>([])
   const [imgSrc, setImgSrc] = useState<string>("/images/logo_full.svg");
-  const { mutateAsync: download } = useTemplate()
+  const { mutateAsync } = useMutationPinFileToIPFS()
+  const { mutateAsync: createRanking } = useCreateRanking()
 
   const schema = yup.object().shape({
     name: yup.string().required(),
@@ -28,8 +31,30 @@ const CreateCourse = () => {
   const methods = useForm({
     resolver: yupResolver(schema),
   });
-  const formSubmitHandler = async (formData: any) => {
-    console.log(formData);
+
+  const formSubmitHandler = async (input: any) => {
+    try {
+      if (!fileInput) {
+        toast.error("Please upload a file");
+        return;
+      }
+      const formData = new FormData()
+      formData.append("file", fileInput)
+      const result: any = await mutateAsync(formData as any);
+      const { hash } = result;
+
+      const payload = {
+        ...input,
+        tags,
+        logo: hash,
+        price: 0,
+      }
+      console.log(payload);
+      await createRanking(payload)
+      toast.success("Course created successfully");
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    }
   };
 
 
@@ -169,7 +194,7 @@ const CreateCourse = () => {
                     </div>
                   )}
                 >
-                  {languageData.map((name) => (
+                  {tags.map((name) => (
                     <MenuItem key={name} value={name} onClick={() => setTags((prev) => ([...prev, name]))}>
                       {name}
                     </MenuItem>

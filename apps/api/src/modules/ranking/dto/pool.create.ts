@@ -22,16 +22,12 @@ export class PoolCreateDto {
 
   @ApiProperty()
   @IsString({ each: true })
-  @IsArray({ each: true })
+  @IsArray()
   tags: string[];
 
   @ApiProperty()
   @IsString()
   logo: string;
-
-  @ApiProperty()
-  @IsNumber()
-  price: string;
 
   @ApiProperty()
   @IsNumber()

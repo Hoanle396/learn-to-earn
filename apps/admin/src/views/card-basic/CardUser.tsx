@@ -6,36 +6,26 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import { IPFS } from "@/constants";
+import Link from "next/link";
 
-const CardUser = () => {
+const CardUser = (data: any) => {
+	console.log(data);
 	return (
 		<Card>
-			<CardMedia image="/images/cards/2.png" className="bs-[180px]" />
+			<CardMedia image={IPFS(data?.logo ?? '')} className="bs-[180px]" />
 			<CardContent className="relative">
-				<Avatar
-					src="/images/avatars/3.png"
-					alt="Robert Meyer"
-					className="is-[78px] bs-[78px] border-[5px] border-backgroundPaper absolute start-[11px] block-start-[-39px]"
-				/>
 				<div className="flex justify-between items-center flex-wrap gap-x-4 gap-y-2 mbe-5 mbs-[30px]">
 					<div className="flex flex-col items-start">
-						<Typography variant="h5">Robert Meyer</Typography>
-						<Typography variant="body2">London, UK</Typography>
+						<Typography variant="h5">{data?.name ?? ''}</Typography>
+						<Typography variant="body2">{data?.tags?.join(',')}</Typography>
 					</div>
-					<Button variant="contained">Send Request</Button>
+					<Link href={`/ranking/${data?.id}`}><Button variant="contained">View</Button></Link>
 				</div>
 				<div className="flex justify-between items-center flex-wrap gap-x-4 gap-y-2">
 					<Typography variant="subtitle2" color="text.disabled">
-						18 mutual friends
+						{data?.description.slice(0, 100) ?? ''}
 					</Typography>
-					<AvatarGroup max={4}>
-						<Avatar src="/images/avatars/1.png" />
-						<Avatar src="/images/avatars/5.png" />
-						<Avatar src="/images/avatars/4.png" />
-						<Avatar src="/images/avatars/6.png" />
-						<Avatar src="/images/avatars/7.png" />
-						<Avatar src="/images/avatars/8.png" />
-					</AvatarGroup>
 				</div>
 			</CardContent>
 		</Card>

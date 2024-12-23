@@ -1,9 +1,9 @@
-import { API_URL, IPFS_KEY } from "@/constants";
+import { IPFS_URL, IPFS_KEY } from "@/constants";
 import axios from "axios";
 import type { AxiosError } from "axios";
 
 const request = axios.create({
-  baseURL: API_URL,
+  baseURL: IPFS_URL,
 });
 
 request.interceptors.request.use(
