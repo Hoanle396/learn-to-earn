@@ -141,7 +141,7 @@ const LearningDetailPage = () => {
                   <div className="aspect-video bg-gray-900 rounded-lg mb-6">
                     <iframe
                       className="w-full h-full rounded-lg"
-                      src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                      src="https://www.youtube.com/embed/dqlO6_5rZSQ"
                       title="Course Introduction"
                       allowFullScreen
                     ></iframe>

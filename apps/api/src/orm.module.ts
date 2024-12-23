@@ -26,4 +26,4 @@ import entities from './databases';
     }),
   ],
 })
-export class OrmModule {}
+export class OrmModule { }

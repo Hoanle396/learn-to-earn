@@ -60,12 +60,6 @@ const DashboardAnalytics = () => {
 					</Grid>
 				</Grid>
 			</Grid>
-			<Grid item xs={12} md={6} lg={4}>
-				<SalesByCountries />
-			</Grid>
-			<Grid item xs={12} lg={8}>
-				<DepositWithdraw />
-			</Grid>
 			<Grid item xs={12}>
 				<Table />
 			</Grid>
