@@ -4,7 +4,7 @@ import { BaseEntity } from './base/base.entity';
 @Entity()
 @Index(['crawlKey'], { unique: false })
 export class LatestBlock extends BaseEntity {
-  @PrimaryColumn({ length: 255 })
+  @Column({ length: 255 })
   crawlKey: string;
 
   @Column({ type: 'bigint', nullable: false })

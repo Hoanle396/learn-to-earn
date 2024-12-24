@@ -3,12 +3,12 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { OrmModule } from './orm.module';
 
+import { HttpModule } from '@nestjs/axios';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TerminusModule } from '@nestjs/terminus';
 import { ExceptionFilter } from './common/exceptions/exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { load } from './configs';
-import { HttpModule } from '@nestjs/axios';
 import { AdminModule } from './modules/admin/admin.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { RoleGuard } from './modules/auth/guards/role.guard';
@@ -16,6 +16,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { CourseModule } from './modules/course/course.module';
 import { LessonModule } from './modules/lesson/lesson.module';
 import { RankingModule } from './modules/ranking/ranking.module';
+import { WorkerModule } from './modules/worker/worker.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RankingModule } from './modules/ranking/ranking.module';
     CourseModule,
     LessonModule,
     RankingModule,
+    WorkerModule,
   ],
   controllers: [AppController],
   providers: [
@@ -50,4 +52,4 @@ import { RankingModule } from './modules/ranking/ranking.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
