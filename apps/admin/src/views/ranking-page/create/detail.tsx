@@ -1,19 +1,28 @@
 "use client"
 import { useRankingDetail } from "@/@core/apis/ranking"
+import { IPFS } from "@/constants"
 import { Box, Card, CardContent, Typography, Chip } from "@mui/material"
 import Image from "next/image"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 
 const DetailPool = () => {
   const { id } = useParams()
-  const { data: { data } = { data: {} }, isLoading } = useRankingDetail(Number(id))
+  const { push } = useRouter()
+  const { data: { data } = { data: {} }, isLoading, isError } = useRankingDetail(Number(id))
   console.log(data);
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    push('/ranking')
+  }
   return (
     <Card sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
       <CardContent>
         <Box sx={{ textAlign: "center", mb: 4 }}>
           <Image
-            src={`https://ipfs.io/ipfs/${data.logo}`}
+            src={IPFS(data?.logo)}
             alt={data.name}
             width={200}
             height={200}
