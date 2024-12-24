@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createRanking, downloadTemplate, getRanking, getRankingDetail } from "./request";
+import { createRanking, downloadTemplate, getRanking, getRankingDetail, uploadQuestions } from "./request";
 import type { Pagination } from "./types";
 
 export const useRankingList = (params: Pagination) => {
@@ -25,5 +25,11 @@ export const useRankingDetail = (id: number) => {
   return useQuery({
     queryKey: ["ranking-detail", id],
     queryFn: () => getRankingDetail(id),
+  })
+}
+
+export const useUploadQuestions = () => {
+  return useMutation({
+    mutationFn: uploadQuestions,
   })
 }

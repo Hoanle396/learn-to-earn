@@ -22,5 +22,8 @@ export const downloadTemplate = async () => {
 };
 
 export const uploadQuestions = async (data: QuestionPayload) => {
-  return request.post("/ranking/question", data);
+  const formData = new FormData();
+  formData.append("file", data.file);
+  formData.append("poolId", String(data.poolId));
+  return request.post("/ranking/question", formData);
 };
