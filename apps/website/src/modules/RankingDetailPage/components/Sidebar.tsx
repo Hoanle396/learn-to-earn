@@ -1,4 +1,5 @@
 import { usePoolById } from '@/apis/pool/queries';
+import { useAuthStore } from '@/stores/auth';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { FaFile, FaGamepad, FaTag, FaUser } from 'react-icons/fa';
@@ -6,6 +7,7 @@ import { useAccount } from 'wagmi';
 
 const Sidebar = () => {
   const { address } = useAccount();
+  const { auth } = useAuthStore();
   const { id } = useParams();
   const { data } = usePoolById(Number(id));
   return (

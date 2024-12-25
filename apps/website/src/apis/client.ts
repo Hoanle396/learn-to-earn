@@ -1,13 +1,14 @@
 import { appConfig } from '@/configs';
 import { Storage } from '@/libs/constants';
 import { getLocalStore, setLocalStore } from '@/libs/utils';
-import axios, {
+import {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
   type AxiosInstance,
   type AxiosRequestConfig,
 } from 'axios';
+import axios from 'axios';
 import Router from 'next/router';
 
 const axiosRequestConfig: AxiosRequestConfig = {
@@ -32,21 +33,25 @@ export const errorInterceptor = async (error: AxiosError): Promise<void> => {
   const originalRequest = error.config;
   const isTokenExpired = error?.response?.status === 401;
   const refreshToken = getLocalStore(Storage.REFRESH_TOKEN);
-  if (error.response && isTokenExpired && refreshToken) {
-    // Token expired, refresh it
+  if (error.response && isTokenExpired && refreshToken && !originalRequest?.url?.includes('/auth/refresh-token')) {
     try {
-      const { data } = await client.post('/auth/refresh-token', {
-        refreshToken,
+      const { data } = await axios({
+        baseURL: appConfig.apiUrl,
+        method: 'POST',
+        url: '/auth/refresh-token',
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
       });
 
-      setLocalStore(Storage.ACCESS_TOKEN, data.accessToken);
-      setLocalStore(Storage.REFRESH_TOKEN, data.accessToken);
+      setLocalStore(Storage.ACCESS_TOKEN, data.data.accessToken);
+      setLocalStore(Storage.REFRESH_TOKEN, data.data.accessToken);
 
       const request = {
         ...originalRequest,
         headers: {
           ...originalRequest?.headers,
-          Authorization: `Bearer ${data.accessToken}`,
+          Authorization: `Bearer ${data.data.accessToken}`,
         },
       };
       return await client(request);

@@ -1,3 +1,3 @@
-import LearningPage from "@/modules/LearningPage";
+import LearningPage from '@/modules/LearningPage';
 
 export default LearningPage;

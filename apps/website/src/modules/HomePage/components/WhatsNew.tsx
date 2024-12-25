@@ -1,23 +1,21 @@
-"use client";
+'use client';
 
-import { TitleText, TypingText } from "@/components";
-import NewFeatures from "@/components/NewFeatures";
-import { fadeIn, planetVariants, staggerContainer } from "@/utils/motion";
-import styles from "@/utils/styles";
-import { motion } from "framer-motion";
+import { TitleText, TypingText } from '@/components';
+import NewFeatures from '@/components/NewFeatures';
+import { fadeIn, planetVariants, staggerContainer } from '@/utils/motion';
+import styles from '@/utils/styles';
+import { motion } from 'framer-motion';
 
 export const newFeatures = [
   {
-    imgUrl: "/images/vrpano.svg",
-    title: "A new world",
-    subtitle:
-      "we have the latest update with new world for you to try never mind",
+    imgUrl: '/images/vrpano.svg',
+    title: 'A new world',
+    subtitle: 'we have the latest update with new world for you to try never mind',
   },
   {
-    imgUrl: "/images/headset.svg",
-    title: "More realistic",
-    subtitle:
-      "In the latest update, your eyes are narrow, making the world more realistic than ever",
+    imgUrl: '/images/headset.svg',
+    title: 'More realistic',
+    subtitle: 'In the latest update, your eyes are narrow, making the world more realistic than ever',
   },
 ];
 const WhatsNew = () => (
@@ -25,33 +23,23 @@ const WhatsNew = () => (
     <motion.div
       // @ts-expect-error ignore
       variants={staggerContainer}
-      initial="hidden"
-      whileInView="show"
+      initial='hidden'
+      whileInView='show'
       viewport={{ once: false, amount: 0.25 }}
       className={`${styles.innerWidth} mx-auto flex lg:flex-row flex-col gap-8`}
     >
-      <motion.div
-        variants={fadeIn("right", "tween", 0.2, 1)}
-        className="flex-[0.95] flex justify-center flex-col"
-      >
-        <TypingText title="| Whats new?" />
+      <motion.div variants={fadeIn('right', 'tween', 0.2, 1)} className='flex-[0.95] flex justify-center flex-col'>
+        <TypingText title='| Whats new?' />
         <TitleText title={<>What&apos;s new about Metaversus?</>} />
-        <div className="mt-[48px] flex flex-wrap justify-between gap-[24px]">
+        <div className='mt-[48px] flex flex-wrap justify-between gap-[24px]'>
           {newFeatures.map((feature) => (
             <NewFeatures key={feature.title} {...feature} />
           ))}
         </div>
       </motion.div>
 
-      <motion.div
-        variants={planetVariants("right")}
-        className={`flex-1 ${styles.flexCenter}`}
-      >
-        <img
-          src="/images/whats-new.png"
-          alt="get-started"
-          className="w-[90%] h-[90%] object-contain"
-        />
+      <motion.div variants={planetVariants('right')} className={`flex-1 ${styles.flexCenter}`}>
+        <img src='/images/whats-new.png' alt='get-started' className='w-[90%] h-[90%] object-contain' />
       </motion.div>
     </motion.div>
   </section>

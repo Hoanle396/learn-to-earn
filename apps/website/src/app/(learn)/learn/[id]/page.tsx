@@ -1,3 +1,3 @@
-import LearningDetailPage from "@/modules/LearningDetailPage";
+import LearningDetailPage from '@/modules/LearningDetailPage';
 
 export default LearningDetailPage;

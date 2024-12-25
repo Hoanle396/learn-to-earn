@@ -1,5 +1,5 @@
-import { polygonAmoy } from "viem/chains";
-import { createConfig, http } from "wagmi";
+import { polygonAmoy } from 'viem/chains';
+import { createConfig, http } from 'wagmi';
 
 export const wagmiConfig = createConfig({
   chains: [polygonAmoy],

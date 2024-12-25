@@ -1,6 +1,6 @@
-import { wagmiConfig } from "@/configs";
-import React from "react";
-import { WagmiProvider } from "wagmi";
+import { wagmiConfig } from '@/configs';
+import React from 'react';
+import { WagmiProvider } from 'wagmi';
 
 type Props = {
   children?: React.ReactNode;

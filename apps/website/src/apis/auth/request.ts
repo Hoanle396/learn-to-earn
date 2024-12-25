@@ -1,47 +1,47 @@
-import client from "../client";
-import { ILoginPayload, ILoginResponse, IRegisterPayload, IUpdateWalletPayload, IUser } from "./type";
+import client from '../client';
+import { ILoginPayload, ILoginResponse, IRegisterPayload, IResponse, IUpdateWalletPayload, IUser } from './type';
 
-export const login = async (data: ILoginPayload): Promise<ILoginResponse> => {
+export const login = async (data: ILoginPayload): Promise<IResponse<ILoginResponse>> => {
   return client({
-    url: "/auth/login",
-    method: "POST",
-    data
-  })
-}
+    url: '/auth/login',
+    method: 'POST',
+    data,
+  });
+};
 
 export const logout = async (): Promise<void> => {
   return client({
-    url: "/auth/logout",
-    method: "POST"
-  })
-}
+    url: '/auth/logout',
+    method: 'POST',
+  });
+};
 
-export const register = async (data: IRegisterPayload): Promise<ILoginResponse> => {
+export const register = async (data: IRegisterPayload): Promise<IResponse<ILoginResponse>> => {
   return client({
-    url: "/auth/register",
-    method: "POST",
-    data
-  })
-}
+    url: '/auth/register',
+    method: 'POST',
+    data,
+  });
+};
 
-export const refreshToken = async (): Promise<ILoginResponse> => {
+export const refreshToken = async (): Promise<IResponse<ILoginResponse>> => {
   return client({
-    url: "/auth/refresh-token",
-    method: "POST"
-  })
-}
+    url: '/auth/refresh-token',
+    method: 'POST',
+  });
+};
 
 export const me = async (): Promise<IUser> => {
   return client({
-    url: "/auth/me",
-    method: "GET"
-  })
-}
+    url: '/auth/me',
+    method: 'GET',
+  });
+};
 
 export const updateWallet = async (data: IUpdateWalletPayload): Promise<IUser> => {
   return client({
-    url: "/auth/update-address",
-    method: "POST",
-    data
-  })
-}
+    url: '/auth/update-address',
+    method: 'POST',
+    data,
+  });
+};

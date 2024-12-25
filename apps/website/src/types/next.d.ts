@@ -1,5 +1,5 @@
-declare module "lenis/react" {
-  import { ReactNode } from "react";
+declare module 'lenis/react' {
+  import { ReactNode } from 'react';
   export interface ReactLenisProps {
     root?: boolean;
     children: ReactNode;

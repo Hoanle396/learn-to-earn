@@ -1,4 +1,6 @@
-import { create } from "zustand";
+import { Storage } from '@/libs/constants';
+import { getLocalStore } from '@/libs/utils';
+import { create } from 'zustand';
 
 export type Auth = {
   accessToken: string;
@@ -7,22 +9,19 @@ export type Auth = {
 };
 
 const initState: Auth = {
-  accessToken: "",
-  refreshToken: "",
+  accessToken: getLocalStore(Storage.ACCESS_TOKEN) || '',
+  refreshToken: getLocalStore(Storage.REFRESH_TOKEN) || '',
   user: null,
 };
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create<any>((set) => ({
   auth: initState,
-  setAccessToken: (token: string) =>
-    set((state: Auth) => (state.accessToken = token)),
-  setRefreshToken: (token: string) =>
-    set((state: Auth) => (state.refreshToken = token)),
-  setUser: (user: any | null) => set((state: Auth) => (state.user = user)),
+  setAccessToken: (token: string) => set((state: any) => ({ ...state, auth: { ...state.auth, accessToken: token } })),
+  setRefreshToken: (token: string) => set((state: any) => ({ ...state, auth: { ...state.auth, refreshToken: token } })),
+  setUser: (user: any | null) => set((state: any) => ({ ...state, auth: { ...state.auth, user } })),
   logout: () =>
-    set((state: Auth) => {
-      state.accessToken = "";
-      state.refreshToken = "";
-      state.user = null;
-    }),
+    set((state: any) => ({
+      ...state,
+      auth: initState,
+    })),
 }));

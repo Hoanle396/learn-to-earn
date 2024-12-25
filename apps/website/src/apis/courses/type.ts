@@ -6,4 +6,4 @@ export type Course = {
   thumbnail: string;
   createdAt: string;
   [key: string]: any;
-}
+};
