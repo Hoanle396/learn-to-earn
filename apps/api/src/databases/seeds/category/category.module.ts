@@ -8,4 +8,4 @@ import { CategorySeedService } from './category.service';
   providers: [CategorySeedService],
   exports: [CategorySeedService],
 })
-export class CategorySeedModule { }
+export class CategorySeedModule {}

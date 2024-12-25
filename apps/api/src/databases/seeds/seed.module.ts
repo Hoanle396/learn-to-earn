@@ -17,7 +17,7 @@ import { CategorySeedModule } from './category/category.module';
     OrmModule,
     TokenSeedModule,
     AdminSeedModule,
-    CategorySeedModule
+    CategorySeedModule,
   ],
 })
-export class SeedModule { }
+export class SeedModule {}

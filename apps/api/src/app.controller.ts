@@ -19,7 +19,7 @@ export class AppController {
     private readonly configService: ConfigService<DOPConfig>,
     private db: TypeOrmHealthIndicator,
     private memory: MemoryHealthIndicator
-  ) { }
+  ) {}
 
   @Get()
   @HealthCheck()
