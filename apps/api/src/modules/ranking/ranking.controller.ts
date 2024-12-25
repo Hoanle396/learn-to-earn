@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Header, Param, Post, Query, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Header,
+  Param,
+  Post,
+  Query,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { RankingService } from './ranking.service';
 import { ApiBearerAuth, ApiBody, ApiConsumes } from '@nestjs/swagger';
 import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
@@ -10,7 +22,7 @@ import { QueryPaginationDto } from '@/shared/dto/pagination.query';
 
 @Controller('ranking')
 export class RankingController {
-  constructor(private readonly rankingService: RankingService) { }
+  constructor(private readonly rankingService: RankingService) {}
 
   @Post()
   @ApiBearerAuth()
@@ -55,9 +67,14 @@ export class RankingController {
   async findAll(@Query() query: QueryPaginationDto) {
     return await this.rankingService.findAll(query);
   }
+
+  @Get('active')
+  async findActive(@Query() query: QueryPaginationDto) {
+    return await this.rankingService.findActive(query);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.rankingService.findOne(id);
   }
-
 }

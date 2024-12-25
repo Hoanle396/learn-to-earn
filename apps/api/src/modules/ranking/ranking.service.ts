@@ -23,7 +23,7 @@ export class RankingService {
 
     @InjectRepository(UserQuiz)
     private readonly userQuizRepository: Repository<UserQuiz>
-  ) { }
+  ) {}
 
   async createPool(dto: PoolCreateDto) {
     const newPool = new RankingPool();
@@ -33,7 +33,7 @@ export class RankingService {
     newPool.endTime = dto.endDate;
     newPool.tags = dto.tags;
     newPool.logo = dto.logo;
-    newPool.price = "0";
+    newPool.price = '0';
     newPool.questionPerPool = dto.questionPerPool;
 
     return this.rankingPoolRepository.save(newPool);
@@ -94,11 +94,17 @@ export class RankingService {
     return await paginateEntities(builder, query);
   }
 
+  async findActive(query: QueryPaginationDto) {
+    const builder = this.rankingPoolRepository.createQueryBuilder('ranking').where('ranking.isVerified = true');
+    return await paginateEntities(builder, query);
+  }
+
   async findOne(id: number) {
     const pool = await this.rankingPoolRepository.findOne({
-      where: { id }, relations: {
+      where: { id },
+      relations: {
         quizzes: true,
-      }
+      },
     });
     if (!pool) {
       throw new NotFoundException('pool not found');

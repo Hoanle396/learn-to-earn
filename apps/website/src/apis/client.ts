@@ -1,32 +1,30 @@
-import { appConfig } from "@/configs";
-import { Storage } from "@/libs/constants";
-import { getLocalStore, setLocalStore } from "@/libs/utils";
+import { appConfig } from '@/configs';
+import { Storage } from '@/libs/constants';
+import { getLocalStore, setLocalStore } from '@/libs/utils';
 import axios, {
   AxiosError,
   AxiosResponse,
   InternalAxiosRequestConfig,
   type AxiosInstance,
   type AxiosRequestConfig,
-} from "axios";
-import Router from "next/router";
+} from 'axios';
+import Router from 'next/router';
 
 const axiosRequestConfig: AxiosRequestConfig = {
   baseURL: appConfig.apiUrl,
-  responseType: "json",
+  responseType: 'json',
 };
 
-export const requestInterceptor = (
-  config: InternalAxiosRequestConfig,
-): InternalAxiosRequestConfig => {
+export const requestInterceptor = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   const token = getLocalStore(Storage.ACCESS_TOKEN);
   if (token) {
-    config.headers.set("Authorization", `Bearer ${token}`);
+    config.headers.set('Authorization', `Bearer ${token}`);
   }
   return config;
 };
 
 export const successInterceptor = (response: AxiosResponse): AxiosResponse => {
-  return response;
+  return response.data;
 };
 
 export const errorInterceptor = async (error: AxiosError): Promise<void> => {
@@ -37,7 +35,7 @@ export const errorInterceptor = async (error: AxiosError): Promise<void> => {
   if (error.response && isTokenExpired && refreshToken) {
     // Token expired, refresh it
     try {
-      const { data } = await client.post("/auth/refresh-token", {
+      const { data } = await client.post('/auth/refresh-token', {
         refreshToken,
       });
 
@@ -53,7 +51,7 @@ export const errorInterceptor = async (error: AxiosError): Promise<void> => {
       };
       return await client(request);
     } catch (error) {
-      Router.push("/logout");
+      Router.push('/logout');
       return Promise.reject(data);
     }
   }

@@ -136,13 +136,25 @@ const DetailPool = () => {
                 </Typography>
               </Stack>
               <Box width={'100%'}>
-                {data.quizzes.length ? (
+                {data.quizzes.length && !data.isVerified && (
                   <Stack>
                     <LoadingButton loading={onchainLoading} variant='outlined' onClick={publishToChain}>
                       Publish{' '}
                     </LoadingButton>
                   </Stack>
+                )}
+                {data.isVerified && new Date().getTime() > new Date(data.endTime).getTime() ? (
+                  <Stack>
+                    <LoadingButton variant='outlined' onClick={() => {}}>
+                      Drawl
+                    </LoadingButton>
+                  </Stack>
                 ) : (
+                  <Stack>
+                    <LoadingButton variant='outlined'>View User joined</LoadingButton>
+                  </Stack>
+                )}
+                {!data.quizzes.length && (
                   <Stack direction='row' width='100%' justifyContent='end' gap={2}>
                     <Button variant='outlined' color='primary' onClick={handleDownload}>
                       download template
