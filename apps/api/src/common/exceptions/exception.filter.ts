@@ -1,5 +1,6 @@
 import type { ArgumentsHost, ExceptionFilter as ExceptionFilterBase } from '@nestjs/common';
-import { Catch, HttpException, HttpStatus, Logger } from '@nestjs/common';
+import { Catch, HttpException, HttpStatus } from '@nestjs/common';
+import { Logger } from 'hidrajs-winston-logger';
 
 const logger = new Logger('ExceptionFilter');
 

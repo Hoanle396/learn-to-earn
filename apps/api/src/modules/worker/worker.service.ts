@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { polygonAmoy } from 'viem/chains';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { createPublicClient, decodeEventLog, http, HttpTransport, PublicClient } from 'viem';
 import { ConfigService } from '@nestjs/config';
@@ -8,6 +8,7 @@ import { ABI } from '@/shared/abi';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LatestBlock, RankingPool } from '@/databases/entities';
 import { DataSource, Repository } from 'typeorm';
+import { Logger } from 'hidrajs-winston-logger';
 
 @Injectable()
 export class WorkerService {

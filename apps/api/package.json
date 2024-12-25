@@ -37,6 +37,7 @@
     "dayjs": "^1.11.13",
     "fast-csv": "^5.0.2",
     "helmet": "^8.0.0",
+    "hidrajs-winston-logger": "^1.0.1",
     "node-cron": "^3.0.3",
     "passport-jwt": "^4.0.1",
     "pg": "^8.13.1",
@@ -44,7 +45,8 @@
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
     "viem": "2.x",
-    "web3-validator": "^2.0.6"
+    "web3-validator": "^2.0.6",
+    "winston-logger": "^1.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

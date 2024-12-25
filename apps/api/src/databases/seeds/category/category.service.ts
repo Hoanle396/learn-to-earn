@@ -1,7 +1,8 @@
 import { Category, Token } from '@/databases/entities';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Logger } from 'hidrajs-winston-logger';
 
 @Injectable()
 export class CategorySeedService {

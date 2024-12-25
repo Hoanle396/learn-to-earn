@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger } from 'hidrajs-winston-logger';
 import { NestFactory } from '@nestjs/core';
 
 import { AdminSeedService } from './admin/admin_seed.service';

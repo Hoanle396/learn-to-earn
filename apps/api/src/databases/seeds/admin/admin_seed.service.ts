@@ -1,9 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { RoleEnum } from '@/shared/enums';
 import { Admin } from '@/databases/entities';
+import { Logger } from 'hidrajs-winston-logger';
 
 @Injectable()
 export class AdminSeedService {

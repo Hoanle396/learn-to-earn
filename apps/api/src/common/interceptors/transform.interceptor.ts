@@ -1,8 +1,9 @@
 import type { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import type { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IResponse } from '../interfaces/response';
+import { Logger } from 'hidrajs-winston-logger';
 
 const logger = new Logger(class DOPApplication {}.name);
 
