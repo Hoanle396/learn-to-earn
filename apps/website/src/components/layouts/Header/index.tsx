@@ -59,7 +59,7 @@ const Header = () => {
             <MenuItem href='/' title='Home' />
             <MenuItem href='/learn' title='Learn' />
             <MenuItem href='/ranking' title='Ranking' />
-            <MenuItem href='/for-education' title='For education' />
+            <MenuItem href='/faqs' title='FAQs' />
             <MenuItem href='/about' title='About' />
           </ul>
         </div>
