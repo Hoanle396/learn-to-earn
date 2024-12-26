@@ -19,6 +19,7 @@ import {
   Option,
   Prize,
   UserQuiz,
+  Certification,
 } from './entities';
 
 const entities = [
@@ -42,6 +43,7 @@ const entities = [
   Option,
   Prize,
   UserQuiz,
+  Certification,
 ];
 
 export default entities;

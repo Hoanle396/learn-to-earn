@@ -18,3 +18,4 @@ export * from './option.entity';
 export * from './user_quiz.entity';
 export * from './ranking-pool.entity';
 export * from './prizes.entity';
+export * from './certification.entity';

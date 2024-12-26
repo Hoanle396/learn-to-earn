@@ -6,7 +6,7 @@ import { createPublicClient, decodeEventLog, http, HttpTransport, PublicClient }
 import { ConfigService } from '@nestjs/config';
 import { ABI } from '@/shared/abi';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LatestBlock, RankingPool } from '@/databases/entities';
+import { Certification, LatestBlock, RankingPool } from '@/databases/entities';
 import { DataSource, Repository } from 'typeorm';
 import { Logger } from 'hidrajs-winston-logger';
 
@@ -59,11 +59,8 @@ export class WorkerService {
           case 'PoolCreatedEvent':
             this.handleCreatedPool(log.args);
             break;
-          case 'PoolClosed':
-            this.logger.debug('PoolClosed');
-            break;
-          case 'PoolPassed':
-            this.logger.debug('PoolPassed');
+          case 'LearnToEarnCertificateCreated':
+            this.userPassedPool(log.args);
             break;
           default:
             this.logger.debug('Unknown event');
@@ -76,8 +73,21 @@ export class WorkerService {
     }
   }
 
+  async userPassedPool(args: any) {
+    const nft = await this.dataSource.manager
+      .createQueryBuilder(Certification, 'certification')
+      .insert()
+      .into(Certification)
+      .values({
+        wallet: args.receipt,
+        tokenId: args.id,
+      })
+      .orUpdate(['wallet'], ['tokenId'])
+      .execute();
+    this.logger.debug('user updated');
+  }
+
   async handleCreatedPool(args: any) {
-    this.logger.debug(args);
     const pool = await this.dataSource.manager
       .createQueryBuilder(RankingPool, 'ranking_pool')
       .where('ranking_pool.name=:name', { name: args.name })

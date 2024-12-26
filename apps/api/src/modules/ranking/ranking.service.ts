@@ -103,7 +103,9 @@ export class RankingService {
     const pool = await this.rankingPoolRepository.findOne({
       where: { id },
       relations: {
-        quizzes: true,
+        quizzes: {
+          options: true,
+        },
       },
     });
     if (!pool) {
