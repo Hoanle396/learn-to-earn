@@ -53,7 +53,7 @@ const page = (props: Props) => {
         <section className='container mx-auto mt-20 px-6 sm:px-16 xl:flex xl:px-0 min-h-[calc(100%-320px)]'>
           <div className='xl:w-1/2'>
             <h2 className='text-[40px] font-extralight leading-none sm:text-[48px]'>Quiz completed</h2>
-            <h3 className='text-[40px] font-medium leading-snug sm:text-[48px]'>Please wait to pool end...</h3>
+            <h3 className='text-[40px] font-medium leading-snug sm:text-[48px]'>Please wait to pool draw...</h3>
           </div>
           <div className='xl:w-1/2 xl:space-y-8'>
             <section className='mb-3 mt-10 flex flex-col items-center rounded-xl bg-white p-8 drop-shadow-sm dark:bg-navy sm:p-12 xl:mb-0 xl:mt-0 xl:w-[564px]'>
@@ -90,7 +90,7 @@ const page = (props: Props) => {
           </div>
           <div className='xl:w-1/2'>
             <ul className='space-y-3 pb-3 sm:space-y-6 sm:pb-6'>
-              {currentQuestion?.options.map((option, index) => {
+              {currentQuestion?.options.map((option:any, index:number) => {
                 const letter = option.option; // 65 is the ASCII value for 'A'
                 const isSelected = selectedAnswer === option.answer;
                 return (
