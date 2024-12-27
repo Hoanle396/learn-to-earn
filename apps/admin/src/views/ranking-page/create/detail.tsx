@@ -8,7 +8,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useWriteContract } from 'wagmi';
 
 const DetailPool = () => {
   const { publish, isLoading: onchainLoading, isTransactionSuccess } = usePublish();
@@ -145,7 +144,7 @@ const DetailPool = () => {
                 )}
                 {data.isVerified && new Date().getTime() > new Date(data.endTime).getTime() ? (
                   <Stack>
-                    <LoadingButton variant='outlined' onClick={() => {}}>
+                    <LoadingButton variant='outlined' onClick={() => { }}>
                       Drawl
                     </LoadingButton>
                   </Stack>

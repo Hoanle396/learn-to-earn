@@ -1,6 +1,4 @@
-import ABI from "../contracts/LearnToEarnCertificate.sol/LearnToEarnCertificate.json"
-export { ABI }
-export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0xff31baA69db8641E60905547Ad9e0C9a6660Df4b";
+export const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "0x1b13e1d43d79b0d711f8DdDEF2B47Fba9E16429c";
 
 export const API_URL =
 	process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";

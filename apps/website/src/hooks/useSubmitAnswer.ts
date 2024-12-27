@@ -1,11 +1,10 @@
-import { CONTRACT_ADDRESS } from "@/constants";
-import { ABI } from "@/constants/abi";
+import { ABI, CONTRACT_ADDRESS } from "@/libs/constants";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Address } from "viem";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
-const usePublish = () => {
+const useSubmit = () => {
   const {
     data: dataCreateCollection,
     isError: isErrorCreateCollection,
@@ -24,11 +23,11 @@ const usePublish = () => {
     confirmations: 4,
   });
 
-  const publish = ({ name, startDate, endDate, questions, passed }: any) => {
+  const publish = ({ poolId, answers }: any) => {
     writeContract({
-      args: [name, startDate, endDate, questions, passed], // get salt from backend
+      args: [poolId, answers], // get salt from backend
       abi: ABI,
-      functionName: 'createPool',
+      functionName: 'submitAnswer',
       address: CONTRACT_ADDRESS as Address,
     });
   };
@@ -53,4 +52,4 @@ const usePublish = () => {
 
 };
 
-export default usePublish;
+export default useSubmit;

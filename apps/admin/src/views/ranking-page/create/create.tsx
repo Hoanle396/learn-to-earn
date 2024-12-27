@@ -56,7 +56,7 @@ const CreatePool = () => {
       methods.reset();
       setTags([]);
       setFile(null);
-      push("/ranking/questions/" + data?.data?.id)
+      push("/ranking/" + data?.data?.id)
     } catch (error) {
       toast.error("An error occurred. Please try again.");
     }

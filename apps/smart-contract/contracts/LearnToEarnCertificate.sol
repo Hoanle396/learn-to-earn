@@ -6,10 +6,10 @@ import "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol";
 
 contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
     mapping(address => bool) private admin;
+    uint256 public serviceFee;
     uint256 private counter;
     uint256 private userAnswerCount;
     uint256 private nextPool;
-    uint256 private nextQuestion;
 
     struct PoolCreated {
         string name;
@@ -35,7 +35,7 @@ contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
     mapping(uint256 => UserAnswer) private userAnswers;
 
     event PoolCreatedEvent(uint256 id, string name, uint256 startDate, uint256 endDate, bool end, string[] questions);
-    event LearnToEarnCertificateCreated(address indexed receipt, uint256 id);
+    event LearnToEarnCertificateCreated(address indexed receipt, uint256 id, uint256 poolId);
     event QuizQuestionCreated(address indexed user, uint256 poolId, string question, string answer);
     event PoolEnded(uint256 id);
 
@@ -44,6 +44,7 @@ contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
     error PoolIsNotEndedYet();
     error PoolIsEnded();
     error UserJoinedPoolBefore();
+    error InValidLengthAnswers();
 
     modifier onlyAdmin() {
         if (!admin[msg.sender]) revert OnlyAdminCanCall(msg.sender);
@@ -60,13 +61,13 @@ contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
         counter = 0;
         userAnswerCount = 0;
         nextPool = 1;
-        nextQuestion = 1;
+        serviceFee = 0.01 ether;
     }
 
-    function mint(address _recipient) private {
+    function mint(address _recipient, uint256 poolId) private {
         uint256 currentId = counter++;
         _mint(_recipient, currentId);
-        emit LearnToEarnCertificateCreated(_recipient, currentId);
+        emit LearnToEarnCertificateCreated(_recipient, currentId, poolId);
     }
 
     function createPool(
@@ -82,23 +83,24 @@ contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
         emit PoolCreatedEvent(nextPool, _name, _startDate, _endDate, false, _questions);
     }
 
-    function submitAnswer(uint256 _poolId, string[] memory _answers) external {
-        if (pools[_poolId].questions.length != _answers.length) revert("Invalid number of answers");
+    function submitAnswer(uint256 _poolId, string[] memory _answers) external payable {
+        require(msg.value == serviceFee, "Service fee is required");
+        if (pools[_poolId].questions.length != _answers.length) revert InValidLengthAnswers();
         if (pools[_poolId].admin == msg.sender) revert IValidCaller(msg.sender);
         if (pools[_poolId].ended) revert PoolIsEnded();
-        for (uint256 i = 0; i < userAnswerCount; i++) {
+
+        for (uint256 i = 0; i <= userAnswerCount; i++) {
             if (userAnswers[i].poolId == _poolId && userAnswers[i].user == msg.sender) revert UserJoinedPoolBefore();
         }
 
+        payable(msg.sender).transfer(msg.value);
         QuizQuestion[] memory answers = new QuizQuestion[](_answers.length);
         for (uint256 i = 0; i < _answers.length; i++) {
             answers[i] = QuizQuestion(pools[_poolId].questions[i], _answers[i]);
         }
         userAnswers[userAnswerCount] = UserAnswer(msg.sender, _poolId, answers);
 
-        nextQuestion++;
         userAnswerCount++;
-        nextQuestion++;
     }
 
     function drawPool(uint256 _poolId, string[] memory answers) external onlyAdmin {
@@ -123,7 +125,7 @@ contract LearnToEarnCertificate is ERC721Upgradeable, OwnableUpgradeable {
                     }
                 }
                 if (correctAnswers >= pools[_poolId].passedScore) {
-                    mint(userAnswers[i].user);
+                    mint(userAnswers[i].user, _poolId);
                 }
             }
         }

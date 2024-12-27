@@ -5,16 +5,19 @@ import { useAnswersStore } from '@/stores';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { usePoolById } from '@/apis/pool/queries';
+import useSubmit from '@/hooks/useSubmitAnswer';
 type Props = {};
 
 const page = (props: Props) => {
   const { id } = useParams();
   const { data } = usePoolById(Number(id));
-  const { setAnswer, setPool } = useAnswersStore();
+  const { setAnswers, setPool, poolId, answers, clear } = useAnswersStore();
+  const { publish } = useSubmit()
 
   useEffect(() => {
-    setPool(String(id));
-  }, [id]);
+    setPool(data?.data.onchainId);
+  }, [data]);
+
   const [question, setQuestion] = useState<number>(0);
   const [progressBar, setProgressBar] = useState<number>(10);
   const [selectedAnswer, setSelectedAnswer] = useState<String | undefined>('');
@@ -33,6 +36,7 @@ const page = (props: Props) => {
       }, 2000);
       return;
     }
+    setAnswers(selectedAnswer);
     setShowNextQuestion(true);
   };
 
@@ -47,9 +51,18 @@ const page = (props: Props) => {
     setShowNextQuestion(false);
   };
 
+  const handleSubmitOnChain = async () => {
+    try {
+      publish({ poolId, answers })
+      clear()
+    } catch (error) {
+
+    }
+  }
+
   return (
     <>
-      {Number(question) !== numberOfQuestions ? (
+      {Number(question) === numberOfQuestions ? (
         <section className='container mx-auto mt-20 px-6 sm:px-16 xl:flex xl:px-0 min-h-[calc(100%-320px)]'>
           <div className='xl:w-1/2'>
             <h2 className='text-[40px] font-extralight leading-none sm:text-[48px]'>Quiz completed</h2>
@@ -68,11 +81,14 @@ const page = (props: Props) => {
                 </h5>
               </div>
             </section>
-            <Link href='/'>
+            <Link href={'/'} >
               <button className='hover:bg-primary/80 h-20 w-full rounded-xl bg-primary py-2 text-[18px] font-medium text-white transition-all duration-200 ease-in-out sm:h-[92px] sm:rounded-3xl sm:text-[28px] xl:w-[564px]'>
                 Back Home
               </button>
             </Link>
+            <button onClick={handleSubmitOnChain}>
+              Submit your answers
+            </button>
           </div>
         </section>
       ) : (
@@ -90,23 +106,21 @@ const page = (props: Props) => {
           </div>
           <div className='xl:w-1/2'>
             <ul className='space-y-3 pb-3 sm:space-y-6 sm:pb-6'>
-              {currentQuestion?.options.map((option:any, index:number) => {
+              {currentQuestion?.options.map((option: any, index: number) => {
                 const letter = option.option; // 65 is the ASCII value for 'A'
                 const isSelected = selectedAnswer === option.answer;
                 return (
                   <li
                     key={index}
-                    className={`min-h-14 sm:min-h-20 group flex h-auto w-full cursor-pointer items-center gap-4 rounded-xl border-[3px] bg-white p-3 font-medium drop-shadow-sm dark:bg-navy dark:text-white sm:rounded-3xl xl:min-h-[92px] xl:w-[564px] ${
-                      isSelected ? 'border-purple dark:border-purple' : 'border-white'
-                    }`}
+                    className={`min-h-14 sm:min-h-20 group flex h-auto w-full cursor-pointer items-center gap-4 rounded-xl border-[3px] bg-white p-3 font-medium drop-shadow-sm dark:bg-navy dark:text-white sm:rounded-3xl xl:min-h-[92px] xl:w-[564px] ${isSelected ? 'border-purple dark:border-purple' : 'border-white'
+                      }`}
                     onClick={() => handleSelectedAnswer(option.answer)}
                   >
                     <span
-                      className={`flex h-10 w-10 items-center justify-center rounded-md bg-primary text-[18px] uppercase text-greyNavy group-hover:bg-primary group-hover:text-purple sm:h-14 sm:w-14 sm:rounded-xl sm:text-[28px] ${
-                        isSelected
-                          ? 'bg-purple text-white group-hover:bg-purple group-hover:text-white'
-                          : 'bg-primary/30'
-                      }`}
+                      className={`flex h-10 w-10 items-center justify-center rounded-md bg-primary text-[18px] uppercase text-greyNavy group-hover:bg-primary group-hover:text-purple sm:h-14 sm:w-14 sm:rounded-xl sm:text-[28px] ${isSelected
+                        ? 'bg-purple text-white group-hover:bg-purple group-hover:text-white'
+                        : 'bg-primary/30'
+                        }`}
                     >
                       {letter}
                     </span>
