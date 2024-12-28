@@ -50,6 +50,9 @@ importers:
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
       gapi-script:
         specifier: ^1.2.0
         version: 1.2.0

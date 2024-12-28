@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { Address } from "viem";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import dayjs from "dayjs";
 
 const usePublish = () => {
   const {
@@ -26,7 +27,7 @@ const usePublish = () => {
 
   const publish = ({ name, startDate, endDate, questions, passed }: any) => {
     writeContract({
-      args: [name, startDate, endDate, questions, passed], // get salt from backend
+      args: [name, dayjs(startDate), dayjs(endDate), questions, passed],
       abi: ABI,
       functionName: 'createPool',
       address: CONTRACT_ADDRESS as Address,
@@ -35,12 +36,12 @@ const usePublish = () => {
 
   useEffect(() => {
     if (!isErrorCreateCollection || !errorCreateCollection) return;
-    toast.error(errorCreateCollection.message);
+    toast.error("Something went wrong. Please try again.");
   }, [errorCreateCollection, isErrorCreateCollection]);
 
   useEffect(() => {
     if (!isTransactionError || !transactionError) return;
-    toast.error(transactionError.message);
+    toast.error("Something went wrong. Please try again.");
   }, [transactionError, isTransactionError]);
 
   const isLoading = isTransactionLoading || isPendingCreateCollection;

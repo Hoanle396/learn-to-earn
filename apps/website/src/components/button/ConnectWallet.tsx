@@ -11,6 +11,7 @@ const ConnectWallet = () => {
   const { disconnect } = useDisconnect();
   const { auth } = useAuthStore();
   const { mutate } = useUpdateWallet();
+  const token = localStorage.getItem('token');
 
   React.useEffect(() => {
     if (isConnected && auth?.user && address && address !== auth?.user?.wallet) {
@@ -18,7 +19,7 @@ const ConnectWallet = () => {
     }
   }, [isConnected, address]);
 
-  if (!auth?.user) {
+  if (!token) {
     return (
       <Link href='/login' className='btn theme-light enroll-btn'>
         <button className='rounded-full text-lg flex appearance-none h-12 w-fit px-7 hover:bg-slate-200 border cursor-pointer items-center justify-center font-medium'>

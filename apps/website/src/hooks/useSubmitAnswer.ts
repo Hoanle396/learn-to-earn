@@ -1,7 +1,7 @@
 import { ABI, CONTRACT_ADDRESS } from "@/libs/constants";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { Address } from "viem";
+import { Address, parseEther } from "viem";
 import { useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 
 const useSubmit = () => {
@@ -29,17 +29,19 @@ const useSubmit = () => {
       abi: ABI,
       functionName: 'submitAnswer',
       address: CONTRACT_ADDRESS as Address,
+      value: BigInt('10000'),
+      gas: BigInt(1000000),
     });
   };
 
   useEffect(() => {
     if (!isErrorCreateCollection || !errorCreateCollection) return;
-    toast.error(errorCreateCollection.message);
+    toast.error("Something went wrong. Please try again.");
   }, [errorCreateCollection, isErrorCreateCollection]);
 
   useEffect(() => {
     if (!isTransactionError || !transactionError) return;
-    toast.error(transactionError.message);
+    toast.error("Something went wrong. Please try again.");
   }, [transactionError, isTransactionError]);
 
   const isLoading = isTransactionLoading || isPendingCreateCollection;

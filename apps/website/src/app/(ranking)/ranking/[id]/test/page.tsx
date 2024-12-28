@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAnswersStore } from '@/stores';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { usePoolById } from '@/apis/pool/queries';
 import useSubmit from '@/hooks/useSubmitAnswer';
 type Props = {};
@@ -12,7 +12,7 @@ const page = (props: Props) => {
   const { id } = useParams();
   const { data } = usePoolById(Number(id));
   const { setAnswers, setPool, poolId, answers, clear } = useAnswersStore();
-  const { publish } = useSubmit()
+  const { publish, isTransactionSuccess } = useSubmit()
 
   useEffect(() => {
     setPool(data?.data.onchainId);
@@ -23,6 +23,7 @@ const page = (props: Props) => {
   const [selectedAnswer, setSelectedAnswer] = useState<String | undefined>('');
   const [showNextQuestion, setShowNextQuestion] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const { push } = useRouter()
 
   let [currentQuestion, numberOfQuestions] = useMemo(
     () => [data?.data?.quizzes[question], data?.data?.quizzes.length],
@@ -54,11 +55,15 @@ const page = (props: Props) => {
   const handleSubmitOnChain = async () => {
     try {
       publish({ poolId, answers })
-      clear()
     } catch (error) {
 
     }
   }
+
+  useEffect(() => {
+    clear()
+    push('/hone')
+  }, [isTransactionSuccess])
 
   return (
     <>
@@ -81,12 +86,7 @@ const page = (props: Props) => {
                 </h5>
               </div>
             </section>
-            <Link href={'/'} >
-              <button className='hover:bg-primary/80 h-20 w-full rounded-xl bg-primary py-2 text-[18px] font-medium text-white transition-all duration-200 ease-in-out sm:h-[92px] sm:rounded-3xl sm:text-[28px] xl:w-[564px]'>
-                Back Home
-              </button>
-            </Link>
-            <button onClick={handleSubmitOnChain}>
+            <button onClick={handleSubmitOnChain} className='hover:bg-primary/80 h-20 w-full rounded-xl bg-primary py-2 text-[18px] font-medium text-white transition-all duration-200 ease-in-out sm:h-[92px] sm:rounded-3xl sm:text-[28px] xl:w-[564px]'>
               Submit your answers
             </button>
           </div>

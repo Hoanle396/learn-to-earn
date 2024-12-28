@@ -5,6 +5,7 @@ import { IPFS } from '@/constants';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Chip, Grid, Stack, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useParams, useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -119,40 +120,40 @@ const DetailPool = () => {
             </Stack>
             <Stack direction='column' gap={4}>
               <Stack direction='row' width='100%' justifyContent='space-between'>
-                <Typography variant='body2' color='textSecondary' gutterBottom>
-                  Start Time: {data.startTime}
+                <Typography variant='body1' color='textSecondary' gutterBottom>
+                  Start Time: {dayjs(data.startTime).format('DD/MM/YYYY')}
                 </Typography>
-                <Typography variant='body2' color='textSecondary' gutterBottom>
-                  End Time: {data.endTime}
+                <Typography variant='body1' color='textSecondary' gutterBottom>
+                  End Time: {dayjs(data.endTime).format('DD/MM/YYYY')}
                 </Typography>
               </Stack>
               <Stack direction='row' width='100%' justifyContent='space-between'>
-                <Typography variant='body2' color='textSecondary' gutterBottom>
+                <Typography variant='body1' color='textSecondary' gutterBottom>
                   Questions Per Pool: {data.questionPerPool}
                 </Typography>
-                <Typography variant='body2' color='textSecondary' gutterBottom>
-                  total question: {data.quizzes.length ? data.quizzes.length : 'No'}
+                <Typography variant='body1' color='textSecondary' gutterBottom>
+                  Total question: {data.quizzes.length}
                 </Typography>
               </Stack>
               <Box width={'100%'}>
-                {data.quizzes.length && !data.isVerified && (
+                {(data.quizzes.length > 0 && !data.isVerified) && (
                   <Stack>
                     <LoadingButton loading={onchainLoading} variant='outlined' onClick={publishToChain}>
                       Publish{' '}
                     </LoadingButton>
                   </Stack>
                 )}
-                {data.isVerified && new Date().getTime() > new Date(data.endTime).getTime() ? (
+                {(data.isVerified && new Date().getTime() > new Date(data.endTime).getTime()) ? (
                   <Stack>
                     <LoadingButton variant='outlined' onClick={() => { }}>
                       Drawl
                     </LoadingButton>
                   </Stack>
-                ) : (
+                ) : data.isVerified ? (
                   <Stack>
                     <LoadingButton variant='outlined'>View User joined</LoadingButton>
                   </Stack>
-                )}
+                ) : ''}
                 {!data.quizzes.length && (
                   <Stack direction='row' width='100%' justifyContent='end' gap={2}>
                     <Button variant='outlined' color='primary' onClick={handleDownload}>

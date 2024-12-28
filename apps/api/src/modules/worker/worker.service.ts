@@ -119,7 +119,7 @@ export class WorkerService {
     if (!latestBlock) {
       latestBlock = new LatestBlock();
       latestBlock.crawlKey = crawlKey;
-      latestBlock.blockNumber = 16000719;
+      latestBlock.blockNumber = Number(await this.client.getBlockNumber());
       latestBlock = await this.latestBlockRepository.save(latestBlock);
     }
     return latestBlock;

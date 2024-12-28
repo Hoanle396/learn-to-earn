@@ -18,7 +18,7 @@ export class BasicAuthService {
     private readonly httpService: HttpService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>
-  ) {}
+  ) { }
 
   async createUser(dto: CreateUserDto) {
     const { fullName, email, password } = dto;
@@ -75,9 +75,9 @@ export class BasicAuthService {
 
   async updateWalletAddress(user: User, dto: UpdateWalletDto) {
     const { wallet } = dto;
-    if (user.wallet) {
-      throw new ConflictException('Wallet already exists');
-    }
+    // if (user.wallet) {
+    //   throw new ConflictException('Wallet already exists');
+    // }
     user.wallet = wallet;
     return await this.userRepository.save(user);
   }
