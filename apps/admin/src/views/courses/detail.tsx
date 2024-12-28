@@ -2,7 +2,7 @@
 import { useCourse } from '@/@core/apis/courses/queries';
 import { IPFS } from '@/constants';
 import { LoadingButton } from '@mui/lab';
-import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
+import { Box, Chip, Grid, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -82,8 +82,13 @@ const DetailPool = () => {
                 </Typography>
               </Stack>
               <Box width={'100%'}>
-                <Stack>
-                  <Link href={`/courses/${data.id}/lesson`} >
+                <Stack direction={'row'} spacing={2} width={'100%'}>
+                  <Link href={`/courses/${data.id}/joined`} className='w-full'>
+                    <LoadingButton loading={false} variant='outlined' fullWidth >
+                      View User Joined
+                    </LoadingButton>
+                  </Link>
+                  <Link href={`/courses/${data.id}/lesson`} className='w-full' >
                     <LoadingButton loading={false} variant='contained' fullWidth >
                       Add Lesson
                     </LoadingButton>
@@ -94,6 +99,29 @@ const DetailPool = () => {
           </Stack>
         </Grid>
       </Grid>
+      <Stack direction='row' justifyContent='space-between' alignItems='center' my={8}>
+        <Typography variant='h5'>Lessons</Typography>
+      </Stack>
+      <Box sx={{ border: 1, borderRadius: 2, padding: 4 }} >
+        <Table sx={{}}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Index</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Lesson Hash</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.lessons.map((lesson: any) => (
+              <TableRow key={lesson.id}>
+                <TableCell>{lesson.index}</TableCell>
+                <TableCell>{lesson.title}</TableCell>
+                <TableCell>{lesson.lessonUrl}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
     </Box>
   );
 };

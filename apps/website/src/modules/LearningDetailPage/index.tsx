@@ -1,28 +1,28 @@
 'use client';
+import { useCourseById, useMyCourseById, useSubscribe } from '@/apis/courses/queries';
+import { IPFS } from '@/libs/constants';
 import { cn } from '@/libs/utils';
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { BsChatDots } from 'react-icons/bs';
 import { FaBookmark, FaShareAlt, FaStar, FaTrophy, FaUpload, FaUser } from 'react-icons/fa';
+import dayjs from 'dayjs';
+import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 const LearningDetailPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
-  const [showChat, setShowChat] = useState(false);
+  const { mutateAsync } = useSubscribe()
+
+  const { id } = useParams()
+
+  const { data } = useCourseById(String(id))
+  const { data: course, refetch } = useMyCourseById(String(id))
+
+  console.log(data, course);
 
   const dummyData = {
-    courseTitle: 'Advanced Web Development Masterclass',
-    instructor: {
-      name: 'Dr. Sarah Johnson',
-      expertise: 'Full Stack Development',
-      image:
-        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80',
-    },
-    overview: 'Master modern web development with this comprehensive course covering React, Node.js, and more.',
-    syllabus: [
-      { title: 'Introduction to Web Development', duration: '2 hours' },
-      { title: 'Frontend Fundamentals', duration: '4 hours' },
-      { title: 'Backend Development', duration: '6 hours' },
-    ],
     reviews: [
       { user: 'John D.', rating: 5, comment: 'Excellent course content!' },
       {
@@ -37,12 +37,16 @@ const LearningDetailPage = () => {
     setActiveTab(tab);
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      console.log('Uploading file:', file.name);
+  const handleSubscribe = async () => {
+    try {
+      await mutateAsync(String(id))
+      refetch()
+      toast.success("Subscribed successfully. You can now access the course.");
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
     }
-  };
+  }
+
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -50,7 +54,7 @@ const LearningDetailPage = () => {
         {/* Header Section */}
         <header className='mb-8'>
           <div className='flex items-center justify-between mb-6'>
-            <h1 className='text-3xl font-bold text-gray-800'>{dummyData.courseTitle}</h1>
+            <h1 className='text-3xl font-bold text-gray-800'>{data?.data.name}</h1>
             <div className='flex items-center space-x-4'>
               <button
                 className='p-2 rounded-full hover:bg-gray-200'
@@ -68,10 +72,7 @@ const LearningDetailPage = () => {
               </button>
             </div>
           </div>
-          <div className='bg-gray-200 rounded-full h-4 mb-4'>
-            <div className={cn('bg-blue-500 h-4 rounded-full transition-all duration-300', `w-[45%]`)} />
-          </div>
-          <p className='text-sm text-gray-600'>45% Complete</p>
+
         </header>
 
         {/* Main Content */}
@@ -80,7 +81,7 @@ const LearningDetailPage = () => {
           <nav className='lg:w-1/4'>
             <div className='bg-white rounded-lg shadow-sm p-4'>
               <ul className='space-y-2'>
-                {['overview', 'syllabus', 'instructor', 'reviews'].map((tab) => (
+                {['overview', 'lessons', 'reviews'].map((tab) => (
                   <li key={tab}>
                     <button
                       className={`w-full text-left p-3 rounded-lg transition ${activeTab === tab ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-50'}`}
@@ -92,24 +93,6 @@ const LearningDetailPage = () => {
                 ))}
               </ul>
             </div>
-
-            {/* Gamification */}
-            <div className='mt-4 bg-white rounded-lg shadow-sm p-4'>
-              <h3 className='text-lg font-semibold mb-3 flex items-center'>
-                <FaTrophy className='text-yellow-500 mr-2' /> Achievements
-              </h3>
-              <div className='grid grid-cols-3 gap-2'>
-                {[1, 2, 3].map((badge) => (
-                  <div
-                    key={badge}
-                    className='aspect-square rounded-lg bg-gray-100 flex items-center justify-center'
-                    title={`Badge ${badge}`}
-                  >
-                    <FaStar className='text-yellow-500' />
-                  </div>
-                ))}
-              </div>
-            </div>
           </nav>
 
           {/* Main Content Area */}
@@ -118,68 +101,78 @@ const LearningDetailPage = () => {
               {activeTab === 'overview' && (
                 <div>
                   <h2 className='text-2xl font-bold mb-4'>Course Overview</h2>
-                  <p className='text-gray-700 mb-6'>{dummyData.overview}</p>
+                  <p className='text-gray-700 mb-6'>{data?.data.name}</p>
 
                   {/* Video Player */}
                   <div className='aspect-video bg-gray-900 rounded-lg mb-6'>
-                    <iframe
+                    <img
                       className='w-full h-full rounded-lg'
-                      src='https://www.youtube.com/embed/dqlO6_5rZSQ'
+                      src={IPFS(data?.data.logo)}
                       title='Course Introduction'
-                      allowFullScreen
-                    ></iframe>
+                    />
+                  </div>
+
+                  {/* Course Details */}
+                  <div>
+                    <h3 className='text-lg font-semibold mb-3'>Course Details</h3>
+                    <div className='grid grid-cols-2 space-y-2'>
+                      <p className='col-span-2 text-gray-600'>
+                        {data?.data.description}
+                      </p>
+                      <div className='col-span-1 flex gap-2'>
+                        <h5 className='font-medium'>Category</h5>
+                        <p>{data?.data.category.name}</p>
+                      </div>
+                      <div className='col-span-1 flex gap-2'>
+                        <h5 className='font-medium'>Total Lesson</h5>
+                        <p>{data?.data.lessons.length}</p>
+                      </div>
+                      <div className='col-span-1 flex gap-2'>
+                        <h5 className='font-medium'>Created At</h5>
+                        <p>{dayjs(data?.data.createdAt).format('DD/MM/YYYY')}</p>
+                      </div>
+                      <div className='col-span-1 flex gap-2'>
+                        <h5 className='font-medium'>Last Update At</h5>
+                        <p>{dayjs(data?.data.updatedAt).format('DD/MM/YYYY')}</p>
+                      </div>
+                    </div>
                   </div>
 
                   {/* File Upload */}
-                  <div className='mt-6'>
-                    <h3 className='text-lg font-semibold mb-3'>Assignment Upload</h3>
-                    <div className='border-2 border-dashed border-gray-300 rounded-lg p-6 text-center'>
-                      <FaUpload className='mx-auto text-gray-400 text-3xl mb-2' />
-                      <p className='text-gray-600 mb-2'>Drag and drop your files here or</p>
-                      <input type='file' className='hidden' id='fileUpload' onChange={handleFileUpload} />
-                      <label
-                        htmlFor='fileUpload'
-                        className='inline-block bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-600'
-                      >
-                        Browse Files
-                      </label>
+                  {course ? (
+                    <div className='mt-6'>
+                      <div className='rounded-lg p-6 text-center'>
+                        <Link href={`/learn/${id}/learn`} >
+                          <button className='hover:bg-primary/80 h-16 w-full rounded-xl bg-primary py-2 text-[18px] font-medium text-white transition-all duration-200 ease-in-out sm:text-[28px] xl:w-[564px]'>
+                            Learn now
+                          </button>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className='mt-6'>
+                      <div className='rounded-lg p-6 text-center'>
+                        <button onClick={handleSubscribe} className='hover:bg-primary/80 h-16 w-full rounded-xl bg-primary py-2 text-[18px] font-medium text-white transition-all duration-200 ease-in-out sm:text-[28px] xl:w-[564px]'>
+                          Subscribe this course
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {activeTab === 'syllabus' && (
+              {activeTab === 'lessons' && (
                 <div>
-                  <h2 className='text-2xl font-bold mb-4'>Course Syllabus</h2>
+                  <h2 className='text-2xl font-bold mb-4'>Lessons of the course</h2>
                   <div className='space-y-4'>
-                    {dummyData.syllabus.map((item, index) => (
+                    {data.data.lessons.map((item: any, index: number) => (
                       <div key={index} className='border rounded-lg p-4 hover:bg-gray-50 transition'>
                         <div className='flex justify-between items-center'>
                           <h3 className='font-semibold'>{item.title}</h3>
-                          <span className='text-gray-600 text-sm'>{item.duration}</span>
+                          <span className='text-gray-600 text-sm'>{item.index}</span>
                         </div>
                       </div>
                     ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'instructor' && (
-                <div>
-                  <h2 className='text-2xl font-bold mb-4'>Meet Your Instructor</h2>
-                  <div className='flex items-start space-x-4'>
-                    <div className='w-12 h-12 rounded-full relative'>
-                      <Image
-                        fill
-                        src={dummyData.instructor.image}
-                        alt={dummyData.instructor.name}
-                        className='w-24 h-24 rounded-full object-cover'
-                      />
-                    </div>
-                    <div>
-                      <h3 className='text-xl font-semibold'>{dummyData.instructor.name}</h3>
-                      <p className='text-gray-600'>{dummyData.instructor.expertise}</p>
-                    </div>
                   </div>
                 </div>
               )}
@@ -207,29 +200,6 @@ const LearningDetailPage = () => {
               )}
             </div>
           </main>
-        </div>
-
-        {/* Chat Widget */}
-        <div className='fixed bottom-4 right-4'>
-          <button
-            onClick={() => setShowChat(!showChat)}
-            className='bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition'
-            aria-label='Toggle chat'
-          >
-            <BsChatDots className='text-xl' />
-          </button>
-
-          {showChat && (
-            <div className='absolute bottom-16 right-0 w-80 bg-white rounded-lg shadow-xl'>
-              <div className='p-4 border-b'>
-                <h3 className='font-semibold'>Course Discussion</h3>
-              </div>
-              <div className='h-80 overflow-y-auto p-4'>
-                {/* Chat messages would go here */}
-                <p className='text-gray-500 text-center'>Start a conversation!</p>
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

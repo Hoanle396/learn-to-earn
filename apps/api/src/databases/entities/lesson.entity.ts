@@ -13,7 +13,7 @@ export class Lesson extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   description: string;
 
-  @Column({ nullable: false, type: 'text' })
+  @Column({ nullable: true, type: 'text' })
   lessonUrl: string;
 
   @ManyToOne(

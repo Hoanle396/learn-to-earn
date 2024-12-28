@@ -1,5 +1,5 @@
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { course, courses, learn, myCourses, subscribe } from './request';
+import { course, courses, learn, myCourseById, myCourses, subscribe } from './request';
 
 export const useCourses = (params: any, options?: Partial<UseQueryOptions<any, any>>) => {
   return useQuery<any, any>({
@@ -36,3 +36,11 @@ export const useLearn = () => {
     mutationFn: learn,
   });
 };
+
+export const useMyCourseById = (id: string, options?: Partial<UseQueryOptions<any, any>>) => {
+  return useQuery<any, any>({
+    queryKey: ['my-course', id],
+    queryFn: () => myCourseById(id),
+    ...options,
+  });
+}

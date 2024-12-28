@@ -7,7 +7,7 @@ const ListCourses = () => {
   const { data } = useCourses()
   console.log(data);
   return (
-    <Grid container>
+    <Grid container mt={2} spacing={2}>
       {data?.data.items.map((item: any) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
           <CardCourse {...item} />

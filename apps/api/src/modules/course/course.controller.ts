@@ -49,10 +49,18 @@ export class CourseController {
     return await this.courseService.findMyCourses(user, query);
   }
 
+  @Get('my-course/:id')
+  @ApiBearerAuth()
+  @UseGuards(UserJwtGuard)
+  async findMyCourseDetail(@GetUser() user: User, @Param('id') id: number) {
+    return await this.courseService.findMyCourseDetail(user, id);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.courseService.findOne(id);
   }
+
 
   @Patch(':id')
   @ApiBearerAuth()

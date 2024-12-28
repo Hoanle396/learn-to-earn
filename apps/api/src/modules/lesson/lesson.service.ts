@@ -11,17 +11,17 @@ export class LessonService {
   constructor(
     @InjectRepository(Lesson) private lessonRepository: Repository<Lesson>,
     @InjectRepository(Course) private courseRepository: Repository<Course>
-  ) {}
+  ) { }
 
   async create(dto: CreateLessonDto) {
-    const course = await this.courseRepository.findOne({ where: { id: dto.courseId } });
+    const course = await this.courseRepository.findOne({ where: { id: dto.courseId }, relations: { lessons: true } });
     if (!course) {
       throw new BadRequestException('Course not found');
     }
 
     const lesson = new Lesson();
     lesson.title = dto.title;
-    lesson.index = dto.index;
+    lesson.index = course.lessons.length;
     lesson.description = dto.description;
     lesson.lessonUrl = dto.lessonUrl;
     lesson.course = course;
@@ -29,19 +29,21 @@ export class LessonService {
   }
 
   async bulkCreate(id: number, dto: CreateLessonDto[]) {
-    const course = await this.courseRepository.findOne({ where: { id } });
+    const course = await this.courseRepository.findOne({ where: { id }, relations: { lessons: true } });
     if (!course) {
       throw new BadRequestException('Course not found');
     }
 
+    let index = course.lessons.length;
     const lessons = [];
     for (const c of dto) {
       const lesson = new Lesson();
       lesson.title = c.title;
-      lesson.index = c.index;
+      lesson.index = index;
       lesson.description = c.description;
       lesson.lessonUrl = c.lessonUrl;
       lesson.course = course;
+      index++;
     }
     return await this.lessonRepository.save(lessons);
   }

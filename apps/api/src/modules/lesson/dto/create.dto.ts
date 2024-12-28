@@ -8,21 +8,14 @@ export class CreateLessonDto {
   title: string;
 
   @ApiProperty({ required: true })
-  @IsNumber()
-  @IsNotEmpty()
-  @Min(1)
-  index: number;
-
-  @ApiProperty({ required: true })
   @IsString()
   @IsOptional()
   description: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
-  @IsUrl()
-  lessonUrl: string;
+  @IsOptional()
+  lessonUrl?: string;
 
   @ApiProperty({ required: true })
   @IsNumber()

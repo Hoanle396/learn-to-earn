@@ -40,7 +40,7 @@ export class CourseService {
   }
 
   async findAll(query: QueryPaginationDto) {
-    const builder = this.courseRepository.createQueryBuilder('course');
+    const builder = this.courseRepository.createQueryBuilder('course').leftJoinAndSelect('course.category', 'category');
     return await paginateEntities(builder, query);
   }
 
@@ -55,6 +55,27 @@ export class CourseService {
       throw new NotFoundException('Course not found');
     }
     return course;
+  }
+
+  async findMyCourseDetail(user: User, id: number) {
+    const course = await this.courseRepository.findOne({
+      where: { id },
+      relations: {
+        category: true,
+        lessons: true,
+      }
+    });
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+    const userCourse = await this.userCourseRepository.findOne({
+      where: { course: { id: course.id }, user: { id: user.id } },
+      relations: { course: true, user: true },
+    });
+    if (!userCourse) {
+      throw new BadRequestException('User not subscribed to course');
+    }
+    return { course, userCourse };
   }
 
   async update(id: number, updateCourseDto: UpdateCourseDto) {

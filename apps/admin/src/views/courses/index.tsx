@@ -16,7 +16,7 @@ export default function Courses() {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h3">Ranking</Typography>
+            <Typography variant="h3">Courses</Typography>
             <Link href="/courses/create">
               <Button variant="contained" color="primary">
                 Create new course

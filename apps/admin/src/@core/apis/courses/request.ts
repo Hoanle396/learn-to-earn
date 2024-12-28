@@ -29,3 +29,12 @@ export const deleteCourse = (id: number) => {
     method: "DELETE",
   });
 }
+
+
+export const createLesson = (data: any) => {
+  return request({
+    url: "/lessons",
+    method: "POST",
+    data,
+  })
+}

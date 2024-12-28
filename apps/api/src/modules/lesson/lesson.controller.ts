@@ -1,14 +1,14 @@
 import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
 
 @ApiTags('Lesson')
 @Controller('lessons')
 export class LessonController {
-  constructor(private readonly lessonService: LessonService) {}
+  constructor(private readonly lessonService: LessonService) { }
 
   @Post('')
   @ApiBearerAuth()
@@ -17,6 +17,7 @@ export class LessonController {
     return await this.lessonService.create(dto);
   }
 
+  @ApiOperation({ deprecated: true })
   @Post('bulk/:id')
   @ApiBearerAuth()
   @UseGuards(AdminJwtGuard)

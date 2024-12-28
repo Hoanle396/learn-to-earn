@@ -16,6 +16,7 @@
     "@tanstack/react-query": "^5.56.2",
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
     "framer-motion": "^11.11.11",
     "icons-next": "^1.0.4",
     "lenis": "^1.1.16",

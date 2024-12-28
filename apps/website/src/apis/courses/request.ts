@@ -37,3 +37,10 @@ export const myCourses = async (params: any): Promise<Course[]> => {
     params,
   });
 };
+
+export const myCourseById = async (id: string): Promise<Course[]> => {
+  return client({
+    url: '/courses/my-course/' + id,
+    method: 'GET',
+  });
+};

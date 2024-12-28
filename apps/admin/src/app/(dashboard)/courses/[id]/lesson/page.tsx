@@ -1,3 +1,3 @@
-export default function CreateLesson() {
-  return <div>CreateLesson</div>
-}
+import { createLesson } from "@/views/lesson/Create";
+
+export default createLesson
