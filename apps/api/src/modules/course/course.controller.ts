@@ -1,18 +1,18 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { CourseService } from './course.service';
-import { CreateCourseDto } from './dto/create.dto';
-import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
-import { QueryPaginationDto } from '@/shared/dto/pagination.query';
-import { UpdateCategoryDto } from '../category/dto/update.dto';
-import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
-import { UserJwtGuard } from '../auth/guards/user_jwt.guard';
 import { GetUser } from '@/common/decorators/user.decorator';
 import { User } from '@/databases/entities';
+import { QueryPaginationDto } from '@/shared/dto/pagination.query';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import { AdminJwtGuard } from '../auth/guards/admin_jwt.guard';
+import { UserJwtGuard } from '../auth/guards/user_jwt.guard';
+import { UpdateCategoryDto } from '../category/dto/update.dto';
+import { CourseService } from './course.service';
+import { CreateCourseDto } from './dto/create.dto';
 import { LearnDto } from './dto/learn.dto';
 
 @Controller('courses')
 export class CourseController {
-  constructor(private readonly courseService: CourseService) {}
+  constructor(private readonly courseService: CourseService) { }
 
   @Post()
   @ApiBearerAuth()
@@ -50,21 +50,21 @@ export class CourseController {
   }
 
   @Get(':id')
-  async findOne(@Query('id') id: number) {
+  async findOne(@Param('id') id: number) {
     return await this.courseService.findOne(id);
   }
 
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(AdminJwtGuard)
-  async update(@Query('id') id: number, @Body() body: UpdateCategoryDto) {
+  async update(@Param('id') id: number, @Body() body: UpdateCategoryDto) {
     return await this.courseService.update(id, body);
   }
 
   @Delete(':id')
   @ApiBearerAuth()
   @UseGuards(AdminJwtGuard)
-  async remove(@Query('id') id: number) {
+  async remove(@Param('id') id: number) {
     return await this.courseService.remove(id);
   }
 }

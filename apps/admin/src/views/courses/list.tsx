@@ -1,14 +1,19 @@
 "use client"
+import { useCourses } from '@/@core/apis/courses/queries'
 import { Grid } from '@mui/material'
-import React from 'react'
-import CardUser from '../card-basic/CardUser'
+import CardCourse from './Card'
 
 const ListCourses = () => {
+  const { data } = useCourses()
+  console.log(data);
   return (
     <Grid container>
-      <Grid item xs={12} md={6} lg={3}>
-        <CardUser />
-      </Grid>
+      {data?.data.items.map((item: any) => (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
+          <CardCourse {...item} />
+        </Grid>
+      ))
+      }
     </Grid>
   )
 }

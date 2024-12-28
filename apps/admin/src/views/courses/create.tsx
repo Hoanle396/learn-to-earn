@@ -11,22 +11,24 @@ import * as yup from "yup";
 import { useCreateRanking, useTemplate } from "@/@core/apis/ranking";
 import { useMutationPinFileToIPFS } from "@/@core/apis/ipfs";
 import toast from "react-hot-toast";
+import { useCreateCourse } from "@/@core/apis/courses/queries";
+import { useCategories } from "@/@core/apis/categories/queries";
 
-const tags = ["English", "Arabic", "French", "German", "Portuguese"];
+const tagList = ["English", "Arabic", "French", "German", "Portuguese"];
 
 const CreateCourse = () => {
 
-  const [fileInput, setFileInput] = useState<string>("");
+  const [fileInput, setFileInput] = useState<File | null>(null);
   const [tags, setTags] = useState<string[]>([])
   const [imgSrc, setImgSrc] = useState<string>("/images/logo_full.svg");
   const { mutateAsync } = useMutationPinFileToIPFS()
-  const { mutateAsync: createRanking } = useCreateRanking()
+  const { mutateAsync: createCourse } = useCreateCourse()
+  const { data: categories } = useCategories()
 
   const schema = yup.object().shape({
+    categoryId: yup.string().required(),
     name: yup.string().required(),
     description: yup.string().required(),
-    questionPerPool: yup.number().required()
-
   });
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -38,9 +40,7 @@ const CreateCourse = () => {
         toast.error("Please upload a file");
         return;
       }
-      const formData = new FormData()
-      formData.append("file", fileInput)
-      const result: any = await mutateAsync(formData as any);
+      const result: any = await mutateAsync(fileInput as any);
       const { hash } = result;
 
       const payload = {
@@ -50,7 +50,7 @@ const CreateCourse = () => {
         price: 0,
       }
       console.log(payload);
-      await createRanking(payload)
+      await createCourse(payload)
       toast.success("Course created successfully");
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -65,15 +65,12 @@ const CreateCourse = () => {
     if (files && files.length !== 0) {
       reader.onload = () => setImgSrc(reader.result as string);
       reader.readAsDataURL(files[0]);
-
-      if (reader.result !== null) {
-        setFileInput(reader.result as string);
-      }
+      setFileInput(files?.[0] as File);
     }
   };
 
   const handleFileInputReset = () => {
-    setFileInput("");
+    setFileInput(null);
     setImgSrc("/images/logo_full.svg");
   };
 
@@ -86,10 +83,10 @@ const CreateCourse = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography variant="h3">Create new pool</Typography>
+          <Typography variant="h3">Create new course</Typography>
           <Link href="/courses">
             <Button variant="contained" color="primary">
-              Back To Ranking
+              Back To Courses
             </Button>
           </Link>{" "}
         </Stack>
@@ -117,7 +114,6 @@ const CreateCourse = () => {
                   <input
                     hidden
                     type="file"
-                    value={fileInput}
                     accept="image/png, image/jpeg"
                     onChange={handleFileInputChange}
                     id="account-settings-upload-image"
@@ -149,12 +145,19 @@ const CreateCourse = () => {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                name="category"
-                label="Category"
-                placeholder="Category"
-              />
+              <FormControl fullWidth>
+                <InputLabel>Category</InputLabel>
+                <Select
+                  value={methods.watch("categoryId")}
+                  label="Category"
+                >
+                  {(categories?.data.items ?? []).map(({ name, id }: any) => (
+                    <MenuItem key={name} value={id} onClick={() => methods.setValue('categoryId', id)}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} >
               <TextField
@@ -194,7 +197,7 @@ const CreateCourse = () => {
                     </div>
                   )}
                 >
-                  {tags.map((name) => (
+                  {tagList.map((name) => (
                     <MenuItem key={name} value={name} onClick={() => setTags((prev) => ([...prev, name]))}>
                       {name}
                     </MenuItem>

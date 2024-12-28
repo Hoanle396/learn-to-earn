@@ -61,8 +61,10 @@ const page = (props: Props) => {
   }
 
   useEffect(() => {
-    clear()
-    push('/hone')
+    if (isTransactionSuccess) {
+      clear()
+      push('/ranking')
+    }
   }, [isTransactionSuccess])
 
   return (

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Min, MinLength } from 'class-validator';
 
 export class CreateCourseDto {
@@ -28,7 +29,7 @@ export class CreateCourseDto {
   })
   @IsNumber()
   @IsNotEmpty()
-  @Min(0)
+  @Type(() => Number)
   price: string;
 
   @ApiProperty({ required: false })
@@ -37,8 +38,7 @@ export class CreateCourseDto {
   description: string;
 
   @ApiProperty({ required: true })
-  @IsArray({ each: true })
+  @IsArray()
   @IsString({ each: true })
-  @MinLength(1)
   tags: string[];
 }

@@ -19,7 +19,7 @@ export class CourseService {
     private lessonRepository: Repository<Lesson>,
     @InjectRepository(LessonProcess)
     private lessonProcessRepository: Repository<LessonProcess>
-  ) {}
+  ) { }
 
   async create(createCourseDto: CreateCourseDto) {
     const category = await this.categoryRepository.findOne({
@@ -45,7 +45,12 @@ export class CourseService {
   }
 
   async findOne(id: number) {
-    const course = await this.courseRepository.findOne({ where: { id } });
+    const course = await this.courseRepository.findOne({
+      where: { id }, relations: {
+        category: true,
+        lessons: true,
+      }
+    });
     if (!course) {
       throw new NotFoundException('Course not found');
     }
