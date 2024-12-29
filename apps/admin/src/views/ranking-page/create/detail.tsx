@@ -1,13 +1,13 @@
 'use client';
-import { useRankingDetail, useTemplate, useUploadQuestions } from '@/@core/apis/ranking';
+import { useJoinedRanking, useRankingDetail, useTemplate, useUploadQuestions } from '@/@core/apis/ranking';
 import usePublish from '@/@core/hooks/usePublishPool';
 import { IPFS } from '@/constants';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Chip, Grid, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, Stack, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useParams, useRouter } from 'next/navigation';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
 
 const DetailPool = () => {
@@ -20,8 +20,8 @@ const DetailPool = () => {
     isError,
   } = useRankingDetail(Number(id));
   const { mutateAsync: download } = useTemplate();
-  const [file, setFile] = useState<File | null>(null);
   const { mutateAsync } = useUploadQuestions();
+  const { data: joined } = useJoinedRanking(Number(id));
   const client = useQueryClient();
 
   const handleDownload = async () => {
@@ -42,7 +42,7 @@ const DetailPool = () => {
 
   const handleFileInputChange = async (file: ChangeEvent) => {
     const { files } = file.target as HTMLInputElement;
-    setFile(files?.[0] as any);
+
     try {
       const data = new FormData();
       data.append('file', files?.[0] as any);
@@ -151,7 +151,7 @@ const DetailPool = () => {
                   </Stack>
                 ) : data.isVerified ? (
                   <Stack>
-                    <LoadingButton variant='outlined'>View User joined</LoadingButton>
+                    <LoadingButton variant='outlined' disabled>Pool on processing...</LoadingButton>
                   </Stack>
                 ) : ''}
                 {!data.quizzes.length && (
@@ -176,6 +176,31 @@ const DetailPool = () => {
           </Stack>
         </Grid>
       </Grid>
+      <Stack direction='row' justifyContent='space-between' alignItems='center' my={8}>
+        <Typography variant='h5'>User Joined</Typography>
+      </Stack>
+      <Box sx={{ border: 1, borderRadius: 2, padding: 4 }} >
+        <Table >
+          <TableHead>
+            <TableRow>
+              <TableCell>id</TableCell>
+              <TableCell>User</TableCell>
+              <TableCell>Joined</TableCell>
+              <TableCell>Passed</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {joined?.data.items.map((item: any) => (
+              <TableRow key={item.id}>
+                <TableCell>{item.id}</TableCell>
+                <TableCell>{item.user.wallet}</TableCell>
+                <TableCell>{item.isJoined ? (<Chip label="joined" color='success' />) : (<Chip label="error" color='warning' />)}</TableCell>
+                <TableCell>{item.isPassed ? (<Chip label="passed" color='success' />) : (<Chip label="failed" color='warning' />)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
     </Box>
   );
 };

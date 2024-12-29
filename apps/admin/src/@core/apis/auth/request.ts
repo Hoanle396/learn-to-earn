@@ -22,3 +22,20 @@ export const secret = async (): Promise<ILoginResponse> => {
 		method: "GET",
 	});
 };
+
+export const getUsers = async () => {
+	return request({
+		url: "/admin/users",
+		method: "GET",
+	});
+}
+
+export const updateUser = async (data: { id: number, status: 'active' | 'inactive' }) => {
+	return request({
+		url: `/admin/users/${data.id}`,
+		method: "PATCH",
+		data: {
+			status: data.status
+		},
+	});
+}

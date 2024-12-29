@@ -27,3 +27,7 @@ export const uploadQuestions = async (data: QuestionPayload) => {
   formData.append("poolId", String(data.poolId));
   return request.post("/ranking/question", formData);
 };
+
+export const getJoinedRanking = async (id: number) => {
+  return request.get(`/ranking/joined/${id}`);
+}

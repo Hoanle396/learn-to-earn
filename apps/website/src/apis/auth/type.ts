@@ -21,9 +21,10 @@ export type IRegisterPayload = {
 };
 export type IUser = {
   id: string;
-  fullName: string;
+  fullname: string;
   email: string;
   wallet: string;
+  isActive: boolean;
 };
 export type IToken = {
   accessToken: string;

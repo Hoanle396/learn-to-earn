@@ -1,15 +1,12 @@
 'use client';
 import { useCourseById, useMyCourseById, useSubscribe } from '@/apis/courses/queries';
 import { IPFS } from '@/libs/constants';
-import { cn } from '@/libs/utils';
-import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import React, { useState } from 'react';
-import { BsChatDots } from 'react-icons/bs';
-import { FaBookmark, FaShareAlt, FaStar, FaTrophy, FaUpload, FaUser } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import toast from 'react-hot-toast';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { FaBookmark, FaShareAlt, FaStar, FaUser } from 'react-icons/fa';
 
 const LearningDetailPage = () => {
   const [activeTab, setActiveTab] = useState('overview');

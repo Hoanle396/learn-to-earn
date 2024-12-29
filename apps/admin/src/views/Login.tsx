@@ -79,10 +79,6 @@ const Login = ({ mode }: { mode: Mode }) => {
 		});
 	}, []);
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		router.push("/");
-	};
 
 	const responseGoogle = (
 		response: GoogleLoginResponse | GoogleLoginResponseOffline,

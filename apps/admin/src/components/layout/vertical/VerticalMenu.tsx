@@ -1,6 +1,7 @@
 // MUI Imports
 import Chip from "@mui/material/Chip";
 import { useTheme } from "@mui/material/styles";
+import { ArchiveMainBroken, ChartPieBroken, FlashMainBroken, PetMainBroken } from 'icons-next'
 
 // Third-party Imports
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -82,51 +83,24 @@ const VerticalMenu = ({
         <MenuSection label="Course management">
           <MenuItem
             href="/courses"
-            icon={<i className="ri-book-shelf-line" />}
+            icon={<FlashMainBroken className="w-5 h-5" />}
           >
             Courses
           </MenuItem>
-          <MenuItem href="/ranking" icon={<i className="ri-sort-asc" />}>
+          <MenuItem href="/ranking" icon={<ArchiveMainBroken className="w-5 h-5" />}>
             Ranking
           </MenuItem>
-          <SubMenu
-            label="Auth Pages"
-            icon={<i className="ri-shield-keyhole-line" />}
-          >
-            <MenuItem href="/login" target="_blank">
-              Login
-            </MenuItem>
-            <MenuItem href="/register" target="_blank">
-              Register
-            </MenuItem>
-            <MenuItem href="/forgot-password" target="_blank">
-              Forgot Password
-            </MenuItem>
-          </SubMenu>
-          <SubMenu
-            label="Miscellaneous"
-            icon={<i className="ri-question-line" />}
-          >
-            <MenuItem href="/error" target="_blank">
-              Error
-            </MenuItem>
-            <MenuItem href="/under-maintenance" target="_blank">
-              Under Maintenance
-            </MenuItem>
-          </SubMenu>
-          <MenuItem
-            href="/card-basic"
-            icon={<i className="ri-bar-chart-box-line" />}
-          >
-            Cards
+          <MenuItem href="/users" icon={<PetMainBroken className="w-5 h-5" />}>
+            Users
           </MenuItem>
+
         </MenuSection>
-        <MenuSection label="Forms & Tables">
+        <MenuSection label="Statistics">
           <MenuItem
-            href="/form-layouts"
-            icon={<i className="ri-layout-4-line" />}
+            href="/statistics"
+            icon={<ChartPieBroken className="w-5 h-5" />}
           >
-            Form Layouts
+            Chart
           </MenuItem>
         </MenuSection>
         <MenuSection label="Misc">

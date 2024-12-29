@@ -5,7 +5,7 @@ import { Readable } from 'stream';
 import { Causes } from '@/common/exceptions/causes';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Option, Quiz, RankingPool, UserQuiz } from '@/databases/entities';
+import { Option, Prize, Quiz, RankingPool, User } from '@/databases/entities';
 import { OptionQuiz } from '@/shared/enums';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
 import { paginateEntities } from '@/utils/paginate';
@@ -21,9 +21,9 @@ export class RankingService {
     @InjectRepository(RankingPool)
     private readonly rankingPoolRepository: Repository<RankingPool>,
 
-    @InjectRepository(UserQuiz)
-    private readonly userQuizRepository: Repository<UserQuiz>
-  ) {}
+    @InjectRepository(Prize)
+    private readonly prizeRepository: Repository<Prize>
+  ) { }
 
   async createPool(dto: PoolCreateDto) {
     const newPool = new RankingPool();
@@ -112,5 +112,35 @@ export class RankingService {
       throw new NotFoundException('pool not found');
     }
     return pool;
+  }
+
+  async getJoinedPool(id, query: QueryPaginationDto) {
+    const builder = this.prizeRepository.createQueryBuilder('prize')
+      .leftJoinAndSelect('prize.user', 'user')
+      .where('prize.poolId = :id', { id });
+    return await paginateEntities(builder, query);
+  }
+
+  async joinPool(user: User, id: number) {
+    const pool = await this.rankingPoolRepository.findOne({ where: { id } });
+    if (!pool) {
+      throw new NotFoundException('pool not found');
+    }
+    const prize = new Prize();
+    prize.user = user;
+    prize.pool = pool;
+    prize.isJoined = true;
+    prize.isPassed = false;
+    await this.prizeRepository.save(prize);
+    return prize;
+  }
+
+  async getCertification(user: User, query: QueryPaginationDto) {
+    const builder = this.prizeRepository.createQueryBuilder('prize')
+      .leftJoinAndSelect('prize.pool', 'pool')
+      .where('prize.userId = :id', { id: user.id })
+      .andWhere('prize.isPassed = :isPassed', { isPassed: true });
+
+    return await paginateEntities(builder, query);
   }
 }

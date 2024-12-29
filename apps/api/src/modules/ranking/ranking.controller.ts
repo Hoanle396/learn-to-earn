@@ -19,10 +19,13 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { format } from 'fast-csv';
 import { Response } from 'express';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
+import { UserJwtGuard } from '../auth/guards/user_jwt.guard';
+import { GetUser } from '@/common/decorators/user.decorator';
+import { User } from '@/databases/entities';
 
 @Controller('ranking')
 export class RankingController {
-  constructor(private readonly rankingService: RankingService) {}
+  constructor(private readonly rankingService: RankingService) { }
 
   @Post()
   @ApiBearerAuth()
@@ -73,8 +76,27 @@ export class RankingController {
     return await this.rankingService.findActive(query);
   }
 
+  @Get('joined/:id')
+  async findJoined(@Param('id') id: number, @Query() query: QueryPaginationDto) {
+    return await this.rankingService.getJoinedPool(id, query);
+  }
+
+  @Get('certification')
+  @ApiBearerAuth()
+  @UseGuards(UserJwtGuard)
+  async findCertification(@GetUser() user: User, @Query() query: QueryPaginationDto) {
+    return await this.rankingService.getCertification(user, query);
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: number) {
     return await this.rankingService.findOne(id);
+  }
+
+  @Post(':id')
+  @ApiBearerAuth()
+  @UseGuards(UserJwtGuard)
+  async joinPool(@GetUser() user: User, @Param('id') id: number) {
+    return await this.rankingService.joinPool(user, id);
   }
 }

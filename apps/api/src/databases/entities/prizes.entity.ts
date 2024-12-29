@@ -1,20 +1,19 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne, Relation } from 'typeorm';
 import { BaseEntity } from './base/base.entity';
+import { User } from './user.entity';
+import { RankingPool } from './ranking-pool.entity';
 
 @Entity()
 export class Prize extends BaseEntity {
-  @Column({ type: 'int' })
-  poolIdOnChain: number;
+  @ManyToOne(() => RankingPool, rankingPool => rankingPool.id)
+  pool: Relation<RankingPool>;
 
-  @Column({ type: 'bigint', nullable: true })
-  totalPrizes: number;
+  @ManyToOne(() => User, user => user.id)
+  user: Relation<User>;
 
-  @Column({ type: 'int', nullable: true })
-  totalUser: number;
+  @Column({ type: 'boolean', nullable: true, default: true })
+  isJoined: boolean;
 
-  @Column({ type: 'bigint', nullable: true })
-  winningPrizes: number;
-
-  @Column({ type: 'bigint', nullable: true })
-  claimedPrizes: number;
+  @Column({ type: 'boolean', nullable: true, default: false })
+  isPassed: boolean;
 }

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { login, logout, me, register, updateWallet } from './request';
 
-export const userUser = async () => {
+export const useUser = () => {
   return useQuery({
     queryKey: ['user'],
     queryFn: me,

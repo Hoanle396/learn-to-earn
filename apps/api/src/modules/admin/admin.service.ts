@@ -2,7 +2,7 @@ import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nes
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Admin } from '@/databases/entities';
+import { Admin, User } from '@/databases/entities';
 import type { QueryPaginationDto } from '@/shared/dto/pagination.query';
 import { AdminStatusEnum } from '@/shared/enums';
 import { FetchType, paginateEntities } from '@/utils/paginate';
@@ -13,8 +13,10 @@ import type { CreateAdminDto, QueryAdminDto, UpdateAdminDto } from './dto/admin.
 export class AdminService {
   constructor(
     @InjectRepository(Admin)
-    private readonly adminRepository: Repository<Admin>
-  ) {}
+    private readonly adminRepository: Repository<Admin>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>
+  ) { }
 
   async create(createAdminDto: CreateAdminDto) {
     try {
@@ -87,6 +89,26 @@ export class AdminService {
       return await this.adminRepository.softRemove(admin);
     } catch (error) {
       throw new BadRequestException(error.message ?? '');
+    }
+  }
+
+  async getUsers(query: QueryPaginationDto) {
+    try {
+      const builder = this.userRepository.createQueryBuilder('user');
+      return await paginateEntities(builder, query);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+  }
+
+  async updateUser(id: number, status: "active" | "inactive") {
+    try {
+      const user = await this.userRepository.findOne({ where: { id } });
+      if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+      return await this.userRepository.update(id, { isActive: status === "active" });
+    } catch (error) {
+      throw new BadRequestException(error.message);
     }
   }
 }

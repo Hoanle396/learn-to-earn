@@ -158,7 +158,7 @@ export class CourseService {
     const builder = this.userCourseRepository
       .createQueryBuilder('userCourse')
       .leftJoinAndSelect('userCourse.course', 'course')
-      .where('userCourse.user = :user', { user });
+      .where('userCourse.userId = :user', { user: user.id });
     return await paginateEntities(builder, query);
   }
 }

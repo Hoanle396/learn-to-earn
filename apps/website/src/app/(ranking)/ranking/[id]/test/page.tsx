@@ -4,8 +4,9 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useAnswersStore } from '@/stores';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { usePoolById } from '@/apis/pool/queries';
+import { useJoinPool, usePoolById } from '@/apis/pool/queries';
 import useSubmit from '@/hooks/useSubmitAnswer';
+import toast from 'react-hot-toast';
 type Props = {};
 
 const page = (props: Props) => {
@@ -13,6 +14,7 @@ const page = (props: Props) => {
   const { data } = usePoolById(Number(id));
   const { setAnswers, setPool, poolId, answers, clear } = useAnswersStore();
   const { publish, isTransactionSuccess } = useSubmit()
+  const { mutate } = useJoinPool()
 
   useEffect(() => {
     setPool(data?.data.onchainId);
@@ -63,6 +65,8 @@ const page = (props: Props) => {
   useEffect(() => {
     if (isTransactionSuccess) {
       clear()
+      mutate(Number(id))
+      toast.success('Your answers has been submitted successfully')
       push('/ranking')
     }
   }, [isTransactionSuccess])

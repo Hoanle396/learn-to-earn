@@ -31,7 +31,7 @@ export const refreshToken = async (): Promise<IResponse<ILoginResponse>> => {
   });
 };
 
-export const me = async (): Promise<IUser> => {
+export const me = async (): Promise<IResponse<IUser>> => {
   return client({
     url: '/auth/me',
     method: 'GET',

@@ -1,6 +1,6 @@
-import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
+import { useMutation, useQuery, type UseQueryOptions } from "@tanstack/react-query";
 import type { ILoginResponse } from "./type";
-import { secret } from "./request";
+import { getUsers, secret, updateUser } from "./request";
 
 export const useUser = (option?: UseQueryOptions<ILoginResponse, Error>) => {
 	const { data, ...rest } = useQuery<ILoginResponse, Error>({
@@ -10,3 +10,16 @@ export const useUser = (option?: UseQueryOptions<ILoginResponse, Error>) => {
 	});
 	return { user: data, ...rest, isLogin: !!data };
 };
+
+export const useUsers = () => {
+	return useQuery({
+		queryKey: ["users"],
+		queryFn: getUsers,
+	})
+}
+
+export const useUpdateUser = () => {
+	return useMutation({
+		mutationFn: updateUser
+	})
+}

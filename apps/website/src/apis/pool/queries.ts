@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getActivePools, getPool } from './request';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getActivePools, getCertification, getPool, joinPool } from './request';
 
 export const usePoolActive = (params: any) => {
   return useQuery({
@@ -14,3 +14,17 @@ export const usePoolById = (id: number) => {
     queryFn: () => getPool(id),
   });
 };
+
+export const useJoinPool = () => {
+  return useMutation({
+    mutationFn: joinPool
+  })
+}
+
+
+export const useCertification = () => {
+  return useQuery({
+    queryKey: ['certification'],
+    queryFn: () => getCertification(),
+  });
+}
