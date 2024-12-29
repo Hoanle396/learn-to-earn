@@ -72,7 +72,7 @@ export class AdminController {
       }
     }
   })
-  async updateUser(@Param('id') id: number, @Body() dto: { status: 'active' | 'inactive' }): Promise<User> {
+  async updateUser(@Param('id') id: number, @Body() dto: { status: 'active' | 'inactive' }): Promise<boolean> {
     return await this.adminService.updateUser(id, dto.status);
   }
 

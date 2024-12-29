@@ -106,7 +106,9 @@ export class AdminService {
       const user = await this.userRepository.findOne({ where: { id } });
       if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
 
-      return await this.userRepository.update(id, { isActive: status === "active" });
+      const { affected } = await this.userRepository.update(id, { isActive: status === "active" });
+
+      return affected > 0;
     } catch (error) {
       throw new BadRequestException(error.message);
     }

@@ -52,4 +52,4 @@ import { WorkerModule } from './modules/worker/worker.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule { }
