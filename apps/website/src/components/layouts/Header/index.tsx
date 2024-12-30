@@ -68,7 +68,7 @@ const Header = () => {
             <ConnectWallet />
           </div>
         </div>
-        <button onClick={handleToggle} className='lg:hidden ml-auto'>
+        <button onClick={handleToggle} className='lg:hidden ml-0 w-8'>
           <IoMenu className='w-6 h-6' />
         </button>
       </div>

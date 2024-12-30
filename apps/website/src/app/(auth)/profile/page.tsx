@@ -6,10 +6,14 @@ import { IPFS } from '@/libs/constants';
 import { ArchiveMainBulk, HomeStarBold } from 'icons-next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useDisconnect } from 'wagmi';
 
 const LearningDetailPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const { push } = useRouter()
+  const { disconnect } = useDisconnect()
   const { data } = useUser()
   const { data: courses, refetch } = useMyCourses(undefined)
   const { data: cert } = useCertification()
@@ -41,6 +45,11 @@ const LearningDetailPage = () => {
                 <li >
                   <button
                     className={`w-full text-left p-3 rounded-lg transition border border-danger text-red-600`}
+                    onClick={() => {
+                      localStorage.removeItem('token')
+                      disconnect()
+                      push('/')
+                    }}
                   >
                     Logout
                   </button>

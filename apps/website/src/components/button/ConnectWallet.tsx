@@ -1,18 +1,28 @@
-import { useUpdateWallet } from '@/apis/auth/queries';
+import { useUpdateWallet, useUser } from '@/apis/auth/queries';
 import { useAuthStore } from '@/stores/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
-import { useAccount, useConnect } from 'wagmi';
+import React, { useEffect } from 'react';
+import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { metaMask } from 'wagmi/connectors';
 
 const ConnectWallet = () => {
   const { address, isConnected } = useAccount();
   const { connect } = useConnect();
+  const { disconnect } = useDisconnect();
   const { auth } = useAuthStore();
   const { mutate } = useUpdateWallet();
   const token = localStorage.getItem('token');
   const { push } = useRouter();
+  const { data, isLoading } = useUser()
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!data) {
+      localStorage.removeItem('token')
+      disconnect()
+    }
+  }, [data])
 
   React.useEffect(() => {
     if (isConnected && auth?.user && address && address !== auth?.user?.wallet) {
