@@ -1,5 +1,6 @@
 'use client';
 import { useJoinedRanking, useRankingDetail, useTemplate, useUploadQuestions } from '@/@core/apis/ranking';
+import useDrawl from '@/@core/hooks/useDrawlPool';
 import usePublish from '@/@core/hooks/usePublishPool';
 import { IPFS } from '@/constants';
 import { LoadingButton } from '@mui/lab';
@@ -12,6 +13,7 @@ import toast from 'react-hot-toast';
 
 const DetailPool = () => {
   const { publish, isLoading: onchainLoading, isTransactionSuccess } = usePublish();
+  const { drawl, isLoading: drawlLoading, isTransactionSuccess: drawlSuccess } = useDrawl()
   const { id } = useParams();
   const { push } = useRouter();
   const {
@@ -59,15 +61,27 @@ const DetailPool = () => {
     const questions = data.quizzes.map((quiz: any) => quiz.question);
     publish({
       name: data?.name ?? '',
-      startDate: new Date(data.startTime).getTime(),
-      endDate: new Date(data.endTime).getTime(),
+      startDate: dayjs(data.startTime).unix(),
+      endDate: dayjs(data.endTime).unix(),
       questions,
       passed: data?.questionPerPool,
     });
   };
 
+  const handleDrawl = async () => {
+    if (!data) return;
+    drawl({
+      pool: data?.onchainId,
+      answers: data?.quizzes.map((quiz: any) => quiz.options.find((option: any) => option.isCorrect)?.answer),
+    });
+  }
+
   if (isTransactionSuccess) {
     toast.success('Pool published successfully');
+  }
+
+  if (drawlSuccess) {
+    toast.success('Pool drawl successfully');
   }
 
   if (isLoading) {
@@ -145,7 +159,7 @@ const DetailPool = () => {
                 )}
                 {(data.isVerified && new Date().getTime() > new Date(data.endTime).getTime()) ? (
                   <Stack>
-                    <LoadingButton variant='outlined' onClick={() => { }}>
+                    <LoadingButton variant='outlined' onClick={handleDrawl} loading={drawlLoading}>
                       Drawl
                     </LoadingButton>
                   </Stack>

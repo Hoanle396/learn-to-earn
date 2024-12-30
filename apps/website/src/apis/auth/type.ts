@@ -24,7 +24,7 @@ export type IUser = {
   fullname: string;
   email: string;
   wallet: string;
-  isActive: boolean;
+  isactive: boolean;
 };
 export type IToken = {
   accessToken: string;

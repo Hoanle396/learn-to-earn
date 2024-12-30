@@ -62,6 +62,9 @@ export class WorkerService {
           case 'LearnToEarnCertificateCreated':
             this.userPassedPool(log.args);
             break;
+          case 'PoolEnded':
+            this.logger.debug('Pool ended');
+            break;
           default:
             this.logger.debug('Unknown event');
             break;

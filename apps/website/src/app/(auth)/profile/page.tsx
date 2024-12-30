@@ -67,7 +67,7 @@ const LearningDetailPage = () => {
                   <h4>Hi! {data?.data?.fullname}</h4>
                   <span>Email: {data?.data?.email}</span>
                   <span>Address: {data?.data?.wallet}</span>
-                  <span>Status: {data?.data?.isActive ? (<span className='bg-green-300 rounded-md px-2'>Active</span>) : (<span className='bg-red-300 rounded-md px-2'>In Active</span>)}</span>
+                  <span>Status: {data?.data?.isactive ? (<span className='bg-green-300 rounded-md px-2'>Active</span>) : (<span className='bg-red-300 rounded-md px-2'>In Active</span>)}</span>
                 </div>
               )}
 
