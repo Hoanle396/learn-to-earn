@@ -3,6 +3,7 @@ import { useUser } from '@/apis/auth/queries';
 import { useMyCourses } from '@/apis/courses/queries';
 import { useCertification } from '@/apis/pool/queries';
 import { IPFS } from '@/libs/constants';
+import { cutString } from '@/libs/utils';
 import { ArchiveMainBulk, HomeStarBold } from 'icons-next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -127,13 +128,16 @@ const LearningDetailPage = () => {
                               Status
                             </th>
                             <th scope="col" className="px-6 py-3">
+                              Wallet
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                               Pool ID
                             </th>
                             <th scope="col" className="px-6 py-3">
                               Pool Name
                             </th>
                             <th scope="col" className="px-6 py-3">
-                              Tags
+                              TokenId
                             </th>
                           </tr>
                         </thead>
@@ -144,13 +148,16 @@ const LearningDetailPage = () => {
                                 <div className='px-2 bg-green-300 rounded-sm w-fit'>Passed</div>
                               </td>
                               <th scope="row" className="px-6 py-4 font-medium">
-                                {item.pool.id}
+                                {cutString(item.wallet, 8)}
+                              </th>
+                              <th scope="row" className="px-6 py-4 font-medium">
+                                {item.poolId}
                               </th>
                               <td className="px-6 py-4 font-medium">
-                                {item.pool.name}
+                                {item.poolName}
                               </td>
                               <td className="px-6 py-4 font-medium">
-                                {item.pool.tags.join(', ')}
+                                {item.tokenId}
                               </td>
                             </tr>
                           ))}

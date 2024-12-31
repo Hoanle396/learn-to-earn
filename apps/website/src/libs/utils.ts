@@ -21,3 +21,11 @@ export function setLocalStore(key: Storage, value: string) {
 export function removeLocalStore(key: Storage) {
   return localStorage.removeItem(key);
 }
+
+
+export const cutString = (str: string, length: number) => {
+  if (str.length > length) {
+    return str.slice(0, length) + '...' + str.slice(-length, str.length);
+  }
+  return str;
+}

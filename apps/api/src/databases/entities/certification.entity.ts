@@ -8,4 +8,7 @@ export class Certification extends BaseEntity {
 
   @Column('bigint')
   tokenId: number;
+
+  @Column('bigint', { nullable: true })
+  poolId: number;
 }

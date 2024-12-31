@@ -6,7 +6,7 @@ import { createPublicClient, decodeEventLog, http, HttpTransport, PublicClient }
 import { ConfigService } from '@nestjs/config';
 import { ABI } from '@/shared/abi';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Certification, LatestBlock, RankingPool } from '@/databases/entities';
+import { Certification, LatestBlock, Prize, RankingPool } from '@/databases/entities';
 import { DataSource, Repository } from 'typeorm';
 import { Logger } from 'hidrajs-winston-logger';
 
@@ -84,9 +84,20 @@ export class WorkerService {
       .values({
         wallet: args.receipt,
         tokenId: args.id,
+        poolId: args.poolId,
       })
       .orUpdate(['wallet'], ['tokenId'])
       .execute();
+    const prize = await this.dataSource.manager.createQueryBuilder(Prize, 'prize')
+      .innerJoin('prize.pool', 'pool')
+      .innerJoin('prize.user', 'user')
+      .where('pool.onchainId = :id', { id: args.poolId })
+      .andWhere('user.wallet = :wallet', { wallet: args.receipt })
+      .getOne();
+    if (prize) {
+      prize.isPassed = true;
+      await this.dataSource.manager.save(prize);
+    }
     this.logger.debug('user updated');
   }
 

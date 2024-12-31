@@ -5,10 +5,10 @@ import { Readable } from 'stream';
 import { Causes } from '@/common/exceptions/causes';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Option, Prize, Quiz, RankingPool, User } from '@/databases/entities';
+import { Certification, Option, Prize, Quiz, RankingPool, User } from '@/databases/entities';
 import { OptionQuiz } from '@/shared/enums';
 import { QueryPaginationDto } from '@/shared/dto/pagination.query';
-import { paginateEntities } from '@/utils/paginate';
+import { FetchType, paginateEntities } from '@/utils/paginate';
 
 @Injectable()
 export class RankingService {
@@ -22,7 +22,11 @@ export class RankingService {
     private readonly rankingPoolRepository: Repository<RankingPool>,
 
     @InjectRepository(Prize)
-    private readonly prizeRepository: Repository<Prize>
+    private readonly prizeRepository: Repository<Prize>,
+
+
+    @InjectRepository(Certification)
+    private readonly certificationRepository: Repository<Certification>
   ) { }
 
   async createPool(dto: PoolCreateDto) {
@@ -136,11 +140,19 @@ export class RankingService {
   }
 
   async getCertification(user: User, query: QueryPaginationDto) {
-    const builder = this.prizeRepository.createQueryBuilder('prize')
-      .leftJoinAndSelect('prize.pool', 'pool')
-      .where('prize.userId = :id', { id: user.id })
-      .andWhere('prize.isPassed = :isPassed', { isPassed: true });
+    const builder = this.certificationRepository.createQueryBuilder('certification')
+      .leftJoinAndSelect(RankingPool, 'pool', 'pool.onchainId = certification.poolId')
+      .where('LOWER(certification.wallet) = LOWER(:wallet)', { wallet: user.wallet })
+      .select([
+        'certification.wallet as "wallet"',
+        'certification.tokenId as "tokenId"',
+        'pool.id as "poolId"',
+        'pool.name as "poolName"',
+        'certification.createdAt as "createdAt"',
+        'certification.updatedAt as "updatedAt"',
+        'pool.onchainId as "onchainId"'
+      ]);
 
-    return await paginateEntities(builder, query);
+    return await paginateEntities(builder, query, FetchType.RAW);
   }
 }
