@@ -32,7 +32,7 @@ const World = () => (
           <img src='/images/people-02.png' alt='people' className='w-full h-full' />
         </div>
 
-        <div className='absolute top-1/2 left-[45%] w-[70px] h-[70px] p-[6px] rounded-full bg-[#5D6680]'>
+        <div className='absolute top-1/2 left-[35%] w-[70px] h-[70px] p-[6px] rounded-full bg-[#5D6680]'>
           <img src='/images/people-03.png' alt='people' className='w-full h-full' />
         </div>
       </motion.div>

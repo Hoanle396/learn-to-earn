@@ -9,15 +9,16 @@ import { motion } from 'framer-motion';
 export const newFeatures = [
   {
     imgUrl: '/images/vrpano.svg',
-    title: 'A new world',
-    subtitle: 'we have the latest update with new world for you to try never mind',
+    title: 'New Online Courses',
+    subtitle: 'Explore our latest online courses designed to help you learn new skills and advance your career.',
   },
   {
     imgUrl: '/images/headset.svg',
-    title: 'More realistic',
-    subtitle: 'In the latest update, your eyes are narrow, making the world more realistic than ever',
+    title: 'Live Webinars',
+    subtitle: 'Join our live webinars to interact with experts and get your questions answered in real-time.',
   },
 ];
+
 const WhatsNew = () => (
   <section className={`${styles.paddings} relative z-10`}>
     <motion.div
@@ -30,7 +31,7 @@ const WhatsNew = () => (
     >
       <motion.div variants={fadeIn('right', 'tween', 0.2, 1)} className='flex-[0.95] flex justify-center flex-col'>
         <TypingText title='| Whats new?' />
-        <TitleText title={<>What&apos;s new about Metaversus?</>} />
+        <TitleText title={<>What&apos;s new in Our Learning Platform?</>} />
         <div className='mt-[48px] flex flex-wrap justify-between gap-[24px]'>
           {newFeatures.map((feature) => (
             <NewFeatures key={feature.title} {...feature} />

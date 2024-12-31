@@ -3,14 +3,15 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { IconContext } from 'react-icons';
 import {
-  IoApps,
-  IoCard,
+  IoSchool,
+  IoBook,
+  IoLaptop,
+  IoPeople,
+  IoChatbubbles,
+  IoGlobe,
+  IoRocket,
+  IoTrophy,
   IoChevronForward,
-  IoColorFill,
-  IoMailOutline,
-  IoNewspaper,
-  IoNotifications,
-  IoPieChart,
 } from 'react-icons/io5';
 
 const container = {
@@ -65,9 +66,9 @@ const OurService: React.FC = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, delay: 1 }}
         >
-          Save Time Managing Social Media
+          Enhance Your Learning Experience
           <br />
-          For Your Business.
+          With Our Comprehensive Services.
         </motion.h2>
       </div>
 
@@ -87,12 +88,12 @@ const OurService: React.FC = () => {
             whileHover='whileHover'
             whileTap='whileTap'
           >
-            <IoMailOutline />
+            <IoSchool />
           </motion.span>
           <h3>
-            Ui/Ux Design
+            Online Courses
             <br />
-            For Mobile & Web
+            For All Levels
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -109,13 +110,13 @@ const OurService: React.FC = () => {
             whileTap='whileTap'
           >
             <IconContext.Provider value={{ color: '#5700cf', size: '22px' }}>
-              <IoApps />
+              <IoBook />
             </IconContext.Provider>
           </motion.span>
           <h3>
-            Web & Mobile
+            Comprehensive
             <br />
-            App Development
+            Study Materials
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -130,12 +131,12 @@ const OurService: React.FC = () => {
             whileHover='whileHover'
             whileTap='whileTap'
           >
-            <IoColorFill color='#ff8559' />
+            <IoLaptop color='#ff8559' />
           </motion.span>
           <h3>
-            Illustration Design
+            Interactive
             <br />
-            (Flat, 3d & More)
+            Learning Tools
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -153,13 +154,13 @@ const OurService: React.FC = () => {
             whileTap='whileTap'
           >
             <IconContext.Provider value={{ color: '#fa3970', size: '22px' }}>
-              <IoNotifications />
+              <IoPeople />
             </IconContext.Provider>
           </motion.span>
           <h3>
-            Stratagy & Product
+            Community
             <br />
-            Management
+            Support
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -177,13 +178,13 @@ const OurService: React.FC = () => {
             whileTap='whileTap'
           >
             <IconContext.Provider value={{ color: '#56a8f4', size: '22px' }}>
-              <IoNewspaper />
+              <IoChatbubbles />
             </IconContext.Provider>
           </motion.span>
           <h3>
-            Custome Wordpress
+            Live
             <br />
-            Design & Dev.
+            Webinars
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -201,12 +202,13 @@ const OurService: React.FC = () => {
             whileTap='whileTap'
           >
             <IconContext.Provider value={{ color: '#06d786', size: '22px' }}>
-              <IoPieChart />
+              <IoGlobe />
             </IconContext.Provider>
           </motion.span>
           <h3>
-            Digital Marketing
-            <br />& Management
+            Global
+            <br />
+            Certifications
           </h3>
           <a href='#'>
             <span>learn more</span>
@@ -224,13 +226,13 @@ const OurService: React.FC = () => {
             whileTap='whileTap'
           >
             <IconContext.Provider value={{ color: '#f1df11', size: '22px' }}>
-              <IoCard />
+              <IoRocket />
             </IconContext.Provider>
           </motion.span>
           <h3>
-            Branding Design
+            Career
             <br />
-            (Logo & Packaging)
+            Advancement
           </h3>
           <a href='#'>
             <span>learn more</span>

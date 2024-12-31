@@ -9,21 +9,21 @@ import { motion } from 'framer-motion';
 export const insights = [
   {
     imgUrl: '/images/planet-06.png',
-    title: 'The launch of the Metaverse makes Elon musk ketar-ketir',
+    title: 'The Future of Online Learning: Trends to Watch',
     subtitle:
-      'Magna etiam tempor orci eu lobortis elementum nibh tellus molestie. Diam maecenas sed enim ut sem viverra alique.',
+      'Explore the latest trends in online learning and how they are shaping the future of education. From AI to gamification, discover what\'s next.',
   },
   {
     imgUrl: '/images/planet-07.png',
-    title: '7 tips to easily master the madness of the Metaverse',
+    title: 'Top 10 Tips for Effective Online Learning',
     subtitle:
-      'Vitae congue eu consequat ac felis donec. Et magnis dis parturient montes nascetur ridiculus mus. Convallis tellus id interdum',
+      'Learn how to make the most of your online learning experience with these top tips. From time management to staying motivated, we\'ve got you covered.',
   },
   {
     imgUrl: '/images/planet-08.png',
-    title: 'With one platform you can explore the whole world virtually',
+    title: 'How to Choose the Right Online Course for You',
     subtitle:
-      'Quam quisque id diam vel quam elementum. Viverra nam libero justo laoreet sit amet cursus sit. Mauris in aliquam sem',
+      'With so many online courses available, it can be hard to choose the right one. Here are some tips to help you find the perfect course for your needs.',
   },
 ];
 
@@ -38,7 +38,7 @@ const Insights = () => (
       className={`${styles.innerWidth} mx-auto flex flex-col`}
     >
       <TypingText title='| Insight' textStyles='text-center' />
-      <TitleText title={<>Insight about metaverse</>} textStyles='text-center' />
+      <TitleText title={<>Insight about Blockchain</>} textStyles='text-center' />
       <div className='mt-[50px] flex flex-col gap-[30px]'>
         {insights.map((item, index) => (
           <InsightCard key={`insight-${index}`} {...item} index={index + 1} />
