@@ -49,6 +49,7 @@ const Login = ({ mode }: { mode: Mode }) => {
 			console.log(data);
 			updateFullName(data?.admin.fullName ?? "");
 			updateIsLogin(!!data);
+
 			localStorage.setItem("token", data?.tokens.accessToken);
 			router.push("/");
 			toast.success("Login successful");

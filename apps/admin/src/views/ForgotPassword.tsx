@@ -43,7 +43,7 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
 							Enter your email and we&#39;ll send you instructions to reset your
 							password
 						</Typography>
-						<Form noValidate autoComplete="off" className="flex flex-col gap-5">
+						{/* <Form >
 							<TextField autoFocus fullWidth label="Email" />
 							<Button fullWidth variant="contained" type="submit">
 								Send reset link
@@ -60,7 +60,7 @@ const ForgotPassword = ({ mode }: { mode: Mode }) => {
 									<span>Back to Login</span>
 								</Link>
 							</Typography>
-						</Form>
+						</Form> */}
 					</div>
 				</CardContent>
 			</Card>

@@ -15,7 +15,7 @@ const FormLayoutsWithIcon = () => {
 		<Card>
 			<CardHeader title="Basic with Icons" />
 			<CardContent>
-				<Form>
+				{/* <Form>
 					<Grid container spacing={5}>
 						<Grid item xs={12}>
 							<TextField
@@ -83,7 +83,7 @@ const FormLayoutsWithIcon = () => {
 							</Button>
 						</Grid>
 					</Grid>
-				</Form>
+				</Form> */}
 			</CardContent>
 		</Card>
 	);

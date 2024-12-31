@@ -1,14 +1,13 @@
 import { TextInput } from './TextInput';
 import { Box, InputAdornment, type TextFieldProps } from '@mui/material';
-/* eslint-disable react/jsx-no-duplicate-props */
-import { type FC, memo, useMemo } from 'react';
+import { type FC, memo, ReactNode, useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 type Props = TextFieldProps & {
   name: string;
-  label?: unknown;
+  label?: ReactNode;
   defaultValue?: string;
-  icon?: unknown;
+  icon?: ReactNode;
   hideError?: boolean;
   counter?: boolean;
   limit?: number;
@@ -39,7 +38,7 @@ const TextField: FC<Props> = ({ icon, name, defaultValue = '', limit, counter, h
             fullWidth
             variant="outlined"
             error={!!errors[name]}
-            helperText={!hideError && errors[name] ? errors[name].message : ''}
+            helperText={!hideError && errors?.[name] ? errors?.[name]?.message as string : ''}
             {...props}
           />
           {counter && (
