@@ -1,4 +1,6 @@
 import { useUpdateWallet, useUser } from '@/apis/auth/queries';
+import { Storage } from '@/libs/constants';
+import { getLocalStore, removeLocalStore } from '@/libs/utils';
 import { useAuthStore } from '@/stores/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -12,14 +14,14 @@ const ConnectWallet = () => {
   const { disconnect } = useDisconnect();
   const { auth } = useAuthStore();
   const { mutate } = useUpdateWallet();
-  const token = localStorage.getItem('token');
+  const token = getLocalStore(Storage.ACCESS_TOKEN);
   const { push } = useRouter();
   const { data, isLoading } = useUser()
 
   useEffect(() => {
     if (isLoading) return
     if (!data) {
-      localStorage.removeItem('token')
+      removeLocalStore(Storage.ACCESS_TOKEN)
       disconnect()
     }
   }, [data])

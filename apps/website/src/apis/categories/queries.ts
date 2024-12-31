@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { Pagination } from "../ranking"
 import { getCategories, getCategory } from "./request"
 
-export const useCategories = (params?: Pagination) => {
+export const useCategories = (params?: any) => {
   return useQuery({
     queryKey: ["categories"],
     queryFn: () => getCategories(params)

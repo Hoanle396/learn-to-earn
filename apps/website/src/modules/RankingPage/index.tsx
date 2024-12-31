@@ -4,16 +4,6 @@ import { IPFS } from '@/libs/constants';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-type Course = {
-  id: number;
-  name: string;
-  level: string;
-  category: string;
-  description: string;
-  imageUrl: string;
-  price: number;
-};
-
 const RankingPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [tags, setTags] = useState('');

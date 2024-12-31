@@ -1,15 +1,14 @@
 'use client';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { useAnswersStore } from '@/stores';
-import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
 import { useJoinPool, usePoolById } from '@/apis/pool/queries';
 import useSubmit from '@/hooks/useSubmitAnswer';
+import { useAnswersStore } from '@/stores';
+import { useParams, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-type Props = {};
 
-const page = (props: Props) => {
+
+const Page = () => {
   const { id } = useParams();
   const { data } = usePoolById(Number(id));
   const { setAnswers, setPool, poolId, answers, clear } = useAnswersStore();
@@ -162,6 +161,5 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Page;
 
-export const Idx = ['A', 'B', 'C', 'D'];

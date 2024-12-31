@@ -55,14 +55,14 @@ const LoginPage = () => {
               label='Your Email'
               placeholder='Enter Your Email'
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             />
             <TextField
               type='password'
               label='Password'
               placeholder='*******'
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             />
             <div className='flex items-start'>
               <div className='flex items-center h-5'>

@@ -2,8 +2,8 @@
 import { useUser } from '@/apis/auth/queries';
 import { useMyCourses } from '@/apis/courses/queries';
 import { useCertification } from '@/apis/pool/queries';
-import { IPFS } from '@/libs/constants';
-import { cutString } from '@/libs/utils';
+import { IPFS, Storage } from '@/libs/constants';
+import { cutString, removeLocalStore } from '@/libs/utils';
 import { ArchiveMainBulk, HomeStarBold } from 'icons-next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useDisconnect } from 'wagmi';
 
-const LearningDetailPage = () => {
+const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const { push } = useRouter()
   const { disconnect } = useDisconnect()
@@ -47,7 +47,7 @@ const LearningDetailPage = () => {
                   <button
                     className={`w-full text-left p-3 rounded-lg transition border border-danger text-red-600`}
                     onClick={() => {
-                      localStorage.removeItem('token')
+                      removeLocalStore(Storage.ACCESS_TOKEN)
                       disconnect()
                       push('/')
                     }}
@@ -175,4 +175,4 @@ const LearningDetailPage = () => {
   );
 };
 
-export default LearningDetailPage;
+export default ProfilePage;

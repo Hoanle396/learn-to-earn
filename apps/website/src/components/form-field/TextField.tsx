@@ -5,9 +5,10 @@ type Props = HTMLAttributes<HTMLInputElement> & {
   label?: string;
   placeholder?: string;
   type?: React.HTMLInputTypeAttribute;
+  value?: string;
 };
 
-const TextField = ({ label, type, className, placeholder, ...props }: Props) => {
+const TextField = ({ label, type, className, placeholder, value, ...props }: Props) => {
   return (
     <div className='w-full'>
       {label && <label className='block text-gray-700 text-sm font-bold mb-2'>{label}</label>}
@@ -18,8 +19,9 @@ const TextField = ({ label, type, className, placeholder, ...props }: Props) => 
         )}
         placeholder={placeholder}
         type={type}
+        value={value}
         {...props}
-        // id='unique-input'
+      // id='unique-input'
       />
     </div>
   );
