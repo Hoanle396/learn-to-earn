@@ -2,6 +2,7 @@
 import { useUser } from '@/apis/auth/queries';
 import { useMyCourses } from '@/apis/courses/queries';
 import { useCertification } from '@/apis/pool/queries';
+import CertificationCard from '@/components/Certification/CertificationCard';
 import { IPFS, Storage } from '@/libs/constants';
 import { cutString, removeLocalStore } from '@/libs/utils';
 import { ArchiveMainBulk, HomeStarBold } from 'icons-next';
@@ -31,7 +32,7 @@ const ProfilePage = () => {
         <div className='flex flex-col lg:flex-row gap-8'>
           {/* Sidebar Navigation */}
           <nav className='lg:w-1/4'>
-            <div className='bg-white rounded-lg shadow-sm p-4'>
+            <div className='bg-white rounded-lg shadow-sm p-4  sticky top-20'>
               <ul className='space-y-4'>
                 {['overview', 'courses', 'certification'].map((tab) => (
                   <li key={tab}>
@@ -63,7 +64,7 @@ const ProfilePage = () => {
           <main className='lg:w-3/4'>
             <div className='bg-white rounded-lg shadow-sm p-6'>
               {activeTab === 'overview' && (
-                <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-4 h-[calc(100vh-45rem)]'>
                   <h2 className='text-2xl font-bold mb-4'>Profile Overview</h2>
                   <h4>Hi! {data?.data?.fullname}</h4>
                   <span>Email: {data?.data?.email}</span>
@@ -120,49 +121,10 @@ const ProfilePage = () => {
                 <div>
                   <h2 className='text-2xl font-bold mb-4'>Your Certification</h2>
                   <div className='space-y-4 mt-8'>
-                    <div className="relative overflow-x-auto">
-                      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                            <th scope="col" className="px-6 py-3">
-                              Status
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              Wallet
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              Pool ID
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              Pool Name
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                              TokenId
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {cert?.data?.items?.map((item: any) => (
-                            <tr key={item.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <td className="px-6 py-4">
-                                <div className='px-2 bg-green-300 rounded-sm w-fit'>Passed</div>
-                              </td>
-                              <th scope="row" className="px-6 py-4 font-medium">
-                                {cutString(item.wallet, 8)}
-                              </th>
-                              <th scope="row" className="px-6 py-4 font-medium">
-                                {item.poolId}
-                              </th>
-                              <td className="px-6 py-4 font-medium">
-                                {item.poolName}
-                              </td>
-                              <td className="px-6 py-4 font-medium">
-                                {item.tokenId}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                    <div className="flex flex-col gap-8">
+                      {cert?.data?.items?.map((item: any) => (
+                        <CertificationCard key={item.id} data={item} />
+                      ))}
                     </div>
                   </div>
                 </div>
