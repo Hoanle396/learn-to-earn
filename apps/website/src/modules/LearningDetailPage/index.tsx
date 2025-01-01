@@ -47,7 +47,7 @@ const LearningDetailPage = () => {
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      <div className='container mx-auto py-8 pt-20'>
+      <div className='container mx-auto py-8 pt-12'>
         {/* Header Section */}
         <header className='mb-8'>
           <div className='flex items-center justify-between mb-6'>

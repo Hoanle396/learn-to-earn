@@ -27,7 +27,7 @@ const ProfilePage = () => {
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      <div className='container mx-auto py-8 pt-20'>
+      <div className='container mx-auto py-8 pt-12'>
         {/* Main Content */}
         <div className='flex flex-col lg:flex-row gap-8'>
           {/* Sidebar Navigation */}
