@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { polygonAmoy } from 'viem/chains';
+import { hardhat, polygonAmoy } from 'viem/chains';
 import { Injectable } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { createPublicClient, decodeEventLog, http, HttpTransport, PublicClient } from 'viem';
@@ -24,8 +24,8 @@ export class WorkerService {
 
   createClient() {
     return createPublicClient({
-      chain: polygonAmoy,
-      transport: http(),
+      chain: hardhat,
+      transport: http('https://rpc.dev-domain.site'),
     });
   }
 
@@ -41,7 +41,7 @@ export class WorkerService {
       console.log(onchainBlock);
       const logs = await this.client.getLogs({
         address: this.configService.get('contract.contractAddress', { infer: true }),
-        fromBlock: BigInt(latestBlock.blockNumber),
+        fromBlock: BigInt(latestBlock.blockNumber - 1),
         toBlock: onchainBlock,
       });
 
@@ -94,6 +94,7 @@ export class WorkerService {
       .where('pool.onchainId = :id', { id: args.poolId })
       .andWhere('user.wallet = :wallet', { wallet: args.receipt })
       .getOne();
+    console.log(prize);
     if (prize) {
       prize.isPassed = true;
       await this.dataSource.manager.save(prize);

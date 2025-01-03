@@ -1,9 +1,9 @@
-import { polygonAmoy } from 'viem/chains';
+import { hardhat, polygonAmoy } from 'viem/chains';
 import { createConfig, http } from 'wagmi';
 
 export const wagmiConfig = createConfig({
-  chains: [polygonAmoy],
+  chains: [hardhat],
   transports: {
-    [polygonAmoy.id]: http(),
+    [hardhat.id]: http('https://rpc.dev-domain.site'),
   },
 });

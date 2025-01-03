@@ -21,7 +21,7 @@ const useDrawl = () => {
     error: transactionError,
   } = useWaitForTransactionReceipt({
     hash: dataCreateCollection,
-    confirmations: 4,
+    confirmations: 0,
   });
 
   const drawl = ({ pool, answers }: any) => {

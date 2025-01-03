@@ -20,7 +20,7 @@ const useSubmit = () => {
     error: transactionError,
   } = useWaitForTransactionReceipt({
     hash: dataCreateCollection,
-    confirmations: 4,
+    confirmations: 0,
   });
 
   const publish = ({ poolId, answers }: any) => {

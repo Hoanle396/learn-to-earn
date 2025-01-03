@@ -50,6 +50,13 @@ module.exports = {
                 mnemonic,
             },
         },
+        dev: {
+            chainId: 31337,
+            url: "https://rpc.dev-domain.site",
+            accounts: {
+                mnemonic,
+            },
+        },
         amoy: {
             url: `https://rpc-amoy.polygon.technology	`,
             accounts: {

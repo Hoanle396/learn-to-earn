@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "test": "npx hardhat test",
-    "deploy": "npx hardhat run scripts/deploy_learn_2_earn_certificate.js --network amoy"
+    "deploy": "npx hardhat run scripts/deploy_learn_2_earn_certificate.js --network dev"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.1",

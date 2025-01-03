@@ -22,7 +22,7 @@ const usePublish = () => {
     error: transactionError,
   } = useWaitForTransactionReceipt({
     hash: dataCreateCollection,
-    confirmations: 4,
+    confirmations: 0,
   });
 
   const publish = ({ name, startDate, endDate, questions, passed }: any) => {
