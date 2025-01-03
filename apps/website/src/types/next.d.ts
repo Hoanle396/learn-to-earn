@@ -6,3 +6,5 @@ declare module 'lenis/react' {
   }
   export function ReactLenis(props: ReactLenisProps): JSX.Element;
 }
+
+declare module "@vidstack/player-react";

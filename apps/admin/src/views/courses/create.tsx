@@ -13,6 +13,7 @@ import { useMutationPinFileToIPFS } from "@/@core/apis/ipfs";
 import toast from "react-hot-toast";
 import { useCreateCourse } from "@/@core/apis/courses/queries";
 import { useCategories } from "@/@core/apis/categories/queries";
+import { useRouter } from "next/navigation";
 
 const tagList = ["English", "Arabic", "French", "German", "Portuguese"];
 
@@ -24,6 +25,7 @@ const CreateCourse = () => {
   const { mutateAsync } = useMutationPinFileToIPFS()
   const { mutateAsync: createCourse } = useCreateCourse()
   const { data: categories } = useCategories()
+  const { push } = useRouter()
 
   const schema = yup.object().shape({
     categoryId: yup.string().required(),
@@ -52,6 +54,7 @@ const CreateCourse = () => {
       console.log(payload);
       await createCourse(payload)
       toast.success("Course created successfully");
+      push('/courses')
     } catch (error) {
       toast.error("An error occurred. Please try again.");
     }

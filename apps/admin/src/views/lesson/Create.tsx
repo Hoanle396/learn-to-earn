@@ -14,13 +14,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
+import VideoPlayer from 'simple-react-video-thumbnail'
 
 export const createLesson = () => {
   const { push } = useRouter();
   const { id } = useParams();
 
   const [fileInput, setFileInput] = useState<File | null>(null);
-  const [imgSrc, setImgSrc] = useState<string>("/images/logo_full.svg");
+  const [imgSrc, setImgSrc] = useState<string>("");
   const { mutateAsync: create } = useCreateLesson()
   const { mutateAsync } = useMutationPinFileToIPFS()
 
@@ -66,7 +67,7 @@ export const createLesson = () => {
 
   const handleFileInputReset = () => {
     setFileInput(null);
-    setImgSrc("/images/logo_full.svg");
+    setImgSrc("");
   };
 
   return (
@@ -90,13 +91,24 @@ export const createLesson = () => {
       <Grid item xs={12}>
         <CardContent className="mbe-5 flex justify-between">
           <div className="flex max-sm:flex-col items-center gap-6">
-            <img
-              height={300}
-              width={599}
-              className="rounded object-contain border border-primary border-dashed"
-              src={imgSrc}
-              alt="Profile"
-            />
+            {!imgSrc ? (
+              <img
+                height={300}
+                width={599}
+                className="rounded object-contain border border-primary border-dashed"
+                src={'/images/logo_full.svg'}
+                alt="Profile"
+              />
+            ) : (
+              <VideoPlayer
+                videoUrl={imgSrc}
+                snapshotAt={3}
+                width={120}
+                height={80}
+              />
+            )
+            }
+
             <div className="flex flex-grow flex-col gap-4">
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
@@ -105,11 +117,11 @@ export const createLesson = () => {
                   variant="contained"
                   htmlFor="account-settings-upload-image"
                 >
-                  Upload New Photo
+                  Upload New Video
                   <input
                     hidden
                     type="file"
-                    accept="image/png, image/jpeg"
+                    accept="video/*"
                     onChange={handleFileInputChange}
                     id="account-settings-upload-image"
                   />
@@ -123,7 +135,7 @@ export const createLesson = () => {
                   Reset
                 </Button>
               </div>
-              <Typography>Allowed JPG, GIF or PNG. Max size of 800K</Typography>
+              <Typography>Allowed Video/*</Typography>
             </div>
           </div>
         </CardContent>

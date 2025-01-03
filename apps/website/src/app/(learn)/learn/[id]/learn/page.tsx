@@ -5,11 +5,11 @@ import MarkdownPreview from '@uiw/react-markdown-preview';
 import dayjs from 'dayjs';
 import { useParams, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
+import { Media, Video } from '@vidstack/player-react';
 
 const LearningProcess = () => {
   const { id } = useParams()
   const [activeTab, setActiveTab] = useState('overview');
-  const { push } = useRouter()
 
   const { data: courses, refetch } = useMyCourseById(String(id))
 
@@ -92,11 +92,11 @@ const LearningProcess = () => {
                     <h2 className='text-2xl font-bold mb-4'>{lesson.title}</h2>
                     <div className='space-y-4 mt-8'>
                       <div className='aspect-video bg-gray-900 rounded-lg mb-6'>
-                        <img
-                          className='w-full h-full rounded-lg'
-                          src={IPFS(courses?.data.course.logo)}
-                          title='Course Introduction'
-                        />
+                        <Media>
+                          <Video loading="visible" controls preload="true">
+                            <video src={IPFS(lesson.lessonUrl)} preload="none" data-video="0" controls />
+                          </Video>
+                        </Media>
                       </div>
                     </div>
                     <MarkdownPreview

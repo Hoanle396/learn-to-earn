@@ -41,7 +41,7 @@ export class WorkerService {
       console.log(onchainBlock);
       const logs = await this.client.getLogs({
         address: this.configService.get('contract.contractAddress', { infer: true }),
-        fromBlock: BigInt(latestBlock.blockNumber - 1),
+        fromBlock: BigInt(latestBlock.blockNumber + 1),
         toBlock: onchainBlock,
       });
 
